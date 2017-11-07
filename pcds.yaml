@@ -1,5 +1,6 @@
 name: pcds
 channels:
+- file:///reg/g/pcds/pyps/conda/channel
 - lightsource2-tag
 - conda-forge
 - defaults
@@ -142,8 +143,11 @@ dependencies:
 - zeromq=4.2.2=hb0b69da_1
 - zope=1.0=py36_0
 - zope.interface=4.4.3=py36h0ccbf34_0
+- pyami=current=py36
+- pycdb=current=py36
+- pydaq=current=py36
 - bluesky=0.10.3=py36hab8209b_0
-- databroker=0.9.3=py36hd021a86_0
+- databroker=0.9.3=py36h3835243_0
 - doct=1.0.5=py36h572038c_0
 - epics-base=3.14.12.6=h0877880_2
 - event-model=1.3.0=py36h044f490_1
