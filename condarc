@@ -1,10 +1,9 @@
-# Our stuff first, then collaborators
-# Put conda-forge in front of defaults because it is more reliable.
+# For our old hardware, favor stable defaults to conda-forge
 channels:
+  - defaults
+  - conda-forge
   - file:///reg/g/pcds/pyps/conda/channel
   - lightsource2-tag
-  - conda-forge
-  - defaults
 
 # Take the highest available version even if in a lower-priority channel
 channel_priority: false
