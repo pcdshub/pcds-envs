@@ -1,0 +1,12 @@
+# For our old hardware, favor stable defaults to conda-forge
+channels:
+  - defaults
+  - conda-forge
+  - file:///reg/g/pcds/pyps/conda/channel
+  - lightsource2-tag
+
+# Take the highest available version even if in a lower-priority channel
+channel_priority: false
+
+# Only change what I asked for!
+update_dependencies: false
