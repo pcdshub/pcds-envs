@@ -15,7 +15,7 @@ conda create --name $ENVNAME \
   bluesky \
   ophyd \
   jupyter \
-  opencv=3.1.0 \
+  opencv \
   xarray \
   simplejson \
   flake8 \
