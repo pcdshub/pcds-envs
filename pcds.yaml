@@ -16,12 +16,14 @@ dependencies:
 - certifi=2017.7.27.1=py36_0
 - cffi=1.10.0=py36_0
 - chardet=3.0.4=py36_0
+- conda-wrappers=1.0.3=py36_0
 - cryptography=2.0.3=py36_0
 - cycler=0.10.0=py36_0
 - cytoolz=0.8.2=py36_0
 - dbus=1.10.22=0
 - decorator=4.1.2=py36_0
 - entrypoints=0.2.3=py36_1
+- exec-wrappers=1.1.0=py_0
 - ffmpeg=3.2.4=1
 - flake8=3.5.0=py36_0
 - fontconfig=2.12.1=4

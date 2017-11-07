@@ -6,4 +6,4 @@ if [ -z $1 ]; then
 else
   ENVNAME="${1}"
 fi
-conda create --name $ENVNAME python=3.6 ipython jupyter opencv simplejson bluesky ophyd flake8 pytest pytest-timeout
+conda create --name $ENVNAME python=3.6 ipython jupyter opencv simplejson bluesky ophyd flake8 pytest pytest-timeout conda-wrappers
