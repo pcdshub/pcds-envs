@@ -33,7 +33,7 @@ fi
 echo "Exporting yaml file"
 conda env export -n "${NAME}" -f "../${BASE}.yaml"
 echo "Committing and pushing"
-git add "${BASE}.yaml"
+git add "../${BASE}.yaml"
 git commit -m "ENH: updated ${BASE} to ${REL}"
 git push origin "${BRANCH}"
 echo "Done"
