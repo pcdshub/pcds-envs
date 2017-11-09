@@ -6,6 +6,9 @@ if [ -z "${1}" ]; then
 else
   REL="${1}"
 fi
+echo "Updating to latest"
+git checkout master
+git pull origin master
 if [ -z "${2}" ]; then
   BASE="pcds"
   TAG="${REL}"
