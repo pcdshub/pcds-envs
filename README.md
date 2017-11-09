@@ -25,6 +25,7 @@ So, to make a new release of `pcds.yaml`, from my checkout I run:
 Then I go to github and make a PR with my rel-1.2.3 branch.
 After we decide to merge it, I tag a `1.2.3` release and go to the release area:
 ```
+ssh psbuild-rhel6
 cd /reg/g/pcds/pyps/conda
 source py36env.sh
 cd pcds-envs/scripts
@@ -37,6 +38,7 @@ cd my_checkout/scripts
 ```
 Then go to github and justify your PR. Once merged, create an `ease-0.1.0` tag (not a release) and go to the checkout:
 ```
+ssh psbuild-rhel6
 cd /reg/g/pcds/pyps/conda
 source py36env.sh
 cd pcds-envs/scripts
