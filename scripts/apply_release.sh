@@ -29,4 +29,5 @@ echo "Write-protecting new env"
 pushd "${CONDA_BIN}/../envs"
 chmod -R a-w ${NAME}
 popd
+git checkout master
 echo "Done"
