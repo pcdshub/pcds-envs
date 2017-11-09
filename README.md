@@ -23,12 +23,28 @@ So, to make a new release of `pcds.yaml`, from my checkout I run:
 ./stage_release.sh 1.2.3
 ```
 Then I go to github and make a PR with my rel-1.2.3 branch.
-After we decide to merge it, I go to the release area:
+After we decide to merge it, I tag a `1.2.3` release and go to the release area:
 ```
 cd /reg/g/pcds/pyps/conda
 source py36env.sh
 cd pcds-envs/scripts
 git checkout master
+git fetch master
+git pull origin master
 ./apply_release.sh 1.2.3
 ```
-You can follow a similar procedure for any app-specifc environment you'd like to implement, but pass a `<name>` argument to the scripts.
+You can follow a similar procedure for any app-specifc environment you'd like to implement, but pass a `<name>` argument to the scripts and pre-build the environment you want. Here is an example, **assuming I've already built an ``ease-0.1.0`` environment**:
+```
+cd my_checkout/scripts
+./stage_releash.sh 0.1.0 ease
+```
+Then go to github and justify your PR. Once merged, create an `ease-0.1.0` tag (not a release) and go to the checkout:
+```
+cd /reg/g/pcds/pyps/conda
+source py36env.sh
+cd pcds-envs/scripts
+git checkout master
+git fetch master
+git pull origin master
+./apply_release.sh 0.1.0 ease
+```
