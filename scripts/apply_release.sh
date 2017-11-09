@@ -8,15 +8,17 @@ else
 fi
 if [ -z "${2}" ]; then
   BASE="pcds"
+  TAG="${REL}"
 else
   BASE="${2}"
+  TAG="${BASE}-${REL}"
 fi
 YAML="../${BASE}.yaml"
 NAME="${BASE}-${REL}"
 echo "Applying release ${NAME}"
-echo "Checking for tag ${REL}"
+echo "Checking for tag ${TAG}"
 git fetch origin
-git checkout "${REL}"
+git checkout "${TAG}"
 echo "Building environment"
 conda env create -n "${NAME}" -f "${YAML}"
 CONDA_BIN=`dirname $(which conda)`

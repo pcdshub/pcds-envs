@@ -29,7 +29,6 @@ cd /reg/g/pcds/pyps/conda
 source py36env.sh
 cd pcds-envs/scripts
 git checkout master
-git fetch master
 git pull origin master
 ./apply_release.sh 1.2.3
 ```
@@ -44,7 +43,6 @@ cd /reg/g/pcds/pyps/conda
 source py36env.sh
 cd pcds-envs/scripts
 git checkout master
-git fetch master
 git pull origin master
 ./apply_release.sh 0.1.0 ease
 ```
