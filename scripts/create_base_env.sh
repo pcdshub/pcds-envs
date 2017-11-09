@@ -6,7 +6,7 @@ if [ -z $1 ]; then
 else
   ENVNAME="${1}"
 fi
-conda create --name $ENVNAME \
+conda create -y --name $ENVNAME \
   python=3.6 \
   ipython \
   pydaq=current \
