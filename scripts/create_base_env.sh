@@ -12,6 +12,8 @@ conda create -y --name $ENVNAME \
   pydaq=current \
   pycdb=current \
   pyami=current \
+  pyqt=5.6 \
+  pyqtgraph \
   bluesky \
   ophyd \
   jupyter \
@@ -21,4 +23,8 @@ conda create -y --name $ENVNAME \
   flake8 \
   pytest \
   pytest-timeout \
+  sphinx \
+  sphinx_rtd_theme \
+  doctr \
+  cookiecutter \
   conda-wrappers
