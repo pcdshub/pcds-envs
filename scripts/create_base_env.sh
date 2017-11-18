@@ -14,6 +14,7 @@ conda create -y --name $ENVNAME \
   pyami=current \
   pyqt=5.6 \
   pyqtgraph \
+  pyepics=3.2.7 \
   bluesky \
   ophyd \
   jupyter \
