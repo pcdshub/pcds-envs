@@ -23,6 +23,7 @@ conda create -y --name $ENVNAME \
   xarray \
   simplejson \
   flake8 \
+  coloredlogs \
   pytest \
   pytest-timeout \
   sphinx \
