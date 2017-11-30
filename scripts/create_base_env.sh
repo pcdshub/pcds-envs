@@ -32,4 +32,4 @@ conda create -y --name $ENVNAME \
   cookiecutter \
   conda-wrappers
 
-pip install QDarkStyleSheet
+pip install QDarkStyle
