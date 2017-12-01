@@ -33,4 +33,6 @@ conda create -y --name $ENVNAME \
   versioneer \
   conda-wrappers
 
+source activate $ENVNAME
 pip install QDarkStyle
+source deactivate
