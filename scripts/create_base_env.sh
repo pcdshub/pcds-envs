@@ -30,6 +30,7 @@ conda create -y --name $ENVNAME \
   sphinx_rtd_theme \
   doctr \
   cookiecutter \
+  versioneer \
   conda-wrappers
 
 pip install QDarkStyle
