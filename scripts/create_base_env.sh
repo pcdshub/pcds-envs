@@ -11,8 +11,8 @@ conda create -y --name $ENVNAME \
   ipython \
   pydm \
   pcds-devices=0.2.0 \
-  pswalker=0.2.0 \
-  lightpath=0.2.1 \
+  pswalker=0.2.1 \
+  lightpath=0.2.2 \
   psbeam=0.0.3 \
   pydaq=current \
   pycdb=current \
