@@ -9,7 +9,7 @@ fi
 conda create -y --name $ENVNAME \
   python=3.6 \
   ipython \
-  pydm \
+  pydm=1.0.0 \
   pcds-devices=0.2.0 \
   pswalker=0.2.1 \
   lightpath=0.2.2 \
