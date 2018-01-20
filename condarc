@@ -5,7 +5,7 @@ channels:
   - file:///reg/g/pcds/pyps/conda/channel
   - skywalker-tag
   - lightsource2-tag
-  - pydm-dev
+  - pydm-tag
 
 # Take the highest available version even if in a lower-priority channel
 channel_priority: false

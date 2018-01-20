@@ -31,7 +31,7 @@ else
   echo "Using existing environment ${NAME}"
 fi
 echo "Exporting yaml file"
-conda env export -n "${NAME}" -f "../${BASE}.yaml"
+conda env export -n "${NAME}" -f "../${BASE}.yaml" --no-builds
 echo "Committing and pushing"
 git add "../${BASE}.yaml"
 git commit -m "ENH: updated ${BASE} to ${REL}"
