@@ -23,6 +23,7 @@ echo "Checking for tag ${TAG}"
 git fetch origin
 git checkout "${TAG}"
 echo "Building environment"
+source deactivate
 conda env create -n "${NAME}" -f "${YAML}"
 CONDA_BIN=`dirname $(which conda)`
 echo "Write-protecting new env"
