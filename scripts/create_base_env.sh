@@ -9,14 +9,11 @@ fi
 conda create -y --name $ENVNAME \
   python=3.6 \
   ipython \
-  pydm=1.0.0 \
-  pcds-devices=0.2.0 \
-  pswalker=0.2.1 \
-  lightpath=0.2.2 \
-  psbeam=0.0.3 \
+  hutch-python=0.1.0 \
   pydaq=current \
   pycdb=current \
   pyami=current \
+  pydm=1.0.0 \
   pyepics=3.2.7 \
   jupyter \
   opencv \
