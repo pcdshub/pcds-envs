@@ -13,10 +13,11 @@ conda create -y --name $ENVNAME \
   pydaq=current \
   pycdb=current \
   pyami=current \
-  pydm=1.0.0 \
+  pydm=1.1.0 \
   pyepics=3.2.7 \
   jupyter \
   opencv \
+  pandas \
   xarray \
   simplejson \
   flake8 \

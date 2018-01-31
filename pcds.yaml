@@ -1,4 +1,4 @@
-name: pcds-0.5.0
+name: pcds-0.5.1
 channels:
 - defaults
 - conda-forge
@@ -7,16 +7,14 @@ channels:
 - lightsource2-tag
 - pydm-tag
 dependencies:
-- arrow=0.12.1=py36_0
+- arrow=0.12.1=py36_1
 - binaryornot=0.4.4=py36_0
 - bluesky=1.1.0=py36_1
 - ca-certificates=2017.11.5=0
-- conda-wrappers=1.0.3=py36_0
 - cookiecutter=1.6.0=py36_0
 - doct=1.0.5=py_0
 - doctr=1.7.1=py36_0
 - event-model=1.4.0=py36_0
-- exec-wrappers=1.1.0=py_0
 - ffmpeg=3.4.1=0
 - fontconfig=2.12.6=0
 - freetype=2.8.1=0
@@ -29,6 +27,7 @@ dependencies:
 - poyo=0.4.1=py36_0
 - prettytable=0.7.2=py36_1
 - pysocks=1.6.8=py36_1
+- pytest=3.4.0=py36_0
 - super_state_machine=1.0=py36_0
 - tqdm=4.19.5=py_0
 - versioneer=0.18=py36_0
@@ -130,7 +129,6 @@ dependencies:
 - pyparsing=2.2.0=py36hee85983_1
 - pyqt=5.6.0=py36h0386399_5
 - pyqtgraph=0.10.0=py36_0
-- pytest=3.3.2=py36_0
 - pytest-timeout=1.2.1=py36hf4a559a_0
 - python=3.6.4=hc3d631a_1
 - python-dateutil=2.6.1=py36h88d3b88_1
@@ -177,7 +175,7 @@ dependencies:
 - happi=1.0.0=py36_0
 - hutch-python=0.1.0rc1=py36_1
 - pcdsdevices=0.3.0=py36_1
-- pydm=1.0.0=py36_0
+- pydm=1.1.0=py36_0
 - pip:
   - ipython-genutils==0.2.0
   - jupyter-client==5.2.2
@@ -187,4 +185,4 @@ dependencies:
   - qdarkstyle==2.3.1
   - sphinx-rtd-theme==0.2.4
   - super-state-machine==1.0
-prefix: /reg/neh/home/zlentz/conda/py36/envs/pcds-0.5.0
+prefix: /reg/neh/home/zlentz/conda/py36/envs/pcds-0.5.1
