@@ -9,12 +9,14 @@ fi
 conda create -y --name $ENVNAME \
   python=3.6 \
   ipython \
-  hutch-python=0.1.0 \
+  hutch-python \
   pydaq=current \
   pycdb=current \
   pyami=current \
-  pydm=1.1.0 \
-  pyepics=3.2.7 \
+  pydm \
+  pyepics \
+  pyca \
+  psdm_qs_cli \
   jupyter \
   opencv \
   pandas \

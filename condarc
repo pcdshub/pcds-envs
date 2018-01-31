@@ -7,8 +7,8 @@ channels:
   - lightsource2-tag
   - pydm-tag
 
-# Take the highest available version even if in a lower-priority channel
-channel_priority: false
+# Stop at first channel with a valid version
+channel_priority: true
 
 # Only change what I asked for!
 update_dependencies: false
