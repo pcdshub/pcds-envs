@@ -25,6 +25,8 @@ git checkout "${TAG}"
 echo "Building environment"
 source deactivate
 conda env create -n "${NAME}" -f "${YAML}"
+source activate "${NAME}"
+conda install conda-wrappers
 CONDA_BIN=`dirname $(which conda)`
 echo "Write-protecting new env"
 pushd "${CONDA_BIN}/../envs"

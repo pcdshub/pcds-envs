@@ -28,7 +28,6 @@ conda create -y --name $ENVNAME \
   doctr \
   cookiecutter \
   versioneer \
-  conda-wrappers
 
 source activate $ENVNAME
 pip install QDarkStyle
