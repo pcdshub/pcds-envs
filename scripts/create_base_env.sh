@@ -24,6 +24,7 @@ conda create -y --name $ENVNAME \
   simplejson \
   flake8 \
   coloredlogs \
+  pyfiglet \
   pytest \
   pytest-timeout \
   sphinx \
