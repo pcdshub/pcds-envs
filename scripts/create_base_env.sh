@@ -17,6 +17,7 @@ conda create -y --name $ENVNAME \
   pyepics \
   pyca \
   psdm_qs_cli \
+  transfocate \
   jupyter \
   opencv \
   pandas \
