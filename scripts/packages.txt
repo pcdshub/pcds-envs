@@ -22,6 +22,5 @@ simplejson
 sphinx
 sphinx_rtd_theme
 transfocate
-typhon
 versioneer
 xarray
