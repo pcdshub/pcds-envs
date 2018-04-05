@@ -6,6 +6,7 @@ if [ -z $1 ]; then
 else
   ENVNAME="${1}"
 fi
+set -e
 conda create -y --name $ENVNAME --file packages.txt
 
 conda activate $ENVNAME
