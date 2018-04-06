@@ -21,6 +21,5 @@ fi
 # pip install where missing from conda
 # we can convert these into conda recipes later
 pip install QDarkStyle
-pip install mysqlclient
 
 conda deactivate

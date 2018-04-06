@@ -1,13 +1,14 @@
-python=3.6
+python>=3.6.5
 coloredlogs
 cookiecutter
 doctr
 elog
 flake8
 hutch-python
-ipython
+ipython>=6.3
 jupyter
-mysql=5.5.24
+mysqlclient
+numpy>=1.14
 opencv
 pandas
 pcaspy
