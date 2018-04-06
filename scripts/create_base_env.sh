@@ -15,7 +15,7 @@ conda activate $ENVNAME
 # Special DAQ installs that rely on our filesystem
 FILE_CHANNEL="/reg/g/pcds/pyps/conda/channel"
 if [ -d "$FILE_CHANNEL" ]; then
-  conda install pydaq=current -c "file://$FILE_CHANNEL"
+  conda install pydaq=current -y -c "file://$FILE_CHANNEL"
 fi
 
 # pip install where missing from conda
