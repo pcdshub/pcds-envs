@@ -7,6 +7,7 @@ else
   ENVNAME="${1}"
 fi
 set -e
+source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 conda create -y --name $ENVNAME --file packages.txt
 
 conda activate $ENVNAME
