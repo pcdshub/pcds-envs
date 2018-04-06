@@ -6,34 +6,20 @@ if [ -z $1 ]; then
 else
   ENVNAME="${1}"
 fi
-conda create -y --name $ENVNAME \
-  python=3.6 \
-  ipython \
-  hutch-python \
-  pydaq=current \
-  pycdb=current \
-  pyami=current \
-  pydm \
-  pyepics \
-  pyca \
-  psdm_qs_cli \
-  transfocate \
-  jupyter \
-  opencv \
-  pandas \
-  xarray \
-  simplejson \
-  flake8 \
-  coloredlogs \
-  pyfiglet \
-  pytest \
-  pytest-timeout \
-  sphinx \
-  sphinx_rtd_theme \
-  doctr \
-  cookiecutter \
-  versioneer \
+set -e
+source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
+conda create -y --name $ENVNAME --file packages.txt
 
-source activate $ENVNAME
+conda activate $ENVNAME
+
+# Special DAQ installs that rely on our filesystem
+FILE_CHANNEL="/reg/g/pcds/pyps/conda/channel"
+if [ -d "$FILE_CHANNEL" ]; then
+  conda install pydaq=current -y -c "file://$FILE_CHANNEL"
+fi
+
+# pip install where missing from conda
+# we can convert these into conda recipes later
 pip install QDarkStyle
-source deactivate
+
+conda deactivate
