@@ -1,11 +1,8 @@
 # For our old hardware, favor stable defaults to conda-forge
 channels:
+  - pcds-tag
   - defaults
   - conda-forge
-  - file:///reg/g/pcds/pyps/conda/channel
-  - pcds-tag
-  - lightsource2-tag
-  - pydm-tag
 
 # Stop at first channel with a valid version
 channel_priority: true

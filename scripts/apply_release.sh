@@ -1,11 +1,12 @@
 #!/bin/bash
-set -e
 if [ -z "${1}" ]; then
   echo "Usage: apply_release.sh [relnum] [base]"
   exit
 else
   REL="${1}"
 fi
+set -e
+source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 echo "Updating to latest"
 git checkout master
 git pull origin master
@@ -24,9 +25,9 @@ git fetch origin
 git checkout "${TAG}"
 echo "Building environment"
 conda env create -n "${NAME}" -f "${YAML}"
-source activate "${NAME}"
+conda activate "${NAME}"
 conda install conda-wrappers -y
-source deactivate
+conda deactivate
 CONDA_BIN=`dirname $(which conda)`
 echo "Write-protecting new env"
 pushd "${CONDA_BIN}/../envs"
