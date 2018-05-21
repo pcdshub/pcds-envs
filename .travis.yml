@@ -45,7 +45,7 @@ script:
         pushd "${dir}"
         python run_tests.py
         # Accumulate error codes, else the loop eats them
-        (( $ERROR += $? ))
+        (( ERROR += $? ))
         popd
       fi
     done
