@@ -26,8 +26,7 @@ install:
   - python test_setup.py test.yaml
   # Show us which test scripts exist
   - readlink -f */run_tests.py
-
-script:
+  # Set up variable and method for tracking errors in loop
   - ERROR=0
   - |
     show_error(){
@@ -37,6 +36,8 @@ script:
         return 0
       fi
     }
+
+script:
   - |
     for dir in *
     do
@@ -49,4 +50,5 @@ script:
         popd
       fi
     done
+  # If ERROR is nonzero, at least one of the run_test.py calls failed
   - show_error $ERROR
