@@ -28,13 +28,25 @@ install:
   - readlink -f */run_tests.py
 
 script:
-  # - python run_tests.py */tests */*/tests
+  - ERROR=0
+  - |
+    show_error(){
+      if [ "$1" -gt "0" ]; then
+        return 1
+      else
+        return 0
+      fi
+    }
   - |
     for dir in *
     do
       if [ -f "${dir}/run_tests.py" ]; then
+        echo "Running tests for ${dir}"
         pushd "${dir}"
         python run_tests.py
+        # Accumulate error codes, else the loop eats them
+        (( $ERROR += $? ))
         popd
       fi
     done
+  - show_error $ERROR
