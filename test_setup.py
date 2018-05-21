@@ -6,7 +6,11 @@ import sys
 
 import yaml
 
-REPOS = ['pcdshub/hutch-python',
+REPOS = ['pcdshub/happi',
+         'pcdshub/hutch-python',
+         'pcdshub/hxrsnd',
+         'pcdshub/lightpath',
+         'pcdshub/pcdsdaq',
          'pcdshub/pcdsdevices']
 
 
