@@ -24,8 +24,17 @@ install:
   - conda activate test-environment
   # Check out the tests for all of our packages
   - python test_setup.py test.yaml
-  # Show us which test directories exist
-  - readlink -f */tests */*/tests
+  # Show us which test scripts exist
+  - readlink -f */run_tests.py
 
 script:
-  - python run_tests.py */tests */*/tests
+  # - python run_tests.py */tests */*/tests
+  - |
+    for dir in *
+    do
+      if [ -f "${dir}/run_tests.py" ]; then
+        pushd "${dir}"
+        python run_tests.py
+        popd
+      fi
+    done
