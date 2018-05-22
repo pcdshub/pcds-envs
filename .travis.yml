@@ -1,0 +1,86 @@
+language: python
+sudo: false
+
+matrix:
+  include:
+    - env:
+      - VARIANT=yaml
+    - env:
+      - VARIANT=tag
+    - env:
+      - VARIANT=dev
+
+install:
+  - sudo apt-get update
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - source "$HOME/miniconda/etc/profile.d/conda.sh"
+  - conda activate
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda install conda-build anaconda-client
+  - conda update -q conda conda-build
+  # Useful for debugging any issues with conda
+  - conda info -a
+  - |
+    if [ "$VARIANT" = "yaml" ]; then
+      # Mutate the env to skip file channels and daq packages
+      egrep -v "file:|pydaq" pcds.yaml > test.yaml
+      # Create the environment from yaml
+      conda env create -q -n test-environment -f test.yaml
+    else
+      # Use our condarc
+      cp condarc ~/.condarc
+      if [ "$VARIANT" = "dev" ]; then
+        # Add the dev channel to be first channel
+        conda config --add channels pcds-dev
+      fi
+      pushd scripts
+      ./create_base_env.sh test-environment
+      popd
+    fi
+  - conda activate test-environment
+  # Check out the tests for all of our packages
+  - |
+    if [ "$VARIANT" = dev ]; then
+      python test_setup.py
+    else
+      python test_setup.py --tag
+    fi
+  # Show us which test scripts exist
+  - readlink -f */run_tests.py
+  # Set up variable and method for tracking errors in loop
+  - ERROR=0
+  - |
+    show_error(){
+      if [ "$1" -gt "0" ]; then
+        return 1
+      else
+        return 0
+      fi
+    }
+
+before_script:
+  # Take from docs.travis-ci.com/user/gui-and-headless-browsers
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+
+script:
+  - |
+    for dir in *
+    do
+      if [ -f "${dir}/run_tests.py" ]; then
+        echo "Running tests for ${dir}"
+        pushd "${dir}"
+        # Check on the repo for debugging purposes
+        git status
+        git rev-parse HEAD
+        python run_tests.py
+        # Accumulate error codes, else the loop eats them
+        (( ERROR += $? ))
+        popd
+      fi
+    done
+  # If ERROR is nonzero, at least one of the run_test.py calls failed
+  - show_error $ERROR
