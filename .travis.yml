@@ -73,6 +73,9 @@ script:
       if [ -f "${dir}/run_tests.py" ]; then
         echo "Running tests for ${dir}"
         pushd "${dir}"
+        # Check on the repo for debugging purposes
+        git status
+        git show-ref
         python run_tests.py
         # Accumulate error codes, else the loop eats them
         (( ERROR += $? ))
