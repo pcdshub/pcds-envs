@@ -2,10 +2,13 @@ language: python
 sudo: false
 
 matrix:
-  env:
-    - VARIANT=yaml
-    - VARIANT=tag
-    - VARIANT=dev
+  include:
+    - env:
+      - VARIANT=yaml
+    - env:
+      - VARIANT=tag
+    - env:
+      - VARIANT=dev
 
 install:
   - sudo apt-get update
