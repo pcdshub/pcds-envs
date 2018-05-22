@@ -2,8 +2,10 @@ language: python
 sudo: false
 
 matrix:
-  include:
-    - python: 3.6
+  env:
+    - VARIANT=yaml
+    - VARIANT=tag
+    - VARIANT=dev
 
 install:
   - sudo apt-get update
@@ -17,13 +19,31 @@ install:
   - conda update -q conda conda-build
   # Useful for debugging any issues with conda
   - conda info -a
-  # Mutate the env to skip file channels and daq packages
-  - egrep -v "file:|pydaq" pcds.yaml > test.yaml
-  # Set up the environment
-  - conda env create -q -n test-environment -f test.yaml
+  - |
+    if [ "$VARIANT" = "yaml" ]; then
+      # Mutate the env to skip file channels and daq packages
+      egrep -v "file:|pydaq" pcds.yaml > test.yaml
+      # Create the environment from yaml
+      conda env create -q -n test-environment -f test.yaml
+    else
+      # Use our condarc
+      cp condarc ~/.condarc
+      if [ "$VARIANT" = "dev" ]; then
+        # Add the dev channel to be first channel
+        conda config --add channels pcds-dev
+      fi
+      pushd scripts
+      ./create_base_env.sh test-environment
+      popd
+    fi
   - conda activate test-environment
   # Check out the tests for all of our packages
-  - python test_setup.py test.yaml
+  - |
+    if [ "$VARIANT" = dev ]; then
+      python test_setup.py
+    else
+      python test_setup.py --tag
+    fi
   # Show us which test scripts exist
   - readlink -f */run_tests.py
   # Set up variable and method for tracking errors in loop
