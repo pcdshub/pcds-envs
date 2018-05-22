@@ -5,7 +5,7 @@ import os
 import requests
 import subprocess
 
-parser = argparse.Argumentparser()
+parser = argparse.ArgumentParser()
 parser.add_argument('--tag', action='store_true')
 
 
@@ -15,7 +15,7 @@ def version_info(channels):
     info = {}
     for line in conda_list.split('\n'):
         if any(ch in line for ch in channels):
-            pkg, ver, _, _ = line.split(' ')
+            pkg, ver, _, _ = line.split()
             info[pkg] = ver
     return info
 
@@ -29,9 +29,9 @@ def pushd(new_dir):
 
 
 if __name__ == '__main__':
-    parser.parse_args()
+    args = parser.parse_args()
 
-    info = version_info(['pcds-tag'], ['pcds-dev'])
+    info = version_info(['pcds-tag', 'pcds-dev'])
 
     for pkg, ver in info.items():
         # Check if url exists
@@ -42,7 +42,7 @@ if __name__ == '__main__':
             continue
         subprocess.run(['git', 'clone', url])
 
-        if parser.tag:
+        if args.tag:
             with pushd(pkg):
                 config = configparser.ConfigParser()
                 config.read('setup.cfg')
