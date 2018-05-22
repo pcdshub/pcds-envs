@@ -75,7 +75,7 @@ script:
         pushd "${dir}"
         # Check on the repo for debugging purposes
         git status
-        git show-ref
+        git rev-parse HEAD
         python run_tests.py
         # Accumulate error codes, else the loop eats them
         (( ERROR += $? ))
