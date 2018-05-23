@@ -1,11 +1,14 @@
 python>=3.6.5
+bokeh
 coloredlogs
 cookiecutter
 doctr
 elog
 flake8
 happi
+holoviews
 hutch-python>=0.5.0
+hxrsnd
 ipython>=6.3
 jupyter
 lightpath
@@ -17,6 +20,7 @@ pcaspy
 pcdsdaq
 pcdsdevices
 psdm_qs_cli
+pswalker
 pyca
 pydm
 pyepics
