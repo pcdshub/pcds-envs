@@ -1,4 +1,4 @@
-name: pcds-1.1.0
+name: pcds-1.1.1
 channels:
   - file:///reg/g/pcds/pyps/conda/channel
   - pcds-tag
@@ -7,36 +7,40 @@ channels:
 dependencies:
   - asteval=0.9.12
   - binaryornot=0.4.4
-  - bluesky=1.3.1
+  - bluesky=1.3.3
   - cookiecutter=1.6.0
   - doct=1.0.5
   - doctr=1.7.3
   - event-model=1.5.0
   - historydict=1.2.3
   - jinja2-time=0.2.0
-  - lmfit=0.9.9
+  - lmfit=0.9.10
   - ophyd=1.1.0
   - poyo=0.4.1
   - prettytable=0.7.2
   - pyfiglet=0.7.5
   - super_state_machine=2.0.2
+  - uncertainties=3.0.2
   - versioneer=0.18
   - whichcraft=0.4.1
   - alabaster=0.7.10
   - arrow=0.12.1
   - asn1crypto=0.24.0
+  - atomicwrites=1.1.5
   - attrs=18.1.0
-  - babel=2.5.3
+  - babel=2.6.0
   - backcall=0.1.0
-  - blas=1.0
   - bleach=2.1.3
   - bokeh=0.12.16
+  - bzip2=1.0.6
   - ca-certificates=2018.03.07
+  - cairo=1.14.12
   - certifi=2018.4.16
   - cffi=1.11.5
   - chardet=3.0.4
   - click=6.7
   - coloredlogs=10.0
+  - coverage=4.5.1
   - cryptography=2.2.2
   - cycler=0.10.0
   - dbus=1.13.2
@@ -44,14 +48,18 @@ dependencies:
   - docutils=0.14
   - entrypoints=0.2.3
   - expat=2.2.5
+  - ffmpeg=4.0
   - flake8=3.5.0
   - fontconfig=2.12.6
   - freetype=2.8
   - future=0.16.0
   - glib=2.53.6
   - gmp=6.1.2
+  - graphite2=1.3.11
   - gst-plugins-base=1.12.4
   - gstreamer=1.12.4
+  - h5py=2.8.0
+  - harfbuzz=1.7.6
   - hdf5=1.10.2
   - holoviews=1.10.4
   - html5lib=1.0.1
@@ -60,11 +68,12 @@ dependencies:
   - icu=58.2
   - idna=2.6
   - imagesize=1.0.0
-  - intel-openmp=2018.0.0
+  - intel-openmp=2018.0.3
   - ipykernel=4.8.2
   - ipython=6.4.0
   - ipython_genutils=0.2.0
   - ipywidgets=7.2.1
+  - jasper=1.900.1
   - jedi=0.12.0
   - jinja2=2.10
   - jpeg=9b
@@ -74,24 +83,28 @@ dependencies:
   - jupyter_console=5.2.0
   - jupyter_core=4.4.0
   - kiwisolver=1.0.1
-  - krb5=1.16
+  - krb5=1.16.1
   - libedit=3.1.20170329
   - libffi=3.2.1
   - libgcc-ng=7.2.0
   - libgfortran-ng=7.2.0
+  - libopenblas=0.2.20
+  - libopencv=3.4.1
+  - libopus=1.2.1
   - libpng=1.6.34
+  - libprotobuf=3.5.2
   - libsodium=1.0.16
   - libstdcxx-ng=7.2.0
+  - libtiff=4.0.9
+  - libvpx=1.7.0
   - libxcb=1.13
   - libxml2=2.9.8
   - markupsafe=1.0
   - matplotlib=2.2.2
   - mccabe=0.6.1
   - mistune=0.8.3
-  - mkl=2018.0.2
-  - mkl_fft=1.0.1
-  - mkl_random=1.0.1
-  - more-itertools=4.1.0
+  - mkl=2018.0.3
+  - more-itertools=4.2.0
   - mysql=5.5.24
   - nbconvert=5.3.1
   - nbformat=4.4.0
@@ -107,16 +120,18 @@ dependencies:
   - pandoc=1.19.2.1
   - pandocfilters=1.4.2
   - param=1.6.1
-  - parso=0.2.0
+  - parso=0.2.1
   - pcre=8.42
-  - pexpect=4.5.0
+  - pexpect=4.6.0
   - pickleshare=0.7.4
   - pip=10.0.1
+  - pixman=0.34.0
   - pluggy=0.6.0
   - prompt_toolkit=1.0.15
   - psutil=5.4.5
   - ptyprocess=0.5.2
   - py=1.5.3
+  - py-opencv=3.4.1
   - pycodestyle=2.3.1
   - pycparser=2.18
   - pyflakes=1.6.0
@@ -127,7 +142,7 @@ dependencies:
   - pyparsing=2.2.0
   - pyqtgraph=0.10.0
   - pysocks=1.6.8
-  - pytest=3.5.1
+  - pytest=3.6.0
   - pytest-timeout=1.2.1
   - python=3.6.5
   - python-dateutil=2.7.3
@@ -140,13 +155,13 @@ dependencies:
   - requests=2.18.4
   - scipy=1.1.0
   - send2trash=1.5.0
-  - setuptools=39.1.0
+  - setuptools=39.2.0
   - simplegeneric=0.8.1
   - simplejson=3.15.0
   - sip=4.18.1
   - six=1.11.0
   - snowballstemmer=1.2.1
-  - sphinx=1.7.4
+  - sphinx=1.7.5
   - sphinx_rtd_theme=0.3.1
   - sphinxcontrib=1.0
   - sphinxcontrib-websupport=1.0.1
@@ -156,15 +171,14 @@ dependencies:
   - tk=8.6.7
   - toolz=0.9.0
   - tornado=5.0.2
-  - tqdm=4.23.3
+  - tqdm=4.23.4
   - traitlets=4.3.2
-  - typing=3.6.4
   - urllib3=1.22
   - wcwidth=0.1.7
   - webencodings=0.5.1
   - wheel=0.31.1
   - widgetsnbextension=3.2.1
-  - xarray=0.10.4
+  - xarray=0.10.6
   - xz=5.2.4
   - yaml=0.1.7
   - zeromq=4.2.5
@@ -184,10 +198,10 @@ dependencies:
   - psdm_qs_cli=0.2.0
   - pswalker=1.0.0
   - pyca=3.0.4
-  - pydm=1.1.0
+  - pydm=1.2.0
   - pyepics=3.3.0
   - pyqt=5.6.0
   - transfocate=0.3.1
   - pip:
     - qdarkstyle==2.5.4
-prefix: /reg/neh/home/zlentz/conda/envs/pcds-1.1.0
+prefix: /reg/neh/home/zlentz/conda/envs/pcds-1.1.1
