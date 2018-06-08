@@ -2,9 +2,11 @@ python>=3.6.5
 bokeh
 coloredlogs
 cookiecutter
+coverage
 doctr
 elog
 flake8
+h5py
 happi
 holoviews
 hutch-python>=0.5.0
