@@ -32,6 +32,7 @@ pytest-timeout
 simplejson
 sphinx
 sphinx_rtd_theme
+tornado<5.0.0
 transfocate
 versioneer
 xarray
