@@ -36,5 +36,6 @@ sphinx
 sphinx_rtd_theme
 tornado<5.0.0
 transfocate
+typhon
 versioneer
 xarray
