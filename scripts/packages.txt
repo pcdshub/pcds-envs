@@ -30,6 +30,7 @@ pyepics
 pyfiglet
 pytest
 pytest-timeout
+qdarkstyle
 simplejson
 sphinx
 sphinx_rtd_theme
