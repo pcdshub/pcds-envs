@@ -1,4 +1,5 @@
 python>=3.6.5
+anaconda-client
 bokeh
 coloredlogs
 cookiecutter
@@ -29,9 +30,12 @@ pyepics
 pyfiglet
 pytest
 pytest-timeout
+qdarkstyle
 simplejson
 sphinx
 sphinx_rtd_theme
+tornado<5.0.0
 transfocate
+typhon
 versioneer
 xarray
