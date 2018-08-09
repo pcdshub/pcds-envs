@@ -1,4 +1,4 @@
-name: pcds-1.2.1
+name: pcds-1.2.2
 channels:
   - file:///reg/g/pcds/pyps/conda/channel
   - pcds-tag
@@ -53,13 +53,16 @@ dependencies:
   - cffi=1.11.5
   - chardet=3.0.4
   - click=6.7
+  - cloudpickle=0.5.3
   - clyent=1.2.2
   - coloredlogs=10.0
   - constantly=15.1.0
   - coverage=4.5.1
-  - cryptography=2.2.2
+  - cryptography=2.3
+  - cryptography-vectors=2.3
   - cycler=0.10.0
   - cytoolz=0.9.0.1
+  - dask-core=0.18.2
   - dbus=1.13.2
   - decorator=4.3.0
   - docopt=0.6.2
@@ -89,13 +92,14 @@ dependencies:
   - hyperlink=18.0.0
   - icu=58.2
   - idna=2.7
+  - imageio=2.3.0
   - imagesize=1.0.0
   - incremental=17.5.0
   - intel-openmp=2018.0.3
   - ipykernel=4.8.2
   - ipython=6.5.0
   - ipython_genutils=0.2.0
-  - ipywidgets=7.3.1
+  - ipywidgets=7.4.0
   - jasper=2.0.14
   - jedi=0.12.1
   - jinja2=2.10
@@ -131,21 +135,21 @@ dependencies:
   - mkl=2018.0.3
   - mkl_fft=1.0.4
   - mkl_random=1.0.1
-  - more-itertools=4.2.0
+  - more-itertools=4.3.0
   - mysql=5.5.24
   - nbconvert=5.3.1
   - nbformat=4.4.0
   - ncurses=6.1
   - networkx=2.1
   - notebook=5.6.0
-  - numexpr=2.6.5
+  - numexpr=2.6.6
   - numpy=1.14.5
   - numpy-base=1.14.5
   - olefile=0.45.1
   - opencv=3.4.1
   - openssl=1.0.2o
   - packaging=17.1
-  - pandas=0.23.3
+  - pandas=0.23.4
   - pandoc=2.2.1
   - pandocfilters=1.4.2
   - pango=1.42.2
@@ -157,7 +161,7 @@ dependencies:
   - pillow=5.2.0
   - pip=10.0.1
   - pixman=0.34.0
-  - pluggy=0.6.0
+  - pluggy=0.7.1
   - prometheus_client=0.3.1
   - prompt_toolkit=1.0.15
   - psutil=5.4.6
@@ -177,22 +181,24 @@ dependencies:
   - pyqtgraph=0.10.0
   - pysocks=1.6.8
   - pytables=3.4.4
-  - pytest=3.6.4
+  - pytest=3.7.1
   - pytest-timeout=1.3.0
   - python=3.6.6
   - python-dateutil=2.7.3
   - pytz=2018.5
   - pyviz_comms=0.1.1
+  - pywavelets=0.5.2
   - pyyaml=3.13
-  - pyzmq=17.0.0
+  - pyzmq=17.1.0
   - qt=5.6.3
   - qtconsole=4.3.1
   - readline=7.0
   - requests=2.19.1
+  - scikit-image=0.14.0
   - scipy=1.1.0
   - send2trash=1.5.0
   - service_identity=17.0.0
-  - setuptools=39.2.0
+  - setuptools=40.0.0
   - simplegeneric=0.8.1
   - simplejson=3.16.0
   - sip=4.18.1
@@ -211,14 +217,14 @@ dependencies:
   - tornado=4.5.3
   - tqdm=4.24.0
   - traitlets=4.3.2
-  - twisted=17.5.0
+  - twisted=18.7.0
   - tzlocal=1.5.1
   - ujson=1.35
   - urllib3=1.23
   - wcwidth=0.1.7
   - webencodings=0.5.1
   - wheel=0.31.1
-  - widgetsnbextension=3.3.1
+  - widgetsnbextension=3.4.0
   - xarray=0.10.8
   - xz=5.2.4
   - yaml=0.1.7
@@ -231,24 +237,25 @@ dependencies:
   - elog=0.1.2
   - epics-base=3.14.12.6
   - happi=1.1.1
-  - hutch-python=0.6.0
+  - hutch-python=0.7.0
   - hxrsnd=0.1.2
   - krtc=0.1.0
   - lightpath=0.4.0
   - mysqlclient=1.3.12
   - pcaspy=0.7.1
-  - pcdsdaq=2.0.0
+  - pcdsdaq=2.1.0
   - pcdsdevices=0.8.0
   - pmgr=1.1.0
-  - psdm_qs_cli=0.2.0
+  - psdm_qs_cli=0.2.1
   - pswalker=1.0.1
   - pyca=3.0.4
-  - pydm=1.3.0
+  - pydm=1.4.0
   - pyepics=3.3.0
   - pyqt=5.6.0
   - qdarkstyle=2.5.4
   - transfocate=0.3.2
   - typhon=0.2.0
   - pip:
+    - dask==0.18.2
     - tables==3.4.4
-prefix: /reg/neh/home/zlentz/conda/envs/pcds-1.2.1
+prefix: /reg/neh/home/zlentz/conda/envs/pcds-1.2.2
