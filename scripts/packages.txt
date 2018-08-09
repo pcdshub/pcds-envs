@@ -37,6 +37,8 @@ pytables
 pytest
 pytest-timeout
 qdarkstyle
+scikit-image
+scipy
 simplejson
 sphinx
 sphinx_rtd_theme
