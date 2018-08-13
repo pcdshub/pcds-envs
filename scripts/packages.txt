@@ -6,10 +6,10 @@ coloredlogs
 cookiecutter
 coverage
 databroker
+datashader
 doctr
 elog
 flake8
-graphviz
 h5py
 happi
 holoviews
@@ -36,6 +36,7 @@ pyfiglet
 pytables
 pytest
 pytest-timeout
+python-graphviz
 qdarkstyle
 scikit-image
 scipy
