@@ -1,4 +1,4 @@
-name: pcds-1.2.3
+name: pcds-1.2.4
 channels:
   - file:///reg/g/pcds/pyps/conda/channel
   - pcds-tag
@@ -49,12 +49,13 @@ dependencies:
   - bzip2=1.0.6
   - ca-certificates=2018.03.07
   - cairo=1.14.12
-  - certifi=2018.4.16
+  - certifi=2018.8.13
   - cffi=1.11.5
   - chardet=3.0.4
   - click=6.7
   - cloudpickle=0.5.3
   - clyent=1.2.2
+  - colorcet=1.0.0
   - coloredlogs=10.0
   - constantly=15.1.0
   - coverage=4.5.1
@@ -62,9 +63,13 @@ dependencies:
   - cryptography-vectors=2.3
   - cycler=0.10.0
   - cytoolz=0.9.0.1
+  - dask=0.18.2
   - dask-core=0.18.2
+  - datashader=0.6.6
+  - datashape=0.5.4
   - dbus=1.13.2
   - decorator=4.3.0
+  - distributed=1.22.1
   - docopt=0.6.2
   - docutils=0.14
   - entrypoints=0.2.3
@@ -85,6 +90,7 @@ dependencies:
   - h5py=2.8.0
   - harfbuzz=1.8.4
   - hdf5=1.10.2
+  - heapdict=1.0.0
   - holoviews=1.10.7
   - html5lib=1.0.1
   - humanfriendly=4.12.1
@@ -127,6 +133,8 @@ dependencies:
   - libvpx=1.7.0
   - libxcb=1.13
   - libxml2=2.9.8
+  - llvmlite=0.24.0
+  - locket=0.2.0
   - lzo=2.10
   - markupsafe=1.0
   - matplotlib=2.2.2
@@ -136,13 +144,16 @@ dependencies:
   - mkl_fft=1.0.4
   - mkl_random=1.0.1
   - more-itertools=4.3.0
+  - msgpack-python=0.5.6
+  - multipledispatch=0.5.0
   - mysql=5.5.24
   - nbconvert=5.3.1
   - nbformat=4.4.0
   - ncurses=6.1
   - networkx=2.1
   - notebook=5.6.0
-  - numexpr=2.6.6
+  - numba=0.39.0
+  - numexpr=2.6.7
   - numpy=1.14.5
   - numpy-base=1.14.5
   - olefile=0.45.1
@@ -155,6 +166,7 @@ dependencies:
   - pango=1.42.2
   - param=1.7.0
   - parso=0.3.1
+  - partd=0.3.8
   - pcre=8.42
   - pexpect=4.6.0
   - pickleshare=0.7.4
@@ -172,6 +184,7 @@ dependencies:
   - pyasn1-modules=0.2.2
   - pycodestyle=2.3.1
   - pycparser=2.18
+  - pyct=0.4.3
   - pyflakes=1.6.0
   - pygments=2.2.0
   - pykerberos=1.1.14
@@ -206,11 +219,13 @@ dependencies:
   - six=1.11.0
   - snappy=1.1.7
   - snowballstemmer=1.2.1
+  - sortedcontainers=2.0.4
   - sphinx=1.7.6
   - sphinx_rtd_theme=0.4.1
   - sphinxcontrib=1.0
   - sphinxcontrib-websupport=1.1.0
   - sqlite=3.24.0
+  - tblib=1.3.2
   - terminado=0.8.1
   - testpath=0.3.1
   - tk=8.6.7
@@ -230,6 +245,7 @@ dependencies:
   - xz=5.2.4
   - yaml=0.1.7
   - zeromq=4.2.5
+  - zict=0.1.3
   - zlib=1.2.11
   - zope=1.0
   - zope.interface=4.5.0
@@ -247,7 +263,7 @@ dependencies:
   - pcdsdaq=2.1.0
   - pcdsdevices=0.8.0
   - pmgr=1.1.0
-  - psdm_qs_cli=0.2.2
+  - psdm_qs_cli=0.2.3
   - pswalker=1.0.1
   - pyca=3.0.4
   - pydm=1.4.0
@@ -257,6 +273,6 @@ dependencies:
   - transfocate=0.3.2
   - typhon=0.2.0
   - pip:
-    - dask==0.18.2
+    - msgpack==0.5.6
     - tables==3.4.4
-prefix: /reg/neh/home/zlentz/conda/envs/pcds-1.2.3
+prefix: /reg/neh/home/zlentz/conda/envs/pcds-1.2.4
