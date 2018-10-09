@@ -22,6 +22,7 @@ mysqlclient
 numpy>=1.14
 opencv
 pandas
+papermill
 pcaspy
 pcdsdaq
 pcdsdevices
@@ -40,6 +41,7 @@ python-graphviz
 qdarkstyle
 scikit-image
 scipy
+seaborn
 simplejson
 sphinx
 sphinx_rtd_theme
