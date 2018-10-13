@@ -28,6 +28,7 @@ dependencies:
   - poyo=0.4.2
   - prettytable=0.7.2
   - pyfiglet=0.7.5
+  - pytest-qt=3.2.1
   - slicerator=0.9.8
   - super_state_machine=2.0.2
   - textwrap3=0.9.1
