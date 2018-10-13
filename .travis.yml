@@ -1,12 +1,17 @@
 language: python
 sudo: required
 
+env:
+
 matrix:
   include:
     - env:
       - VARIANT=yaml
     - env:
       - VARIANT=tag
+    - env:
+      - VARIANT=dev
+  allow_failures:
     - env:
       - VARIANT=dev
 
