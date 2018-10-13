@@ -204,6 +204,7 @@ dependencies:
   - pyyaml=3.13
   - pyzmq=17.1.2
   - qt=5.6.3
+  - qtawesome=0.5.1
   - qtconsole=4.3.1
   - qtpy=1.5.1
   - readline=7.0
@@ -255,7 +256,7 @@ dependencies:
   - hutch-python=1.0.0
   - hxrsnd=0.1.2
   - krtc=0.1.0
-  - lightpath=0.4.0
+  - lightpath=0.5.0rc1
   - mysqlclient=1.3.12
   - pcaspy=0.7.1
   - pcdsdaq=2.2.0
