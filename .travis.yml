@@ -24,10 +24,8 @@ install:
   - conda info -a
   - |
     if [ "$VARIANT" = "yaml" ]; then
-      # Mutate the env to skip file channels and daq packages
-      egrep -v "file:|pydaq" pcds.yaml > test.yaml
       # Create the environment from yaml
-      conda env create -q -n test-environment -f test.yaml
+      conda env create -q -n test-environment -f pcds.yaml
     else
       # Use our condarc
       cp condarc ~/.condarc
