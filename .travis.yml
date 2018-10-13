@@ -1,8 +1,6 @@
 language: python
 sudo: required
 
-env:
-
 matrix:
   include:
     - env:
