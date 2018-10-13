@@ -9,13 +9,4 @@ fi
 set -e
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 conda create -y --name $ENVNAME --file packages.txt
-
-conda activate $ENVNAME
-
-# Special DAQ installs that rely on our filesystem
-FILE_CHANNEL="/reg/g/pcds/pyps/conda/channel"
-if [ -d "$FILE_CHANNEL" ]; then
-  conda install pydaq=current -y -c "file://$FILE_CHANNEL"
-fi
-
 conda deactivate
