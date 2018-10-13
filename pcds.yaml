@@ -1,6 +1,5 @@
-name: pcds-1.2.6
+name: pcds-2.0.0
 channels:
-  - file:///reg/g/pcds/pyps/conda/channel
   - pcds-tag
   - defaults
   - conda-forge
@@ -10,6 +9,7 @@ dependencies:
   - binaryornot=0.4.4
   - bluesky=1.4.0
   - boltons=18.0.1
+  - cf_units=2.0.1
   - cookiecutter=1.6.0
   - curio=0.9
   - databroker=0.11.3
@@ -32,9 +32,10 @@ dependencies:
   - super_state_machine=2.0.2
   - textwrap3=0.9.1
   - tifffile=0.15.1
+  - udunits2=2.2.27.6
   - uncertainties=3.0.2
   - versioneer=0.18
-  - whichcraft=0.4.1
+  - whichcraft=0.5.2
   - alabaster=0.7.12
   - anaconda-client=1.7.2
   - arrow=0.12.1
@@ -54,6 +55,7 @@ dependencies:
   - cairo=1.14.12
   - certifi=2018.8.24
   - cffi=1.11.5
+  - cftime=1.0.0b1
   - chardet=3.0.4
   - click=7.0
   - cloudpickle=0.5.6
@@ -246,30 +248,30 @@ dependencies:
   - zeromq=4.2.5
   - zict=0.1.3
   - zlib=1.2.11
-  - pydaq=current
   - caproto=0.1.1
   - elog=0.1.2
   - epics-base=3.14.12.6
   - happi=1.1.2
-  - hutch-python=0.7.0
+  - hutch-python=1.0.0
   - hxrsnd=0.1.2
   - krtc=0.1.0
   - lightpath=0.4.0
   - mysqlclient=1.3.12
   - pcaspy=0.7.1
-  - pcdsdaq=2.1.0
-  - pcdsdevices=0.8.0
+  - pcdsdaq=2.2.0
+  - pcdsdevices=1.0.0
   - pmgr=1.1.0
   - psdm_qs_cli=0.2.6
   - pswalker=1.0.1
   - pyca=3.0.4
-  - pydm=1.4.2
+  - pydm=1.5.0
   - pyepics=3.3.0
   - pyqt=5.6.0
   - qdarkstyle=2.5.4
+  - timechart=1.0.0
   - transfocate=0.3.2
   - typhon=0.2.1
   - pip:
     - msgpack==0.5.6
     - tables==3.4.4
-prefix: /reg/neh/home/zlentz/conda/envs/pcds-1.2.6
+prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.0
