@@ -45,6 +45,7 @@ seaborn
 simplejson
 sphinx
 sphinx_rtd_theme
+timechart
 tornado<5.0.0
 transfocate
 typhon
