@@ -59,7 +59,7 @@ install:
   - conda activate test-environment
   # Check out the tests for all of our packages
   - |
-    if [ "$VARIANT" = dev ]; then
+    if [ "$VARIANT" = "dev" ]; then
       python test_setup.py
     else
       python test_setup.py --tag
