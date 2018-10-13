@@ -36,6 +36,7 @@ pyepics
 pyfiglet
 pytables
 pytest
+pytest-qt
 pytest-timeout
 python-graphviz
 qdarkstyle
