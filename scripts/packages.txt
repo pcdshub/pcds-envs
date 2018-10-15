@@ -1,4 +1,3 @@
-python>=3.6.5
 anaconda-client
 bokeh
 caproto
@@ -36,6 +35,7 @@ pyepics
 pyfiglet
 pytables
 pytest
+pytest-qt
 pytest-timeout
 python-graphviz
 qdarkstyle
@@ -45,6 +45,7 @@ seaborn
 simplejson
 sphinx
 sphinx_rtd_theme
+timechart
 tornado<5.0.0
 transfocate
 typhon

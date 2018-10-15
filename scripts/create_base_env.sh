@@ -1,21 +1,17 @@
 #!/bin/bash
 # Creates a "latest" environment from key packages
 if [ -z $1 ]; then
-  echo "Usage: create_base_env.sh [envname]"
+  echo "Usage: create_base_env.sh [envname] [python_ver]"
   exit
 else
   ENVNAME="${1}"
 fi
+if [ -z $2 ]; then
+  PY_VER="3.6"
+else
+  PY_VER="${2}"
+fi
 set -e
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
-conda create -y --name $ENVNAME --file packages.txt
-
-conda activate $ENVNAME
-
-# Special DAQ installs that rely on our filesystem
-FILE_CHANNEL="/reg/g/pcds/pyps/conda/channel"
-if [ -d "$FILE_CHANNEL" ]; then
-  conda install pydaq=current -y -c "file://$FILE_CHANNEL"
-fi
-
+conda create -y --name $ENVNAME python=$PY_VER --file packages.txt
 conda deactivate

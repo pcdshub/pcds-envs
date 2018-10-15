@@ -9,6 +9,21 @@ matrix:
       - VARIANT=tag
     - env:
       - VARIANT=dev
+    - env:
+      - VARIANT=tag
+      - PY_VER=3.7
+    - env:
+      - VARIANT=dev
+      - PY_VER=3.7
+  allow_failures:
+    - env:
+      - VARIANT=dev
+    - env:
+      - VARIANT=tag
+      - PY_VER=3.7
+    - env:
+      - VARIANT=dev
+      - PY_VER=3.7
 
 install:
   - sudo apt-get update
@@ -24,10 +39,8 @@ install:
   - conda info -a
   - |
     if [ "$VARIANT" = "yaml" ]; then
-      # Mutate the env to skip file channels and daq packages
-      egrep -v "file:|pydaq" pcds.yaml > test.yaml
       # Create the environment from yaml
-      conda env create -q -n test-environment -f test.yaml
+      conda env create -q -n test-environment -f pcds.yaml
     else
       # Use our condarc
       cp condarc ~/.condarc
@@ -36,13 +49,17 @@ install:
         conda config --add channels pcds-dev
       fi
       pushd scripts
-      ./create_base_env.sh test-environment
+      if [ -z "$PY_VER" ]; then
+        ./create_base_env.sh test-environment
+      else
+        ./create_base_env.sh test-environment "$PY_VER"
+      fi
       popd
     fi
   - conda activate test-environment
   # Check out the tests for all of our packages
   - |
-    if [ "$VARIANT" = dev ]; then
+    if [ "$VARIANT" = "dev" ]; then
       python test_setup.py
     else
       python test_setup.py --tag
