@@ -1,4 +1,4 @@
-name: pcds-2.0.0
+name: pcds-2.0.1
 channels:
   - pcds-tag
   - defaults
@@ -46,20 +46,20 @@ dependencies:
   - babel=2.6.0
   - backcall=0.1.0
   - blas=1.0
-  - bleach=3.0.0
+  - bleach=3.0.2
   - blosc=1.14.4
   - bokeh=0.13.0
-  - boto3=1.9.13
-  - botocore=1.12.14
+  - boto3=1.9.21
+  - botocore=1.12.23
   - bzip2=1.0.6
   - ca-certificates=2018.03.07
   - cairo=1.14.12
-  - certifi=2018.8.24
+  - certifi=2018.10.15
   - cffi=1.11.5
   - cftime=1.0.0b1
   - chardet=3.0.4
   - click=7.0
-  - cloudpickle=0.5.6
+  - cloudpickle=0.6.1
   - clyent=1.2.2
   - colorcet=1.0.0
   - coloredlogs=10.0
@@ -67,8 +67,8 @@ dependencies:
   - cryptography=2.3.1
   - cycler=0.10.0
   - cytoolz=0.9.0.1
-  - dask=0.19.3
-  - dask-core=0.19.3
+  - dask=0.19.4
+  - dask-core=0.19.4
   - datashader=0.6.6
   - datashape=0.5.4
   - dbus=1.13.2
@@ -103,7 +103,7 @@ dependencies:
   - imageio=2.4.1
   - imagesize=1.1.0
   - intel-openmp=2019.0
-  - ipykernel=5.0.0
+  - ipykernel=5.1.0
   - ipython=7.0.1
   - ipython_genutils=0.2.0
   - ipywidgets=7.4.2
@@ -126,7 +126,7 @@ dependencies:
   - libglu=9.0.0
   - libopencv=3.4.2
   - libopus=1.2.1
-  - libpng=1.6.34
+  - libpng=1.6.35
   - libsodium=1.0.16
   - libstdcxx-ng=8.2.0
   - libtiff=4.0.9
@@ -140,7 +140,7 @@ dependencies:
   - markupsafe=1.0
   - matplotlib=2.2.2
   - mccabe=0.6.1
-  - mistune=0.8.3
+  - mistune=0.8.4
   - mkl=2019.0
   - mkl_fft=1.0.6
   - mkl_random=1.0.1
@@ -165,9 +165,9 @@ dependencies:
   - pandoc=2.2.3.2
   - pandocfilters=1.4.2
   - pango=1.42.4
-  - param=1.7.0
+  - param=1.8.1
   - parso=0.3.1
-  - partd=0.3.8
+  - partd=0.3.9
   - patsy=0.5.0
   - pcre=8.42
   - pexpect=4.6.0
@@ -176,11 +176,11 @@ dependencies:
   - pip=10.0.1
   - pixman=0.34.0
   - pluggy=0.7.1
-  - prometheus_client=0.4.0
-  - prompt_toolkit=2.0.5
+  - prometheus_client=0.4.2
+  - prompt_toolkit=2.0.6
   - psutil=5.4.7
   - ptyprocess=0.6.0
-  - py=1.6.0
+  - py=1.7.0
   - py-opencv=3.4.2
   - pycodestyle=2.3.1
   - pycparser=2.19
@@ -188,7 +188,7 @@ dependencies:
   - pyflakes=1.6.0
   - pygments=2.2.0
   - pykerberos=1.1.14
-  - pymongo=3.7.1
+  - pymongo=3.7.2
   - pyopenssl=18.0.0
   - pyparsing=2.2.2
   - pyqtgraph=0.10.0
@@ -206,7 +206,7 @@ dependencies:
   - pyzmq=17.1.2
   - qt=5.6.3
   - qtawesome=0.5.1
-  - qtconsole=4.3.1
+  - qtconsole=4.4.2
   - qtpy=1.5.1
   - readline=7.0
   - requests=2.19.1
@@ -224,7 +224,7 @@ dependencies:
   - snowballstemmer=1.2.1
   - sortedcontainers=2.0.5
   - sphinx=1.8.1
-  - sphinx_rtd_theme=0.4.1
+  - sphinx_rtd_theme=0.4.2
   - sphinxcontrib=1.0
   - sphinxcontrib-websupport=1.1.0
   - sqlite=3.25.2
@@ -270,10 +270,10 @@ dependencies:
   - pyepics=3.3.0
   - pyqt=5.6.0
   - qdarkstyle=2.5.4
-  - timechart=1.0.0
+  - timechart=1.1.0
   - transfocate=0.3.2
   - typhon=0.2.1
   - pip:
     - msgpack==0.5.6
     - tables==3.4.4
-prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.0
+prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.1
