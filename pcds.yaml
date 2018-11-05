@@ -1,4 +1,4 @@
-name: pcds-2.0.1
+name: pcds-2.0.2
 channels:
   - pcds-tag
   - defaults
@@ -7,7 +7,7 @@ dependencies:
   - ansiwrap=0.8.3
   - asteval=0.9.13
   - binaryornot=0.4.4
-  - bluesky=1.4.0
+  - bluesky=1.4.1
   - boltons=18.0.1
   - cf_units=2.0.1
   - cookiecutter=1.6.0
@@ -34,7 +34,7 @@ dependencies:
   - textwrap3=0.9.1
   - tifffile=0.15.1
   - udunits2=2.2.27.6
-  - uncertainties=3.0.2
+  - uncertainties=3.0.3
   - versioneer=0.18
   - whichcraft=0.5.2
   - alabaster=0.7.12
@@ -49,14 +49,14 @@ dependencies:
   - bleach=3.0.2
   - blosc=1.14.4
   - bokeh=0.13.0
-  - boto3=1.9.21
-  - botocore=1.12.23
+  - boto3=1.9.35
+  - botocore=1.12.35
   - bzip2=1.0.6
   - ca-certificates=2018.03.07
   - cairo=1.14.12
   - certifi=2018.10.15
   - cffi=1.11.5
-  - cftime=1.0.0b1
+  - cftime=1.0.2.1
   - chardet=3.0.4
   - click=7.0
   - cloudpickle=0.6.1
@@ -67,24 +67,24 @@ dependencies:
   - cryptography=2.3.1
   - cycler=0.10.0
   - cytoolz=0.9.0.1
-  - dask=0.19.4
-  - dask-core=0.19.4
+  - dask=0.20.0
+  - dask-core=0.20.0
   - datashader=0.6.6
   - datashape=0.5.4
   - dbus=1.13.2
   - decorator=4.3.0
-  - distributed=1.23.3
+  - distributed=1.24.0
   - docopt=0.6.2
   - docutils=0.14
   - entrypoints=0.2.3
   - expat=2.2.6
   - ffmpeg=4.0
-  - flake8=3.5.0
+  - flake8=3.6.0
   - fontconfig=2.13.0
   - freeglut=3.0.0
   - freetype=2.9.1
   - fribidi=1.0.5
-  - future=0.16.0
+  - future=0.17.1
   - glib=2.56.2
   - gmp=6.1.2
   - graphite2=1.3.12
@@ -96,7 +96,7 @@ dependencies:
   - hdf5=1.10.2
   - heapdict=1.0.0
   - holoviews=1.10.7
-  - humanfriendly=4.16.1
+  - humanfriendly=4.17
   - humanize=0.5.1
   - icu=58.2
   - idna=2.7
@@ -104,7 +104,7 @@ dependencies:
   - imagesize=1.1.0
   - intel-openmp=2019.0
   - ipykernel=5.1.0
-  - ipython=7.0.1
+  - ipython=7.1.1
   - ipython_genutils=0.2.0
   - ipywidgets=7.4.2
   - jasper=2.0.14
@@ -125,7 +125,7 @@ dependencies:
   - libgfortran-ng=7.3.0
   - libglu=9.0.0
   - libopencv=3.4.2
-  - libopus=1.2.1
+  - libopus=1.3
   - libpng=1.6.35
   - libsodium=1.0.16
   - libstdcxx-ng=8.2.0
@@ -134,8 +134,10 @@ dependencies:
   - libvpx=1.7.0
   - libxcb=1.13
   - libxml2=2.9.8
+  - libxslt=1.1.32
   - llvmlite=0.25.0
   - locket=0.2.0
+  - lxml=4.2.5
   - lzo=2.10
   - markupsafe=1.0
   - matplotlib=2.2.2
@@ -168,24 +170,24 @@ dependencies:
   - param=1.8.1
   - parso=0.3.1
   - partd=0.3.9
-  - patsy=0.5.0
+  - patsy=0.5.1
   - pcre=8.42
   - pexpect=4.6.0
   - pickleshare=0.7.5
   - pillow=5.3.0
-  - pip=10.0.1
+  - pip=18.1
   - pixman=0.34.0
-  - pluggy=0.7.1
+  - pluggy=0.8.0
   - prometheus_client=0.4.2
-  - prompt_toolkit=2.0.6
-  - psutil=5.4.7
+  - prompt_toolkit=2.0.7
+  - psutil=5.4.8
   - ptyprocess=0.6.0
   - py=1.7.0
   - py-opencv=3.4.2
-  - pycodestyle=2.3.1
+  - pycodestyle=2.4.0
   - pycparser=2.19
   - pyct=0.4.5
-  - pyflakes=1.6.0
+  - pyflakes=2.0.0
   - pygments=2.2.0
   - pykerberos=1.1.14
   - pymongo=3.7.2
@@ -194,20 +196,20 @@ dependencies:
   - pyqtgraph=0.10.0
   - pysocks=1.6.8
   - pytables=3.4.4
-  - pytest=3.8.2
+  - pytest=3.9.3
   - pytest-timeout=1.3.2
   - python=3.6.6
-  - python-dateutil=2.7.3
+  - python-dateutil=2.7.5
   - python-graphviz=0.8.4
-  - pytz=2018.5
+  - pytz=2018.7
   - pyviz_comms=0.6.0
   - pywavelets=1.0.1
   - pyyaml=3.13
   - pyzmq=17.1.2
   - qt=5.6.3
-  - qtawesome=0.5.1
+  - qtawesome=0.5.2
   - qtconsole=4.4.2
-  - qtpy=1.5.1
+  - qtpy=1.5.2
   - readline=7.0
   - requests=2.19.1
   - s3transfer=0.1.13
@@ -215,8 +217,7 @@ dependencies:
   - scipy=1.1.0
   - seaborn=0.9.0
   - send2trash=1.5.0
-  - setuptools=40.4.3
-  - simplegeneric=0.8.1
+  - setuptools=40.5.0
   - simplejson=3.16.0
   - sip=4.18.1
   - six=1.11.0
@@ -235,14 +236,14 @@ dependencies:
   - tk=8.6.8
   - toolz=0.9.0
   - tornado=4.5.3
-  - tqdm=4.26.0
+  - tqdm=4.28.1
   - traitlets=4.3.2
   - tzlocal=1.5.1
   - ujson=1.35
   - urllib3=1.23
   - wcwidth=0.1.7
   - webencodings=0.5.1
-  - wheel=0.32.1
+  - wheel=0.32.2
   - widgetsnbextension=3.4.2
   - xarray=0.10.9
   - xz=5.2.4
@@ -250,7 +251,7 @@ dependencies:
   - zeromq=4.2.5
   - zict=0.1.3
   - zlib=1.2.11
-  - caproto=0.1.1
+  - caproto=0.2.0
   - elog=0.1.2
   - epics-base=3.14.12.6
   - happi=1.1.2
@@ -261,9 +262,9 @@ dependencies:
   - mysqlclient=1.3.12
   - pcaspy=0.7.1
   - pcdsdaq=2.2.0
-  - pcdsdevices=1.0.0
+  - pcdsdevices=1.1.0
   - pmgr=1.1.0
-  - psdm_qs_cli=0.2.6
+  - psdm_qs_cli=0.2.7
   - pswalker=1.0.1
   - pyca=3.0.4
   - pydm=1.5.0
@@ -276,4 +277,4 @@ dependencies:
   - pip:
     - msgpack==0.5.6
     - tables==3.4.4
-prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.1
+prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.2
