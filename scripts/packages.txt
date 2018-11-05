@@ -17,6 +17,7 @@ hxrsnd
 ipython>=7.1
 jupyter
 lightpath
+lxml
 mysqlclient
 numpy>=1.14
 opencv
