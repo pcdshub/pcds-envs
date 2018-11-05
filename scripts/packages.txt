@@ -14,7 +14,7 @@ happi
 holoviews
 hutch-python>=0.5.0
 hxrsnd
-ipython>=6.3
+ipython>=7.1
 jupyter
 lightpath
 mysqlclient
