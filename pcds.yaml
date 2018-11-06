@@ -1,4 +1,4 @@
-name: pcds-2.0.2
+name: pcds-2.0.3
 channels:
   - pcds-tag
   - defaults
@@ -17,6 +17,7 @@ dependencies:
   - doctr=1.7.4
   - event-model=1.5.0
   - historydict=1.2.3
+  - holoviews=1.10.9
   - jinja2-time=0.2.0
   - lmfit=0.9.11
   - mongoquery=1.1.0
@@ -95,7 +96,6 @@ dependencies:
   - harfbuzz=1.8.8
   - hdf5=1.10.2
   - heapdict=1.0.0
-  - holoviews=1.10.4
   - humanfriendly=4.17
   - humanize=0.5.1
   - icu=58.2
@@ -202,6 +202,7 @@ dependencies:
   - python-dateutil=2.7.5
   - python-graphviz=0.8.4
   - pytz=2018.7
+  - pyviz_comms=0.6.0
   - pywavelets=1.0.1
   - pyyaml=3.13
   - pyzmq=17.1.2
@@ -276,4 +277,4 @@ dependencies:
   - pip:
     - msgpack==0.5.6
     - tables==3.4.4
-prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.2
+prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.3
