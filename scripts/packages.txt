@@ -1,5 +1,5 @@
 anaconda-client
-bokeh
+bokeh>=1.0.1
 caproto
 coloredlogs
 cookiecutter
