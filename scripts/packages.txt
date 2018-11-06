@@ -1,5 +1,5 @@
 anaconda-client
-bokeh
+bokeh>=1.0.1
 caproto
 coloredlogs
 cookiecutter
@@ -14,9 +14,10 @@ happi
 holoviews
 hutch-python>=0.5.0
 hxrsnd
-ipython>=6.3
+ipython>=7.1
 jupyter
 lightpath
+lxml
 mysqlclient
 numpy>=1.14
 opencv
