@@ -36,7 +36,7 @@ pydm
 pyepics
 pyfiglet
 pytables
-pytest
+pytest<4
 pytest-qt
 pytest-timeout
 python-graphviz
