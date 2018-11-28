@@ -1,4 +1,4 @@
-name: pcds-2.0.3
+name: pcds-2.0.4
 channels:
   - pcds-tag
   - defaults
@@ -64,17 +64,17 @@ dependencies:
   - clyent=1.2.2
   - colorcet=1.0.0
   - coloredlogs=10.0
-  - coverage=4.5.1
+  - coverage=4.5.2
   - cryptography=2.3.1
   - cycler=0.10.0
   - cytoolz=0.9.0.1
-  - dask=0.20.0
-  - dask-core=0.20.0
+  - dask=0.20.2
+  - dask-core=0.20.2
   - datashader=0.6.6
   - datashape=0.5.4
   - dbus=1.13.2
   - decorator=4.3.0
-  - distributed=1.24.0
+  - distributed=1.24.2
   - docopt=0.6.2
   - docutils=0.14
   - entrypoints=0.2.3
@@ -102,7 +102,7 @@ dependencies:
   - idna=2.7
   - imageio=2.4.1
   - imagesize=1.1.0
-  - intel-openmp=2019.0
+  - intel-openmp=2019.1
   - ipykernel=5.1.0
   - ipython=7.1.1
   - ipython_genutils=0.2.0
@@ -139,11 +139,11 @@ dependencies:
   - locket=0.2.0
   - lxml=4.2.5
   - lzo=2.10
-  - markupsafe=1.0
+  - markupsafe=1.1.0
   - matplotlib=2.2.2
   - mccabe=0.6.1
   - mistune=0.8.4
-  - mkl=2019.0
+  - mkl=2018.0.3
   - mkl_fft=1.0.6
   - mkl_random=1.0.1
   - more-itertools=4.3.0
@@ -154,7 +154,7 @@ dependencies:
   - nbformat=4.4.0
   - ncurses=6.1
   - networkx=2.2
-  - notebook=5.7.0
+  - notebook=5.7.2
   - numba=0.40.0
   - numexpr=2.6.8
   - numpy=1.14.6
@@ -178,12 +178,14 @@ dependencies:
   - pip=18.1
   - pixman=0.34.0
   - pluggy=0.8.0
+  - portaudio=19.6.0
   - prometheus_client=0.4.2
   - prompt_toolkit=2.0.7
   - psutil=5.4.8
   - ptyprocess=0.6.0
   - py=1.7.0
   - py-opencv=3.4.2
+  - pyaudio=0.2.11
   - pycodestyle=2.4.0
   - pycparser=2.19
   - pyct=0.4.5
@@ -196,8 +198,8 @@ dependencies:
   - pyqtgraph=0.10.0
   - pysocks=1.6.8
   - pytables=3.4.4
-  - pytest=3.10.0
-  - pytest-timeout=1.3.2
+  - pytest=4.0.0
+  - pytest-timeout=1.3.3
   - python=3.6.6
   - python-dateutil=2.7.5
   - python-graphviz=0.8.4
@@ -207,28 +209,28 @@ dependencies:
   - pyyaml=3.13
   - pyzmq=17.1.2
   - qt=5.6.3
-  - qtawesome=0.5.2
+  - qtawesome=0.5.3
   - qtconsole=4.4.2
   - qtpy=1.5.2
   - readline=7.0
-  - requests=2.19.1
+  - requests=2.20.1
   - s3transfer=0.1.13
   - scikit-image=0.14.0
   - scipy=1.1.0
   - seaborn=0.9.0
   - send2trash=1.5.0
-  - setuptools=40.5.0
+  - setuptools=40.6.2
   - simplejson=3.16.0
   - sip=4.18.1
   - six=1.11.0
   - snappy=1.1.7
   - snowballstemmer=1.2.1
   - sortedcontainers=2.0.5
-  - sphinx=1.8.1
+  - sphinx=1.8.2
   - sphinx_rtd_theme=0.4.2
   - sphinxcontrib=1.0
   - sphinxcontrib-websupport=1.1.0
-  - sqlite=3.25.2
+  - sqlite=3.25.3
   - statsmodels=0.9.0
   - tblib=1.3.2
   - terminado=0.8.1
@@ -243,9 +245,9 @@ dependencies:
   - urllib3=1.23
   - wcwidth=0.1.7
   - webencodings=0.5.1
-  - wheel=0.32.2
+  - wheel=0.32.3
   - widgetsnbextension=3.4.2
-  - xarray=0.10.9
+  - xarray=0.11.0
   - xz=5.2.4
   - yaml=0.1.7
   - zeromq=4.2.5
@@ -267,7 +269,7 @@ dependencies:
   - psdm_qs_cli=0.2.7
   - pswalker=1.0.1
   - pyca=3.0.4
-  - pydm=1.5.0
+  - pydm=1.6.1
   - pyepics=3.3.0
   - pyqt=5.6.0
   - qdarkstyle=2.5.4
@@ -277,4 +279,4 @@ dependencies:
   - pip:
     - msgpack==0.5.6
     - tables==3.4.4
-prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.3
+prefix: /reg/neh/home/zlentz/conda/envs/pcds-2.0.4
