@@ -32,7 +32,7 @@ psdm_qs_cli
 pswalker
 pyaudio
 pyca
-pydm
+pydm<1.6
 pyepics
 pyfiglet
 pytables
