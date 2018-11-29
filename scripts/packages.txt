@@ -30,12 +30,13 @@ periodictable
 pmgr
 psdm_qs_cli
 pswalker
+pyaudio
 pyca
-pydm
+pydm<1.6
 pyepics
 pyfiglet
 pytables
-pytest
+pytest<4
 pytest-qt
 pytest-timeout
 python-graphviz
