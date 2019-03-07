@@ -35,6 +35,9 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda install conda-build anaconda-client
   - conda update -q conda conda-build
+  # Reboot conda after updating conda to avoid subtle path bugs
+  - conda deactivate
+  - conda activate
   # Useful for debugging any issues with conda
   - conda info -a
   - |
