@@ -83,7 +83,7 @@ dependencies:
   - humanfriendly=4.17
   - humanize=0.5.1
   - hutch-python=1.0.0
-  - hxrsnd=0.1.2
+  - hxrsnd=0.1.0
   - icu=58.2
   - idna=2.8
   - imageio=2.5.0
@@ -152,7 +152,7 @@ dependencies:
   - olefile=0.46
   - opencv=3.4.2
   - openssl=1.1.1b
-  - ophyd=1.2.0
+  - ophyd=1.3.1
   - packaging=19.0
   - pandas=0.24.1
   - pandoc=2.2.3.2
