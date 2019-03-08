@@ -32,7 +32,7 @@ psdm_qs_cli
 pswalker
 pyaudio
 pyca
-pydm<1.6
+pydm
 pyepics
 pyfiglet
 pytables
@@ -50,6 +50,6 @@ sphinx_rtd_theme
 timechart
 tornado<5.0.0
 transfocate
-typhon>=0.3.0
+typhon
 versioneer
 xarray
