@@ -50,6 +50,6 @@ sphinx_rtd_theme
 timechart
 tornado<5.0.0
 transfocate
-typhon
+typhon>=0.3.0
 versioneer
 xarray
