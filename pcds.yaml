@@ -82,7 +82,7 @@ dependencies:
   - holoviews=1.11.2
   - humanfriendly=4.17
   - humanize=0.5.1
-  - hutch-python=1.0.0
+  - hutch-python=1.0.1
   - hxrsnd=0.1.3
   - icu=58.2
   - idna=2.8
