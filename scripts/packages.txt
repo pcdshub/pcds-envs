@@ -27,6 +27,7 @@ papermill
 pcaspy
 pcdsdaq
 pcdsdevices
+pcdswidgets
 periodictable
 pmgr
 psdm_qs_cli
