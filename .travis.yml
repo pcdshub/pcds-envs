@@ -36,6 +36,8 @@ install:
   - source "$HOME/miniconda/etc/profile.d/conda.sh"
   - conda activate
   - hash -r
+  # Use our condarc
+  - cp condarc ~/.condarc
   - conda config --set always_yes yes --set changeps1 no
   - conda install conda-build anaconda-client
   - conda update -q conda conda-build
@@ -49,8 +51,6 @@ install:
       # Create the environment from yaml
       conda env create -q -n test-environment -f pcds.yaml
     else
-      # Use our condarc
-      cp condarc ~/.condarc
       if [ "$VARIANT" = "dev" ]; then
         # Add the dev channel to be first channel
         conda config --add channels pcds-dev

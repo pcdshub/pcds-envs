@@ -9,3 +9,7 @@ channel_priority: true
 
 # Only change what I asked for!
 update_dependencies: false
+
+# Revert to old behavior that uses the "free" channel from defaults. We need a package from here...
+# https://conda.io/projects/conda/en/latest/user-guide/configuration/free-channel.html
+restore_free_channel: true
