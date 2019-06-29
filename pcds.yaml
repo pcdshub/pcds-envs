@@ -173,7 +173,7 @@ dependencies:
   - pcaspy=0.7.1
   - pcdsdaq=2.2.1
   - pcdsdevices=2.0.0
-  - pcdswidgets=0.1.0
+  - pcdswidgets=0.1.0rc1
   - pcre=8.43
   - periodictable=1.5.0
   - pexpect=4.7.0
