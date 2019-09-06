@@ -105,7 +105,14 @@ script:
         git rev-parse HEAD
         python run_tests.py
         # Accumulate error codes, else the loop eats them
-        (( ERROR += $? ))
+        retcode=$?
+        if [ "$retcode" -eq "0"]; then
+          color="32"
+        else
+          color="31"
+        fi
+        echo "\033[0;{color}mTest for {dir} finished with exit code ${retcode}\033[0m"
+        (( ERROR += $retcode ))
         popd
       fi
     done
