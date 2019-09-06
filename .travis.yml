@@ -79,6 +79,7 @@ install:
   - readlink -f */run_tests.py
   # Set up variable and method for tracking errors in loop
   - ERROR=0
+  - ERR_PKGS=""
   - |
     show_error(){
       if [ "$1" -gt "0" ]; then
@@ -106,15 +107,17 @@ script:
         python run_tests.py
         # Accumulate error codes, else the loop eats them
         retcode=$?
-        if [ "$retcode" -eq "0"]; then
-          color="32"
-        else
-          color="31"
+        if [ "$retcode" -neq "0"]; then
+          ERR_PKGS="${ERR_PKGS}\n${dir}"
         fi
-        echo "\033[0;{color}mTest for {dir} finished with exit code ${retcode}\033[0m"
+        echo "Test for ${dir} finished with exit code ${retcode}"
         (( ERROR += $retcode ))
         popd
       fi
     done
   # If ERROR is nonzero, at least one of the run_test.py calls failed
   - show_error $ERROR
+  - |
+    if [ "${ERROR}" -neq "0" ]; then
+      echo "The following packages had errors:${ERR_PKGS}"
+    fi
