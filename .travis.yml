@@ -88,6 +88,11 @@ install:
       fi
     }
 
+before_script:
+  # Run windows manager
+  - "herbstluftwm &"
+  - sleep 1
+
 script:
   - |
     for dir in *
