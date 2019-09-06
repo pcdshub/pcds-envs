@@ -107,17 +107,19 @@ script:
         python run_tests.py
         # Accumulate error codes, else the loop eats them
         retcode=$?
-        if [ "$retcode" -neq "0" ]; then
+        if [ "${retcode}" -ne "0" ]; then
           ERR_PKGS="${ERR_PKGS}\n${dir}"
+          color="31" # Red
+        else
+          color="32" # Green
         fi
-        echo "Test for ${dir} finished with exit code ${retcode}"
+        echo -e "\033[0;${color}mTest for ${dir} finished with exit code ${retcode}\033[0m"
         (( ERROR += $retcode ))
         popd
       fi
     done
   # If ERROR is nonzero, at least one of the run_test.py calls failed
   - show_error $ERROR
-  - |
-    if [ "${ERROR}" -neq "0" ]; then
-      echo "The following packages had errors:${ERR_PKGS}"
-    fi
+
+after_failure:
+  - echo "The following packages had errors:${ERR_PKGS}"
