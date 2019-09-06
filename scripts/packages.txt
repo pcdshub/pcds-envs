@@ -42,6 +42,7 @@ pytest<4
 pytest-qt
 pytest-timeout
 python-graphviz
+pytmc>=2.1.0
 qdarkstyle
 scikit-image
 scipy
