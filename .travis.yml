@@ -77,17 +77,6 @@ install:
     fi
   # Show us which test scripts exist
   - readlink -f */run_tests.py
-  # Set up variable and method for tracking errors in loop
-  - ERROR=0
-  - ERR_PKGS=""
-  - |
-    show_error(){
-      if [ "$1" -gt "0" ]; then
-        return 1
-      else
-        return 0
-      fi
-    }
 
 before_script:
   # Run windows manager
@@ -95,31 +84,4 @@ before_script:
   - sleep 1
 
 script:
-  - |
-    for dir in *
-    do
-      if [ -f "${dir}/run_tests.py" ]; then
-        echo "Running tests for ${dir}"
-        pushd "${dir}"
-        # Check on the repo for debugging purposes
-        git status
-        git rev-parse HEAD
-        python run_tests.py
-        # Accumulate error codes, else the loop eats them
-        retcode=$?
-        if [ "${retcode}" -ne "0" ]; then
-          ERR_PKGS="${ERR_PKGS}\n${dir}"
-          color="31" # Red
-        else
-          color="32" # Green
-        fi
-        echo -e "\033[0;${color}mTest for ${dir} finished with exit code ${retcode}\033[0m"
-        (( ERROR += $retcode ))
-        popd
-      fi
-    done
-  # If ERROR is nonzero, at least one of the run_test.py calls failed
-  - show_error $ERROR
-
-after_failure:
-  - echo "The following packages had errors:${ERR_PKGS}"
+  - ./run_all_tests.sh
