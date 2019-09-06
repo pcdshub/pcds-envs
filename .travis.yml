@@ -107,7 +107,7 @@ script:
         python run_tests.py
         # Accumulate error codes, else the loop eats them
         retcode=$?
-        if [ "$retcode" -neq "0"]; then
+        if [ "$retcode" -neq "0" ]; then
           ERR_PKGS="${ERR_PKGS}\n${dir}"
         fi
         echo "Test for ${dir} finished with exit code ${retcode}"
