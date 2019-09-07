@@ -62,9 +62,9 @@ install:
       fi
       pushd scripts
       if [ -z "$PY_VER" ]; then
-        ./create_base_env.sh test-environment
+        timeout 10m ./create_base_env.sh test-environment
       else
-        ./create_base_env.sh test-environment "$PY_VER"
+        timeout 10m ./create_base_env.sh test-environment "$PY_VER"
       fi
       popd
     fi
