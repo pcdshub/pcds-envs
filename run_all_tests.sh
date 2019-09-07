@@ -25,7 +25,7 @@ do
 done
 
 # If ERROR is nonzero, at least one of the run_test.py calls failed
-if [ -n ${ERR_PKGS} ]; then
+if [ -n "${ERR_PKGS}" ]; then
   echo -e "\033[0;31mThe following packages had errors:${ERR_PKGS}\033[0m"
 fi
 
