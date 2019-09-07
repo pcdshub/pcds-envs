@@ -28,7 +28,7 @@ dependencies:
   - bzip2=1.0.8
   - ca-certificates=2019.5.15
   - cairo=1.14.12
-  - caproto=0.3.2
+  - caproto=0.4.0
   - certifi=2019.6.16
   - cf_units=2.0.1
   - cffi=1.12.3
@@ -199,11 +199,11 @@ dependencies:
   - py=1.8.0
   - py-opencv=3.4.2
   - pyaudio=0.2.11
-  - pyca=3.0.4
+  - pyca=3.1.1
   - pycodestyle=2.5.0
   - pycparser=2.19
   - pyct=0.4.6
-  - pydm=1.7.2
+  - pydm=1.7.3
   - pyepics=3.3.3
   - pyfiglet=0.8.post1
   - pyflakes=2.1.1
