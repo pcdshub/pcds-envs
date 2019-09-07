@@ -1,7 +1,7 @@
 ERROR=0
 ERR_PKGS=""
 WARN_PKGS=""
-RETRIES=3
+RETRIES=5
 
 for dir in *
 do
