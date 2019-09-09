@@ -1,11 +1,17 @@
 language: python
-sudo: required
 dist: xenial
 
 services:
  - xvfb
 
+addons:
+  apt:
+    packages:
+      - herbstluftwm
+      - libxkbcommon-x11-0
+
 matrix:
+  fast_finish: true
   include:
     - env:
       - VARIANT=yaml
@@ -30,7 +36,6 @@ matrix:
       - PY_VER=3.7
 
 install:
-  - sudo apt-get update
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - source "$HOME/miniconda/etc/profile.d/conda.sh"
@@ -57,9 +62,9 @@ install:
       fi
       pushd scripts
       if [ -z "$PY_VER" ]; then
-        ./create_base_env.sh test-environment
+        timeout 10m ./create_base_env.sh test-environment
       else
-        ./create_base_env.sh test-environment "$PY_VER"
+        timeout 10m ./create_base_env.sh test-environment "$PY_VER"
       fi
       popd
     fi
@@ -73,32 +78,11 @@ install:
     fi
   # Show us which test scripts exist
   - readlink -f */run_tests.py
-  # Set up variable and method for tracking errors in loop
-  - ERROR=0
-  - |
-    show_error(){
-      if [ "$1" -gt "0" ]; then
-        return 1
-      else
-        return 0
-      fi
-    }
+
+before_script:
+  # Run windows manager
+  - "herbstluftwm &"
+  - sleep 1
 
 script:
-  - |
-    for dir in *
-    do
-      if [ -f "${dir}/run_tests.py" ]; then
-        echo "Running tests for ${dir}"
-        pushd "${dir}"
-        # Check on the repo for debugging purposes
-        git status
-        git rev-parse HEAD
-        python run_tests.py
-        # Accumulate error codes, else the loop eats them
-        (( ERROR += $? ))
-        popd
-      fi
-    done
-  # If ERROR is nonzero, at least one of the run_test.py calls failed
-  - show_error $ERROR
+  - ./run_all_tests.sh
