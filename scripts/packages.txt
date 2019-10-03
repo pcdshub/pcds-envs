@@ -23,6 +23,7 @@ numpy>=1.14
 opencv
 ophyd>=1.3.1
 pandas
+panel
 papermill
 pcaspy
 pcdsdaq>=2.2.1
