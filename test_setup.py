@@ -53,7 +53,7 @@ if __name__ == '__main__':
                 break
         if url is None:
             continue
-        subprocess.run(['git', 'clone', url])
+        subprocess.run(['git', 'clone', '--recursive', url])
 
         if args.tag:
             print('Checking out package tag')
