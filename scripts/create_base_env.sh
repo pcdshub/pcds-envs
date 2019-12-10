@@ -13,5 +13,7 @@ else
 fi
 set -e
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
-conda create -y --name $ENVNAME python=$PY_VER --file packages.txt
+conda create -y --name $ENVNAME python=$PY_VER --file conda-packages.txt
+conda activate $ENVNAME
+pip install pip-packages.txt
 conda deactivate
