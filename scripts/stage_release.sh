@@ -26,7 +26,7 @@ else
 fi
 if [ -z "${HASREL}" ]; then
   echo "Building environment ${NAME}"
-  ./create_base_env.sh "${NAME}"
+  ./create_base_env.sh "${REL}" "${BASE}"
 else
   echo "Using existing environment ${NAME}"
 fi

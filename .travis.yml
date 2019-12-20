@@ -58,15 +58,15 @@ install:
   - |
     if [ "$VARIANT" = "yaml" ]; then
       # Create the environment from yaml
-      conda env create -q -n test-environment -f pcds.yaml
+      conda env create -q -n pcds-test -f envs/pcds/env.yaml
     else
       if [ "$VARIANT" = "dev" ]; then
         # Add the dev channel to be first channel
         conda config --add channels pcds-dev
       fi
-      timeout 10m scripts/create_base_env.sh test-environment "$PY_VER"
+      timeout 10m scripts/create_base_env.sh test pcds "$PY_VER"
     fi
-  - conda activate test-environment
+  - conda activate pcds-test
   # Check out the tests for all of our packages
   - |
     if [ "$VARIANT" = "dev" ]; then
