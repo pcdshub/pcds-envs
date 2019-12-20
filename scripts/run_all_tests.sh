@@ -47,3 +47,15 @@ if [ -n "${WARN_PKGS}" ]; then
 fi
 
 exit $ERROR
+
+# Now that all the normal tests have passed, do the environment's extra tests if they exist
+if [ -n "${1}" ]; then
+  EXTRA_TESTS=envs/${1}/extra_tests.sh
+  if [ -f "${EXTRA_TESTS}"]; then
+    $EXTRA_TESTS
+  else
+    echo "Did not find ${EXTRA_TESTS}"
+  fi
+else
+  echo "Did not input an environment name as argument 1"
+fi

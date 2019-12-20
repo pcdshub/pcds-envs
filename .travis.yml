@@ -84,4 +84,4 @@ before_script:
   - sleep 1
 
 script:
-  - scripts/run_all_tests.sh
+  - scripts/run_all_tests.sh pcds
