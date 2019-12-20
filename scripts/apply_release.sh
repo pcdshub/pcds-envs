@@ -17,7 +17,7 @@ else
   BASE="${2}"
   TAG="${BASE}-${REL}"
 fi
-YAML="../${BASE}.yaml"
+YAML="../envs/${BASE}/env.yaml"
 NAME="${BASE}-${REL}"
 echo "Applying release ${NAME}"
 echo "Checking for tag ${TAG}"
