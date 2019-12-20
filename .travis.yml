@@ -65,7 +65,6 @@ install:
         conda config --add channels pcds-dev
       fi
       timeout 10m scripts/create_base_env.sh test-environment "$PY_VER"
-      fi
     fi
   - conda activate test-environment
   # Check out the tests for all of our packages
