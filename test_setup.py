@@ -60,5 +60,8 @@ if __name__ == '__main__':
             with pushd(pkg):
                 config = configparser.ConfigParser()
                 config.read('setup.cfg')
-                tag_prefix = config['versioneer']['tag_prefix']
+                try:
+                    tag_prefix = config['versioneer']['tag_prefix']
+                except KeyError:
+                    tag_prefix = ''
                 subprocess.run(['git', 'checkout', tag_prefix + ver])
