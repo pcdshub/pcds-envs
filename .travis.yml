@@ -15,10 +15,13 @@ matrix:
   include:
     - env:
       - VARIANT=yaml
+      - PY_VER=3.6
     - env:
       - VARIANT=tag
+      - PY_VER=3.6
     - env:
       - VARIANT=dev
+      - PY_VER=3.6
     - env:
       - VARIANT=tag
       - PY_VER=3.7
@@ -28,6 +31,7 @@ matrix:
   allow_failures:
     - env:
       - VARIANT=dev
+      - PY_VER=3.6
     - env:
       - VARIANT=tag
       - PY_VER=3.7
@@ -60,21 +64,16 @@ install:
         # Add the dev channel to be first channel
         conda config --add channels pcds-dev
       fi
-      pushd scripts
-      if [ -z "$PY_VER" ]; then
-        timeout 10m ./create_base_env.sh test-environment
-      else
-        timeout 10m ./create_base_env.sh test-environment "$PY_VER"
+      timeout 10m scripts/create_base_env.sh test-environment "$PY_VER"
       fi
-      popd
     fi
   - conda activate test-environment
   # Check out the tests for all of our packages
   - |
     if [ "$VARIANT" = "dev" ]; then
-      python test_setup.py
+      python scripts/test_setup.py
     else
-      python test_setup.py --tag
+      python scripts/test_setup.py --tag
     fi
   # Show us which test scripts exist
   - readlink -f */run_tests.py
@@ -85,4 +84,4 @@ before_script:
   - sleep 1
 
 script:
-  - ./run_all_tests.sh
+  - scripts/run_all_tests.sh
