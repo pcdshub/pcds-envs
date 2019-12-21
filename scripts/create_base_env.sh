@@ -9,7 +9,7 @@ fi
 if [ -z "${2}" ]; then
   BASE="pcds"
 else
-  base="${2}"
+  BASE="${2}"
 fi
 if [ -z "${3}" ]; then
   PY_VER="3.6"
