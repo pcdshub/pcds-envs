@@ -13,32 +13,52 @@ addons:
 matrix:
   fast_finish: true
   include:
-    - env:
+    - name: Latest Env
+      env:
       - VARIANT=yaml
       - PY_VER=3.6
-    - env:
+    - name: Newest Tags py3.6
+      env:
       - VARIANT=tag
       - PY_VER=3.6
-    - env:
+    - name: Master py3.6
+      env:
       - VARIANT=dev
       - PY_VER=3.6
-    - env:
+    - name: Newest Tags py3.7
+      env:
       - VARIANT=tag
       - PY_VER=3.7
-    - env:
+    - name: Master py3.7
+      env:
       - VARIANT=dev
       - PY_VER=3.7
+    - name: Newest Tags py3.8
+      env:
+      - VARIANT=tag
+      - PY_VER=3.8
+    - name: Master py3.8
+      env:
+      - VARIANT=dev
+      - PY_VER=3.8
   allow_failures:
-    - env:
-      - VARIANT=dev
-      - PY_VER=3.6
-    - env:
+    - name: Newest Tags py3.7
+      env:
       - VARIANT=tag
       - PY_VER=3.7
-    - env:
+    - name: Master py3.7
+      env:
       - VARIANT=dev
       - PY_VER=3.7
-
+    - name: Newest Tags py3.8
+      env:
+      - VARIANT=tag
+      - PY_VER=3.8
+    - name: Master py3.8
+      env:
+      - VARIANT=dev
+      - PY_VER=3.8
+ 
 install:
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
