@@ -17,44 +17,44 @@ matrix:
       env:
       - VARIANT=yaml
       - PY_VER=3.6
-    - name: Newest Tags py3.6
+    - name: py3.6 Newest Tags
       env:
       - VARIANT=tag
       - PY_VER=3.6
-    - name: Master py3.6
+    - name: py3.6 Master Branches
       env:
       - VARIANT=dev
       - PY_VER=3.6
-    - name: Newest Tags py3.7
+    - name: py3.7 Newest Tags
       env:
       - VARIANT=tag
       - PY_VER=3.7
-    - name: Master py3.7
+    - name: py3.7 Master Branches
       env:
       - VARIANT=dev
       - PY_VER=3.7
-    - name: Newest Tags py3.8
+    - name: py3.8 Newest Tags
       env:
       - VARIANT=tag
       - PY_VER=3.8
-    - name: Master py3.8
+    - name: py3.8 Master Branches
       env:
       - VARIANT=dev
       - PY_VER=3.8
   allow_failures:
-    - name: Newest Tags py3.7
+    - name: py3.7 Newest Tags
       env:
       - VARIANT=tag
       - PY_VER=3.7
-    - name: Master py3.7
+    - name: py3.7 Master Branches
       env:
       - VARIANT=dev
       - PY_VER=3.7
-    - name: Newest Tags py3.8
+    - name: py3.8 Newest Tags
       env:
       - VARIANT=tag
       - PY_VER=3.8
-    - name: Master py3.8
+    - name: py3.8 Master Branches
       env:
       - VARIANT=dev
       - PY_VER=3.8
