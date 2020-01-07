@@ -46,9 +46,7 @@ if [ -n "${WARN_PKGS}" ]; then
   echo -e "\033[0;33mThe following packages had race conditions, but passed at least once:${WARN_PKGS}\033[0m"
 fi
 
-exit $ERROR
-
-# Now that all the normal tests have passed, do the environment's extra tests if they exist
+# Do the environment's extra tests if they exist
 if [ -n "${1}" ]; then
   EXTRA_TESTS=envs/${1}/extra_tests.sh
   if [ -f "${EXTRA_TESTS}"]; then
@@ -60,3 +58,5 @@ if [ -n "${1}" ]; then
 else
   echo "Did not input an environment name as argument 1"
 fi
+
+exit $ERROR
