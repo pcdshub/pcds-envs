@@ -51,6 +51,7 @@ if [ -n "${1}" ]; then
   EXTRA_TESTS="envs/${1}/extra_tests.sh"
   if [ -f "${EXTRA_TESTS}" ]; then
     echo "Running ${EXTRA_TESTS}"
+    cat "${EXTRA_TESTS}"
     bash "${EXTRA_TESTS}"
   else
     echo "Did not find ${EXTRA_TESTS}"
