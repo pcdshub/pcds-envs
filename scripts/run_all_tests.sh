@@ -53,6 +53,13 @@ if [ -n "${1}" ]; then
     echo "Running ${EXTRA_TESTS}"
     cat "${EXTRA_TESTS}"
     bash "${EXTRA_TESTS}"
+    retcode=$?
+    if [ "${retcode}" -eq "0" ]; then
+      echo -e "\033[0;32mExtra tests passed\033[0m"
+    else
+      echo -e "\033[0;31mExtra tests failed\033[0m"
+      (( ERROR += $retcode ))
+    fi
   else
     echo "Did not find ${EXTRA_TESTS}"
   fi
