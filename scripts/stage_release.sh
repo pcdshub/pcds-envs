@@ -26,12 +26,12 @@ else
 fi
 if [ -z "${HASREL}" ]; then
   echo "Building environment ${NAME}"
-  ./create_base_env.sh "${NAME}"
+  ./create_base_env.sh "${REL}" "${BASE}"
 else
   echo "Using existing environment ${NAME}"
 fi
 echo "Exporting yaml file"
-conda env export -n "${NAME}" -f "../${BASE}.yaml" --no-builds
+conda env export -n "${NAME}" -f "../envs/${BASE}/env.yaml" --no-builds
 echo "Committing and pushing"
 git add "../${BASE}.yaml"
 git commit -m "ENH: updated ${BASE} to ${REL}"

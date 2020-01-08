@@ -1,6 +1,6 @@
 # pcds-envs
 
-A simple repo to hold our current and past conda environment.yaml files. Each yaml file is the most recent version of an environment of a specific type. The `pcds.yaml` file is designated as the 'catch-all' for generic python sessions, but individual apps may want to create app-specific environments.
+A simple repo to hold our current and past conda env.yaml files. Each yaml file is the most recent version of an environment of a specific type. The `envs/pcds/env.yaml` file is designated as the 'catch-all' for generic python sessions, but individual apps may want to create app-specific environments.
 
 To use a built environment:
 - Find the conda landing area `/reg/g/pcds/pyps/conda`
@@ -12,13 +12,13 @@ To create a development environment from a yaml:
 - `git clone https://github.com/pcdshub/pcds-env.git`
 - `cd pcds-env`
 - optional: `git fetch`, `git checkout 0.1.0` (if you'd like a tag other than latest)
-- `conda env create -n myenvname -f pcds.yaml`
+- `conda env create -n myenvname -f envs/pcds/env.yaml`
 
 To manage releases:
 - `stage_release.sh <relnum> <name>`: creates a git branch, builds an environment, updates yaml, pushes to origin
 - `apply_release.sh <relnum> <name>`: checks out a tag, reads a yaml file, locks down write-access
 
-So, to make a new release of `pcds.yaml`, from my checkout I run:
+So, to make a new release of `envs/pcds/env.yaml`, from my checkout I run:
 ```
 ./stage_release.sh 1.2.3
 ```

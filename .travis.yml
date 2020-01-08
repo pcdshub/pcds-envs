@@ -13,28 +13,56 @@ addons:
 matrix:
   fast_finish: true
   include:
-    - env:
+    - name: Latest Env
+      env:
       - VARIANT=yaml
-    - env:
+      - PY_VER=3.6
+    - name: py3.6 Newest Tags
+      env:
       - VARIANT=tag
-    - env:
+      - PY_VER=3.6
+    - name: py3.6 Master Branch
+      env:
       - VARIANT=dev
-    - env:
+      - PY_VER=3.6
+    - name: py3.7 Newest Tags
+      env:
       - VARIANT=tag
       - PY_VER=3.7
-    - env:
+    - name: py3.7 Master Branch
+      env:
       - VARIANT=dev
       - PY_VER=3.7
+    - name: py3.8 Newest Tags
+      env:
+      - VARIANT=tag
+      - PY_VER=3.8
+    - name: py3.8 Master Branch
+      env:
+      - VARIANT=dev
+      - PY_VER=3.8
   allow_failures:
-    - env:
+    - name: py3.6 Master Branch
+      env:
       - VARIANT=dev
-    - env:
+      - PY_VER=3.6
+    - name: py3.7 Newest Tags
+      env:
       - VARIANT=tag
       - PY_VER=3.7
-    - env:
+    - name: py3.7 Master Branch
+      env:
       - VARIANT=dev
       - PY_VER=3.7
-
+    - name: py3.8 Newest Tags
+      env:
+      - VARIANT=tag
+      - PY_VER=3.8
+    - name: py3.8 Master Branch
+      env:
+      - VARIANT=dev
+      - PY_VER=3.8
+ 
 install:
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
@@ -54,27 +82,21 @@ install:
   - |
     if [ "$VARIANT" = "yaml" ]; then
       # Create the environment from yaml
-      conda env create -q -n test-environment -f pcds.yaml
+      conda env create -q -n pcds-test -f envs/pcds/env.yaml
     else
       if [ "$VARIANT" = "dev" ]; then
         # Add the dev channel to be first channel
         conda config --add channels pcds-dev
       fi
-      pushd scripts
-      if [ -z "$PY_VER" ]; then
-        timeout 10m ./create_base_env.sh test-environment
-      else
-        timeout 10m ./create_base_env.sh test-environment "$PY_VER"
-      fi
-      popd
+      timeout 10m scripts/create_base_env.sh test pcds "$PY_VER"
     fi
-  - conda activate test-environment
+  - conda activate pcds-test
   # Check out the tests for all of our packages
   - |
     if [ "$VARIANT" = "dev" ]; then
-      python test_setup.py
+      python scripts/test_setup.py
     else
-      python test_setup.py --tag
+      python scripts/test_setup.py --tag
     fi
   # Show us which test scripts exist
   - readlink -f */run_tests.py
@@ -85,4 +107,4 @@ before_script:
   - sleep 1
 
 script:
-  - ./run_all_tests.sh
+  - scripts/run_all_tests.sh pcds
