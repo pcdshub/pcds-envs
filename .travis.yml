@@ -88,7 +88,8 @@ install:
         # Add the dev channel to be first channel
         conda config --add channels pcds-dev
       fi
-      timeout 10m scripts/create_base_env.sh test pcds "$PY_VER"
+      cd scripts
+      timeout 10m ./create_base_env.sh test pcds "$PY_VER"
     fi
   - conda activate pcds-test
   # Check out the tests for all of our packages
