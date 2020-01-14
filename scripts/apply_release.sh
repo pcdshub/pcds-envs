@@ -30,9 +30,5 @@ echo "Write-protecting new env"
 pushd "${CONDA_BIN}/../envs"
 chmod -R a-w ${NAME}
 popd
-echo "Setting execute permissions"
-pushd "${CONDA_BIN}/../envs/${NAME}/bin/wrappers/conda"
-chmod a+x *
-popd
 git checkout master
 echo "Done"
