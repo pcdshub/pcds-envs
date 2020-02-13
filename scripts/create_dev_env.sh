@@ -31,10 +31,10 @@ for pkg in $pkgs
 do
   set +e
   echo "Attempting to clone ${pkg} from slaclab..."
-  git clone "git@github.com:pcdshub/${pkg}"
+  git clone "git@github.com:slaclab/${pkg}"
   if [ "$?" -ne "0" ]; then
     echo "Attempting to clone ${pkg} from pcdshub..."
-    git clone "git@github.com:slaclab/${pkg}"
+    git clone "git@github.com:pcdshub/${pkg}"
     if [ "$?" -ne "0" ]; then
       set -e
       echo "Attempting to clone ${pkg} from bluesky..."
