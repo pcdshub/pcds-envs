@@ -23,8 +23,10 @@ echo "Activating env ${envname}"
 conda activate "${envname}"
 echo "Installing any scheduled pip packages to ${envname}"
 pip install -r "${envdir}/pip-packages.txt"
-echo "Remove incompatible package" # TODO delete this
+echo "Remove incompatible package pmgr" # TODO delete this
 conda remove -y pmgr # TODO delete this after issue resolved
+echo "Add bonus package pyqtads=2.7.0" # TODO delete this
+conda install -y pyqtads=2.7.0 # TODO delete this
 echo "Changing to directory ${devdir}"
 cd "${devdir}"
 for pkg in $pkgs
@@ -41,9 +43,10 @@ do
       git clone "git@github.com:bluesky/${pkg}"
     fi
   fi
-  set -e
+  set +e
   echo "Removing tagged ${pkg} from environment"
   conda remove -y --force "${pkg}"
+  set -e
   echo "Installing ${pkg} master branch in dev mode"
   pip install -e "${pkg}"
 done
