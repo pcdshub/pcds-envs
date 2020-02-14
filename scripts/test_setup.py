@@ -33,7 +33,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     info = version_info(['pcds-tag', 'pcds-dev'])
-    github_orgs = ['pcdshub', 'slaclab']
+    github_orgs = ['slaclab', 'pcdshub']
     url_base = 'https://github.com/{org}/{pkg}'
 
     if len(info) == 0:
