@@ -10,7 +10,7 @@ doctr
 elog
 flake8
 h5py
-happi>=1.2.1
+happi>=1.4.0
 holoviews>=1.10.9
 hutch-python>=1.1.1
 hxrsnd>=0.1.5
@@ -36,7 +36,7 @@ psdm_qs_cli
 pswalker
 pyaudio
 pyca>=3.1.1
-pydm
+pydm>=1.9.0
 pyepics
 pyfiglet
 pytables
@@ -55,6 +55,6 @@ sphinx_rtd_theme
 timechart
 tornado<5.0.0
 transfocate
-typhos>=0.6.0
+typhos>=0.7.0
 versioneer
 xarray
