@@ -1,6 +1,6 @@
 anaconda-client
 bokeh>=1.0.1
-caproto
+caproto>=0.4.3
 coloredlogs
 cookiecutter
 coverage
