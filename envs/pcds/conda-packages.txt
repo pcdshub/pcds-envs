@@ -16,7 +16,7 @@ hutch-python>=1.1.1
 hxrsnd>=0.1.5
 ipython>=7.1
 jupyter
-lightpath>=0.6.0
+lightpath>=0.6.1
 lucid
 lxml
 mysqlclient
