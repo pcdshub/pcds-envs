@@ -17,6 +17,7 @@ hxrsnd>=0.1.5
 ipython>=7.1
 jupyter
 lightpath>=0.6.0
+lucid
 lxml
 mysqlclient
 numpy>=1.14
