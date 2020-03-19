@@ -57,7 +57,7 @@ def update_specs(path, versions_dict, dry_run=False):
 def main(args):
     env = args.env
 
-    here = Path(__file__).parent
+    here = Path(__file__).resolve().parent
     env_folder = here.parent / 'envs' / env
 
     conda_packages = env_folder / 'conda-packages.txt'
@@ -68,7 +68,10 @@ def main(args):
     if keep_updated.exists():
         with keep_updated.open('r') as fd:
             packages = fd.readlines()
+    else:
+        print(f'{keep_updated} does not exist')
     if not packages:
+        print(f'Found no packages in {keep_updated}, nothing to do')
         return
 
     versions_dict = {}
