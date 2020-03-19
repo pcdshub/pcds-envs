@@ -18,7 +18,7 @@ def latest_version(package):
     return latest_version
 
 
-def update_specs(path, versions_dict):
+def update_specs(path, versions_dict, dry_run=False):
     if not path.exists():
         print(f'{path} does not exist, skipping')
         return
@@ -39,8 +39,11 @@ def update_specs(path, versions_dict):
 
     if changed_spec:
         print(f'Writing changes for packages {changed_spec}')
-        with path.open('w') as fd:
-            fd.writelines(specs)
+        if dry_run:
+            print('Skip write because this is a dry run')
+        else:
+            with path.open('w') as fd:
+                fd.writelines(specs)
     else:
         print('No changes found')
 
@@ -70,13 +73,14 @@ def main(args):
         print(f'Latest version of {package} is {latest}')
 
     print('Updating specs. Make sure to verify and commit')
-    update_specs(conda_packages, versions_dict)
-    update_specs(pip_packages, versions_dict)
+    update_specs(conda_packages, versions_dict, dry_run=args.dryrun)
+    update_specs(pip_packages, versions_dict, dry_run=args.dryrun)
     print('Done')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('env')
+    parser.add_argument('--dryrun', action='store_true')
 
     main(parser.parse_args())
