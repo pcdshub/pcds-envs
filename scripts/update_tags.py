@@ -58,7 +58,7 @@ def main(args):
     env = args.env
 
     here = Path(__file__).parent
-    env_folder = here / '../envs/' / env
+    env_folder = here.parent / 'envs' / env
 
     conda_packages = env_folder / 'conda-packages.txt'
     pip_packages = env_folder / 'pip-packages.txt'
