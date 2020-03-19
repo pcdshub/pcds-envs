@@ -20,24 +20,29 @@ def latest_version(package):
 
 def update_specs(path, versions_dict):
     if not path.exists():
+        print(f'{path} does not exist, skipping')
         return
+    print(f'Updating {path} specs...')
 
     with path.open('r') as fd:
         specs = fd.readlines()
 
-    changed_spec = False
+    changed_spec = []
     for i, spec in enumerate(specs):
         package = re.split(spec, '\=|>|<| ')[0]
         try:
             latest = versions_dict[package]
             specs[i] = f'{package}>={latest}'
-            changed_spec = True
+            changed_spec.append(package)
         except KeyError:
             pass
 
     if changed_spec:
+        print(f'Writing changes for packages {changed_spec}')
         with path.open('w') as fd:
             fd.writelines(specs)
+    else:
+        print('No changes found')
 
 
 def main(args):
