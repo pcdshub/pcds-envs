@@ -59,6 +59,7 @@ def main(args):
 
     versions_dict = {}
     for package in packages:
+        package = package.strip('\n')
         latest = latest_version(package)
         versions_dict[package] = latest
         print(f'Latest version of {package} is {latest}')
