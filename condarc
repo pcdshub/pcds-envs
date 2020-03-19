@@ -1,8 +1,8 @@
-# For our old hardware, favor stable defaults to conda-forge
+# Use ours first, then conda-forge for maximum compatibility
 channels:
   - pcds-tag
-  - defaults
   - conda-forge
+  - defaults
 
 # Stop at first channel with a valid version
 channel_priority: true
