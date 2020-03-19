@@ -72,7 +72,7 @@ install:
   # Use our condarc
   - cp condarc ~/.condarc
   - conda config --set always_yes yes --set changeps1 no
-  - conda install conda-build anaconda-client
+  - conda install conda-build anaconda-client packaging
   - conda update -q conda conda-build
   # Reboot conda after updating conda to avoid subtle path bugs
   - conda deactivate
@@ -89,6 +89,7 @@ install:
         conda config --add channels pcds-dev
       fi
       pushd scripts
+      python update_tags.py pcds
       timeout 10m ./create_base_env.sh test pcds "$PY_VER"
       popd
     fi
