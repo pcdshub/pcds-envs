@@ -29,6 +29,7 @@ papermill
 pcaspy
 pcdsdaq>=2.2.2
 pcdsdevices>=2.3.0
+pcdsutils
 pcdswidgets>=0.3.0
 periodictable
 pmgr
