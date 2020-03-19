@@ -27,18 +27,24 @@ def update_specs(path, versions_dict, dry_run=False):
     with path.open('r') as fd:
         specs = fd.readlines()
 
-    changed_spec = []
+    changed_spec = False
     for i, spec in enumerate(specs):
-        package = re.split(spec, '\=|>|<| ')[0]
+        package = re.split('\=|>|<| |\n', spec)[0]
         try:
             latest = versions_dict[package]
-            specs[i] = f'{package}>={latest}'
-            changed_spec.append(package)
+            spec = spec.strip('\n')
+            new_spec = f'{package}>={latest}'
+            if new_spec == spec:
+                print(f'Will keep existing {package} spec {spec}')
+            else:
+                print(f'Will change {package} spec from {spec} to {new_spec}')
+                specs[i] = new_spec + '\n'
+                changed_spec = True
         except KeyError:
             pass
 
     if changed_spec:
-        print(f'Writing changes for packages {changed_spec}')
+        print(f'Writing changes for package specs')
         if dry_run:
             print('Skip write because this is a dry run')
         else:
