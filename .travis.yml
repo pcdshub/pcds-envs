@@ -89,6 +89,7 @@ install:
         conda config --add channels pcds-dev
       fi
       pushd scripts
+      python update_tags.py pcds
       timeout 10m ./create_base_env.sh test pcds "$PY_VER"
       popd
     fi
