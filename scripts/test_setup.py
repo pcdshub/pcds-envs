@@ -32,7 +32,7 @@ if __name__ == '__main__':
     print('Running pcds-envs test setup')
     args = parser.parse_args()
 
-    info = version_info(['pcds-tag', 'pcds-dev'])
+    info = version_info(['pcds-tag', 'pcds-dev', 'conda-forge'])
     github_orgs = ['slaclab', 'pcdshub']
     url_base = 'https://github.com/{org}/{pkg}'
 
