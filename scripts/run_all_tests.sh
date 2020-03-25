@@ -48,7 +48,7 @@ fi
 
 # Do the environment's extra tests if they exist
 if [ -n "${1}" ]; then
-  EXTRA_TESTS="envs/${1}/extra_tests.sh"
+  EXTRA_TESTS="envs/${1}/extra-tests.sh"
   if [ -f "${EXTRA_TESTS}" ]; then
     echo "Running ${EXTRA_TESTS}"
     cat "${EXTRA_TESTS}"
@@ -64,7 +64,7 @@ if [ -n "${1}" ]; then
     echo "Did not find ${EXTRA_TESTS}"
   fi
 else
-  echo "Skipping extra_tests.sh, did not input an environment name as argument 1"
+  echo "Skipping extra-tests.sh, did not input an environment name as argument 1"
 fi
 
 exit $ERROR
