@@ -97,9 +97,9 @@ install:
   # Check out the tests for all of our packages
   - |
     if [ "$VARIANT" = "dev" ]; then
-      python scripts/test_setup.py
+      python scripts/test_setup.py pcds
     else
-      python scripts/test_setup.py --tag
+      python scripts/test_setup.py pcds --tag
     fi
   # Show us which test scripts exist
   - readlink -f */run_tests.py
