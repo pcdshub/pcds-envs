@@ -5,7 +5,14 @@ A simple repo to hold our current and past conda env.yaml files. Each yaml file 
 To use a built environment:
 - Find the conda landing area `/reg/g/pcds/pyps/conda`
 - For latest: `source py36env.sh`
-- For specific: `source py36env.sh pcds-0.1.0`
+- For a specific release, set this environment variable first: `export PCDS_CONDA_VER=2.1.0`
+
+To install a pre-built environment on a linux host without conda:
+- Navigate to the release pages on this repo
+- Download the environment tarball (not the source code)
+- `tar -xzf my_env.tar.gz -C my_env`
+- `source my_env/bin/activate`
+- `conda-unpack` (first time setup)
 
 To create a development environment from a yaml:
 - Download and install a [miniconda environment](https://conda.io/miniconda.html)
