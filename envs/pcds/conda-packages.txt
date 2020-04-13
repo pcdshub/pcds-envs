@@ -2,6 +2,8 @@ anaconda-client
 bokeh>=1.0.1
 caproto>=0.4.3
 coloredlogs
+conda-pack
+conda-smithy
 cookiecutter
 coverage
 databroker
