@@ -42,7 +42,7 @@ def setup_all_tests(repo_file, tags=None):
             except KeyError as err:
                 msg = f'Did not find package {pkg} in environment'
                 raise RuntimeError(msg) from err
-            setup_test(repo, pkg, tag=tags[pkg])
+            setup_one_test(repo, pkg, tag=tags[pkg])
 
 
 def setup_one_test(repo, pkg, tag=None):
