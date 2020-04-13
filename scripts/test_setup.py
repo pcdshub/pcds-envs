@@ -1,23 +1,75 @@
 import argparse
 import configparser
 import contextlib
+import json
 import os
 import requests
 import subprocess
+from pathlib import Path
 
+URL_BASE = 'https://github.com/{}.git'
 parser = argparse.ArgumentParser()
+parser.add_argument('env')
 parser.add_argument('--tag', action='store_true')
 
 
-def version_info(channels):
-    conda_list = subprocess.check_output(['conda', 'list'],
+def version_info():
+    conda_list = subprocess.check_output(['conda', 'list', '--json'],
                                          universal_newlines=True)
-    info = {}
-    for line in conda_list.split('\n'):
-        if any(ch in line for ch in channels):
-            pkg, ver, _, _ = line.split()
-            info[pkg] = ver
-    return info
+    info_list = json.loads(conda_list)
+    version_dict = {}
+
+    for item in info_list:
+        version_dict[item['name']] = item['version']
+
+    return version_dict
+
+
+def setup_all_tests(repo_file, tags=None):
+    url_base = 'https://github.com/{}.git'
+    repo_file = Path(repo_file)
+
+    with repo_file.open('r') as fd:
+        repos = fd.read().strip().splitlines()
+
+    for repo in repos:
+        pkg = repo.split('/')[-1]
+        if tags is None:
+            setup_one_test(repo, pkg)
+        else:
+            try:
+                tag = tags[pkg]
+            except KeyError as err:
+                msg = f'Did not find package {pkg} in environment'
+                raise RuntimeError(msg) from err
+            setup_one_test(repo, pkg, tag=tags[pkg])
+
+
+def setup_one_test(repo, pkg, tag=None):
+    url = URL_BASE.format(repo)
+    try:
+        subprocess.run(['git', 'clone', '--recursive', url, '--depth', '1'],
+                       check=True)
+    except subprocess.CalledProcessError as err:
+        raise RuntimeError(f'Error cloning from {url}') from err
+
+    if tag is not None:
+        print('Checking out package tag')
+        with pushd(pkg):
+            config = configparser.ConfigParser()
+            config.read('setup.cfg')
+            try:
+                tag_prefix = config['versioneer']['tag_prefix']
+            except KeyError:
+                tag_prefix = ''
+            try:
+                subprocess.run(['git', 'fetch', '--tags'], check=True)
+                subprocess.run(['git', 'checkout', tag_prefix + tag],
+                               check=True)
+            except KeyError as err:
+                raise ValueError(f'Did not have tag for {pkg}') from err
+            except subprocess.CalledProcessError as err:
+                raise RuntimeError(f'Error checking out tag') from err
 
 
 @contextlib.contextmanager
@@ -28,40 +80,24 @@ def pushd(new_dir):
     os.chdir(previous_dir)
 
 
-if __name__ == '__main__':
+def main(args):
     print('Running pcds-envs test setup')
+
+    pcds_envs = Path(__file__).resolve().parent.parent
+    repo_file = pcds_envs / 'envs' / args.env / 'package-tests.txt'
+
+    if args.tag:
+        tags = version_info()
+
+        if len(tags) == 0:
+            print('No packages in current environment to test, quitting')
+            return
+    else:
+        tags = None
+
+    setup_all_tests(repo_file, tags=tags)
+
+
+if __name__ == '__main__':
     args = parser.parse_args()
-
-    info = version_info(['pcds-tag', 'pcds-dev', 'conda-forge'])
-    github_orgs = ['slaclab', 'pcdshub']
-    url_base = 'https://github.com/{org}/{pkg}'
-
-    if len(info) == 0:
-        print('No packages in current environment to test, quitting')
-
-    for pkg, ver in info.items():
-        print('Checking for tests on package {}...'.format(pkg))
-        for org in github_orgs:
-            # Check if url exists
-            url = url_base.format(org=org, pkg=pkg)
-            resp = requests.head(url)
-            if resp.status_code >= 400:
-                print('Skip {}/{}, nothing found'.format(org, pkg))
-                url = None
-            else:
-                print('Setting up test for {}/{}'.format(org, pkg))
-                break
-        if url is None:
-            continue
-        subprocess.run(['git', 'clone', '--recursive', url])
-
-        if args.tag:
-            print('Checking out package tag')
-            with pushd(pkg):
-                config = configparser.ConfigParser()
-                config.read('setup.cfg')
-                try:
-                    tag_prefix = config['versioneer']['tag_prefix']
-                except KeyError:
-                    tag_prefix = ''
-                subprocess.run(['git', 'checkout', tag_prefix + ver])
+    main(args)

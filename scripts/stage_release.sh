@@ -25,6 +25,8 @@ else
   git checkout "${BRANCH}"
 fi
 if [ -z "${HASREL}" ]; then
+  echo "Automatically updating ${BASE} environment specs"
+  python update_tags.py "${BASE}"
   echo "Building environment ${NAME}"
   ./create_base_env.sh "${REL}" "${BASE}"
 else

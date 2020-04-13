@@ -2,8 +2,9 @@ import argparse
 import json
 import re
 import subprocess
-from packaging import version
 from pathlib import Path
+
+from packaging import version
 
 
 def latest_version(package):
