@@ -80,9 +80,8 @@ def pushd(new_dir):
     os.chdir(previous_dir)
 
 
-def main():
+def main(args):
     print('Running pcds-envs test setup')
-    args = parser.parse_args()
 
     pcds_envs = Path(__file__).resolve().parent.parent
     repo_file = pcds_envs / 'envs' / args.env / 'package-tests.txt'
@@ -99,4 +98,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    args = parser.parse_args()
+    main(args)
