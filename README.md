@@ -14,6 +14,10 @@ To install a pre-built environment on a linux host without conda:
 - `source my_env/bin/activate`
 - `conda-unpack` (first time setup)
 
+This completes the setup, but you need to deactivate and reactivate the environment to ensure scripts are loaded properly in the current shell:
+- `source my_env/bin/deactivate`
+- `source my_env/bin/activate`
+
 To create a development environment from a yaml:
 - Download and install a [miniconda environment](https://conda.io/miniconda.html)
 - `git clone https://github.com/pcdshub/pcds-env.git`
