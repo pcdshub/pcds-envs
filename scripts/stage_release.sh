@@ -45,5 +45,7 @@ if [ -x "$(command -v conda-pack)" ]; then
   echo "Packing env into ${PACKPATH}"
   mkdir -p "${PACKDIR}"
   conda-pack -n "${NAME}" -o "${PACKPATH}"
+else
+  echo "conda-pack is not installed, skipping step"
 fi
 echo "Done"
