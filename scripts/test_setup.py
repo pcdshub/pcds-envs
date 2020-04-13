@@ -29,7 +29,7 @@ def setup_tests(repo_file, tags=None):
     repo_file = Path(repo_file)
 
     with repo_file.open('r') as fd:
-        repos = fd.read().strip().split('\n')
+        repos = fd.read().strip().splitlines()
 
     for repo in repos:
         url = url_base.format(repo)
