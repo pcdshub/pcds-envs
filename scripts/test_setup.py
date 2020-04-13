@@ -80,7 +80,7 @@ def pushd(new_dir):
     os.chdir(previous_dir)
 
 
-if __name__ == '__main__':
+def main():
     print('Running pcds-envs test setup')
     args = parser.parse_args()
 
@@ -96,3 +96,7 @@ if __name__ == '__main__':
         tags = None
 
     setup_all_tests(repo_file, tags=tags)
+
+
+if __name__ == '__main__':
+    main()
