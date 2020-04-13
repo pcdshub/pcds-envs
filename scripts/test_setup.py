@@ -91,6 +91,7 @@ def main(args):
 
         if len(tags) == 0:
             print('No packages in current environment to test, quitting')
+            return
     else:
         tags = None
 
