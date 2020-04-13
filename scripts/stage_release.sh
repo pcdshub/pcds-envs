@@ -39,4 +39,13 @@ echo "Committing and pushing"
 git add "${YAML}"
 git commit -m "ENH: updated ${BASE} to ${REL}"
 git push origin "${BRANCH}"
+if [ -x "$(command -v conda-pack)" ]; then
+  PACKDIR="${HOME}/pcds-envs-packs"
+  PACKPATH="${PACKDIR}/${NAME}.tar.gz"
+  echo "Packing env into ${PACKPATH}"
+  mkdir -p "${PACKDIR}"
+  conda-pack -n "${NAME}" -o "${PACKPATH}"
+else
+  echo "conda-pack is not installed, skipping step"
+fi
 echo "Done"
