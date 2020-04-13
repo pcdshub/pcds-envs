@@ -25,7 +25,7 @@ def version_info():
     return version_dict
 
 
-def setup_tests(repo_file, tags=None):
+def setup_all_tests(repo_file, tags=None):
     url_base = 'https://github.com/{}.git'
     repo_file = Path(repo_file)
 
@@ -35,7 +35,7 @@ def setup_tests(repo_file, tags=None):
     for repo in repos:
         pkg = repo.split('/')[-1]
         if tags is None:
-            setup_test(repo, pkg)
+            setup_one_test(repo, pkg)
         else:
             try:
                 tag = tags[pkg]
@@ -45,7 +45,7 @@ def setup_tests(repo_file, tags=None):
             setup_test(repo, pkg, tag=tags[pkg])
 
 
-def setup_test(repo, pkg, tag=None):
+def setup_one_test(repo, pkg, tag=None):
     url = URL_BASE.format(repo)
     try:
         subprocess.run(['git', 'clone', '--recursive', url, '--depth', '1'],
@@ -95,4 +95,4 @@ if __name__ == '__main__':
     else:
         tags = None
 
-    setup_tests(repo_file, tags=tags)
+    setup_all_tests(repo_file, tags=tags)
