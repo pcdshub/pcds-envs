@@ -46,6 +46,7 @@ pyfiglet
 pymongo
 pytables
 pytest<4
+pytest-benchmark
 pytest-qt
 pytest-timeout
 python-graphviz
