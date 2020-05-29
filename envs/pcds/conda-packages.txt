@@ -15,7 +15,7 @@ flake8
 h5py
 happi>=1.6.0
 holoviews>=1.10.9
-hutch-python>=1.2.2
+hutch-python>=1.2.3
 hxrsnd>=0.1.5
 ipython>=7.1
 jupyter
