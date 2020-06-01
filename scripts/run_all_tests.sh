@@ -14,16 +14,16 @@ do
     git rev-parse HEAD
     # Try a few times. Allow pass with a warning for race conditions in tests.
     while [ $retries -gt 0 ]; do
-      timeout 5m python run_tests.py
+      timeout 10m python run_tests.py
       # Accumulate error codes, else the loop eats them
       retcode=$?
       if [ "${retcode}" -eq "0" ]; then
         break
       elif [ "${retcode}" -eq "124" ]; then
-        echo "Test timed out after 5 minutes, killed with SIGTERM"
+        echo "Test timed out after 10 minutes, killed with SIGTERM"
         break
       elif [ "${retcode}" -eq "137" ]; then
-        echo "Test timed out after 5 minutes, killed with SIGKILL"
+        echo "Test timed out after 10 minutes, killed with SIGKILL"
         break
       else
         (( retries -= 1 ))
