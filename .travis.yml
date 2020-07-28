@@ -72,7 +72,7 @@ install:
   # Use our condarc
   - cp condarc ~/.condarc
   - conda config --set always_yes yes --set changeps1 no
-  - conda install conda=4.8.2 conda-build anaconda-client packaging
+  - conda install conda-build anaconda-client packaging
   # Reboot conda after updating conda to avoid subtle path bugs
   - conda deactivate
   - conda activate
