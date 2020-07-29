@@ -42,6 +42,10 @@ matrix:
       - VARIANT=dev
       - PY_VER=3.8
   allow_failures:
+    - name: py3.6 Newest Tags
+      env:
+      - VARIANT=tag
+      - PY_VER=3.6
     - name: py3.6 Master Branch
       env:
       - VARIANT=dev
@@ -73,7 +77,6 @@ install:
   - cp condarc ~/.condarc
   - conda config --set always_yes yes --set changeps1 no
   - conda install conda-build anaconda-client packaging
-  - conda update -q conda conda-build
   # Reboot conda after updating conda to avoid subtle path bugs
   - conda deactivate
   - conda activate
