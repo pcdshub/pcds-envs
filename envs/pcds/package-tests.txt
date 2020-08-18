@@ -3,6 +3,7 @@ pcdshub/happi
 pcdshub/hutch-python
 pcdshub/hxrsnd
 pcdshub/lightpath
+pcdshub/lucid
 pcdshub/pcdsdaq
 pcdshub/pcdsdevices
 pcdshub/pcdsutils
