@@ -1,9 +1,11 @@
+archapp
 caproto
 elog
 happi
 hutch-python
 hxrsnd
 lightpath
+lucid
 ophyd
 pcdsdaq
 pcdsdevices
