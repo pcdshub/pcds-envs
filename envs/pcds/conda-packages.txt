@@ -32,7 +32,7 @@ pandas
 panel
 papermill
 pcaspy
-pcdsdaq>=2.2.5
+pcdsdaq>=2.2.6
 pcdsdevices>=2.9.0
 pcdsutils>=0.3.0
 pcdswidgets>=0.4.1
@@ -65,6 +65,6 @@ sphinx_rtd_theme
 timechart>=1.2.3
 tornado<5.0.0
 transfocate>=0.3.3
-typhos>=1.1.0
+typhos>=1.1.1
 versioneer
 xarray
