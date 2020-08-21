@@ -14,7 +14,7 @@ elog>=0.1.2
 epicscorelibs=7.0.3.99.1.0
 flake8
 h5py
-happi>=1.7.0
+happi>=1.7.1
 holoviews>=1.10.9
 hutch-python>=1.4.0
 hxrsnd>=0.1.7
@@ -33,7 +33,7 @@ panel
 papermill
 pcaspy
 pcdsdaq>=2.2.6
-pcdsdevices>=2.9.0
+pcdsdevices>=2.10.0
 pcdsutils>=0.3.0
 pcdswidgets>=0.4.1
 periodictable
