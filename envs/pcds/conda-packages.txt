@@ -63,7 +63,6 @@ simplejson
 sphinx
 sphinx_rtd_theme
 timechart>=1.2.3
-tornado<5.0.0
 transfocate>=0.3.3
 typhos>=1.1.1
 versioneer
