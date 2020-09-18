@@ -24,7 +24,6 @@ lightpath>=0.6.5
 line_profiler
 lucid>=0.7.1
 lxml
-matplotlib>=3.3.0
 mysqlclient
 numpy>=1.14
 opencv
