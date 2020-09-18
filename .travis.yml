@@ -17,55 +17,55 @@ matrix:
       env:
       - VARIANT=yaml
       - PY_VER=3.6
-    - name: py3.6 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.6
-    - name: py3.6 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.6
-    - name: py3.7 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.7
-    - name: py3.7 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.7
-    - name: py3.8 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.8
-    - name: py3.8 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.8
-  allow_failures:
-    - name: py3.6 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.6
-    - name: py3.6 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.6
-    - name: py3.7 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.7
-    - name: py3.7 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.7
-    - name: py3.8 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.8
-    - name: py3.8 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.8
+#    - name: py3.6 Newest Tags
+#      env:
+#      - VARIANT=tag
+#      - PY_VER=3.6
+#    - name: py3.6 Master Branch
+#      env:
+#      - VARIANT=dev
+#      - PY_VER=3.6
+#    - name: py3.7 Newest Tags
+#      env:
+#      - VARIANT=tag
+#      - PY_VER=3.7
+#    - name: py3.7 Master Branch
+#      env:
+#      - VARIANT=dev
+#      - PY_VER=3.7
+#    - name: py3.8 Newest Tags
+#      env:
+#      - VARIANT=tag
+#      - PY_VER=3.8
+#    - name: py3.8 Master Branch
+#      env:
+#      - VARIANT=dev
+#      - PY_VER=3.8
+#  allow_failures:
+#    - name: py3.6 Newest Tags
+#      env:
+#      - VARIANT=tag
+#      - PY_VER=3.6
+#    - name: py3.6 Master Branch
+#      env:
+#      - VARIANT=dev
+#      - PY_VER=3.6
+#    - name: py3.7 Newest Tags
+#      env:
+#      - VARIANT=tag
+#      - PY_VER=3.7
+#    - name: py3.7 Master Branch
+#      env:
+#      - VARIANT=dev
+#      - PY_VER=3.7
+#    - name: py3.8 Newest Tags
+#      env:
+#      - VARIANT=tag
+#      - PY_VER=3.8
+#    - name: py3.8 Master Branch
+#      env:
+#      - VARIANT=dev
+#      - PY_VER=3.8
  
 install:
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
