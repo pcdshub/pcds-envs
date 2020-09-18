@@ -1,5 +1,4 @@
 anaconda-client
-bluesky>=1.6.6
 bokeh>=1.0.1
 caproto>=0.6.0
 coloredlogs

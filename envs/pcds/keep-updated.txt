@@ -1,5 +1,4 @@
 archapp
-bluesky
 caproto
 elog
 happi
