@@ -11,6 +11,8 @@ else
   ENV="${1}"
 fi
 set -e
+source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
+
 conda create -y --name conda-debug python=3.6
 conda activate conda-debug
 
