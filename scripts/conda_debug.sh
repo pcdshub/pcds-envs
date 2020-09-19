@@ -19,5 +19,5 @@ conda activate conda-debug
 PACKAGES="../envs/${ENV}/conda-packages.txt"
 cat "${PACKAGES}" | while read line
 do
-  conda install "${line}" 2>&1 | tee -a conda_debug.log
+  conda install -y "${line}" 2>&1 | tee -a conda_debug.log
 done
