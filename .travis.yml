@@ -10,107 +10,97 @@ addons:
       - herbstluftwm
       - libxkbcommon-x11-0
 
-matrix:
-  fast_finish: true
-  include:
-    - name: Latest Env
-      env:
-      - VARIANT=yaml
-      - PY_VER=3.6
-    - name: py3.6 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.6
-    - name: py3.6 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.6
-    - name: py3.7 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.7
-    - name: py3.7 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.7
-    - name: py3.8 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.8
-    - name: py3.8 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.8
+jobs:
   allow_failures:
-    - name: py3.6 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.6
-    - name: py3.6 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.6
-    - name: py3.7 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.7
-    - name: py3.7 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.7
-    - name: py3.8 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.8
-    - name: py3.8 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.8
- 
-install:
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - source "$HOME/miniconda/etc/profile.d/conda.sh"
-  - conda activate
-  - hash -r
-  # Use our condarc
-  - cp condarc ~/.condarc
-  - conda config --set always_yes yes --set changeps1 no
-  - conda install conda-build anaconda-client packaging
-  # Reboot conda after updating conda to avoid subtle path bugs
-  - conda deactivate
-  - conda activate
-  # Useful for debugging any issues with conda
-  - conda info -a
-  # Always create the environment from yaml
-  - conda env create -q -n pcds-test -f envs/pcds/env.yaml
-  - |
-    if [ "$VARIANT" = "dev" ]; then
-      # Add the dev channel to be first channel
-      conda config --add channels pcds-dev
-    fi
-  - |
-    if [ "$VARIANT" != "yaml" ]; then
-      pushd scripts
-      python update_tags.py pcds
-      timeout 10m ./update_env.sh pcds-test pcds
-      popd
-    fi
-  - conda activate pcds-test
-  # Check out the tests for all of our packages
-  - |
-    if [ "$VARIANT" = "dev" ]; then
-      python scripts/test_setup.py pcds
-    else
-      python scripts/test_setup.py pcds --tag
-    fi
-  # Show us which test scripts exist
-  - readlink -f */run_tests.py
+    - name: "New Tag Compat"
+    - name: "Python 3.7 Compat"
+    - name: "Python 3.8 Compat"
+  include:
+    - stage: "Build"
+      name: "Create Base Env from YAML"
+      workspaces:
+        create:
+          name: conda_base
+          paths:
+            - miniconda
+      install:
+        - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+        - bash miniconda.sh -b -p $HOME/miniconda
+        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - conda activate
+        - hash -r
+        # Use our condarc
+        - cp condarc ~/.condarc
+        - conda config --set always_yes yes --set changeps1 no
+        - conda install conda-build anaconda-client packaging
+        # Reboot conda after updating conda to avoid subtle path bugs
+        - conda deactivate
+        - conda activate
+        # Useful for debugging any issues with conda
+        - conda info -a
+      script:
+        # Always create the environment from yaml
+        - conda env create -q -n pcds-test -f envs/pcds/env.yaml
 
-before_script:
-  # Run windows manager
-  - "herbstluftwm &"
-  - sleep 1
+    - stage: "Build"
+      name: "Setup Tests"
+      workspaces:
+        create:
+          name: test_checkouts
+          paths:
+            - test_repos
+      install:
+        - mkdir test_repos
+        - cd test_repos
+      script:
+        - python ../scripts/test_setup.py pcds
+        - readlink -f */run_tests.py
 
-script:
-  - scripts/run_all_tests.sh pcds
+    - stage: "Test"
+      name: "Python 3.6 Unit Tests"
+      workspaces:
+        use:
+        - conda_base
+        - test_checkouts
+      install:
+        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - conda activate pcds-test
+        - cd test_repos
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
+      script:
+        - ../scripts/run_all_tests.sh pcds
+
+    - stage: "Test"
+      name: "New Tag Compat"
+      workspaces:
+        use: conda_base
+      install:
+        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - conda activate pcds-test
+      script:
+        - cd scripts
+        - python update_tags.py pcds
+        - ./update_env.sh pcds-test pcds
+
+    - stage: "Test"
+      name: "Python 3.7 Compat"
+      workspaces:
+        use: conda_base
+      install:
+        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - conda activate pcds-test
+      script:
+        - conda install python=3.7
+
+    - stage: "Test"
+      name: "Python 3.8 Compat"
+      workspaces:
+        use: conda_base
+      install:
+        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - conda activate pcds-test
+      script:
+        - conda install python=3.8
