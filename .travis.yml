@@ -176,6 +176,11 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
         - cd test_repos
+        - |
+          for repo in *
+          do
+            export PYTHONPATH="$PYTHONPATH:$(readlink -f $repo)"
+          done
       before_script:
         # Run windows manager
         - "herbstluftwm &"
