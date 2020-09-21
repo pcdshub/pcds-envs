@@ -21,3 +21,4 @@ cat "${PACKAGES}" | while read line
 do
   conda install -y "${line}" 2>&1 | tee -a conda_debug.log
 done
+echo "Finished conda debug with no errors."
