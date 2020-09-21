@@ -15,8 +15,9 @@ jobs:
     - name: "New Tag Compat"
     - name: "Python 3.7 Compat"
     - name: "Python 3.8 Compat"
+
   include:
-    - stage: "Build"
+    - stage: "Init"
       name: "Create Base Env from YAML"
       workspaces:
         create:
@@ -25,8 +26,8 @@ jobs:
             - miniconda
       install:
         - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-        - bash miniconda.sh -b -p $HOME/miniconda
-        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - bash miniconda.sh -b -p miniconda
+        - source "miniconda/etc/profile.d/conda.sh"
         - conda activate
         - hash -r
         # Use our condarc
@@ -43,13 +44,33 @@ jobs:
         - conda env create -q -n pcds-test -f envs/pcds/env.yaml
 
     - stage: "Build"
-      name: "Setup Tests"
+      name: "Setup Tests (Tag)"
       workspaces:
+        use: conda_base
         create:
-          name: test_checkouts
+          name: test_tag
           paths:
             - test_repos
       install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - mkdir test_repos
+        - cd test_repos
+      script:
+        - python ../scripts/test_setup.py pcds --tag
+        - readlink -f */run_tests.py
+
+    - stage: "Build"
+      name: "Setup Tests (Dev)"
+      workspaces:
+        use: conda_base
+        create:
+          name: test_dev
+          paths:
+            - test_repos
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
         - mkdir test_repos
         - cd test_repos
       script:
@@ -61,9 +82,9 @@ jobs:
       workspaces:
         use:
         - conda_base
-        - test_checkouts
+        - test_tag
       install:
-        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
         - cd test_repos
       before_script:
@@ -78,7 +99,7 @@ jobs:
       workspaces:
         use: conda_base
       install:
-        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
       script:
         - cd scripts
@@ -90,7 +111,7 @@ jobs:
       workspaces:
         use: conda_base
       install:
-        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
       script:
         - conda install python=3.7
@@ -100,7 +121,7 @@ jobs:
       workspaces:
         use: conda_base
       install:
-        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
       script:
         - conda install python=3.8
