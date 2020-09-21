@@ -1,4 +1,5 @@
 anaconda-client
+bluesky>=1.6.6
 bokeh>=1.0.1
 caproto>=0.6.0
 coloredlogs
@@ -32,7 +33,7 @@ panel
 papermill
 pcaspy
 pcdsdaq>=2.2.7
-pcdsdevices>=2.10.0
+pcdsdevices>=2.11.0
 pcdsutils>=0.3.1
 pcdswidgets>=0.4.2
 periodictable
@@ -43,10 +44,9 @@ pswalker>=1.0.5
 pyaudio
 pyca>=3.1.1
 pydm>=1.10.4
-pyepics>=3.4.2
+pyepics>=3.4.3
 pyfiglet
 pymongo
-py-spy
 pytables
 pytest<4
 pytest-benchmark
