@@ -21,6 +21,11 @@ conda activate conda_debug
 PACKAGES="../envs/${ENV}/conda-packages.txt"
 cat "${PACKAGES}" | while read line
 do
+  echo "Installing ${line}" | tee -a conda_debug.log
   conda install -y "${line}" 2>&1 | tee -a conda_debug.log
+  if [ "$?" != "0" ]; then
+    echo "${line} install failed!" | tee -a conda_debug.log
+    exit
+  fi
 done
-echo "Finished conda debug with no errors."
+echo "Finished conda debug with no errors." | tee -a conda_debug.log
