@@ -12,9 +12,14 @@ addons:
 
 jobs:
   allow_failures:
-    - name: "New Tag Compat"
-    - name: "Python 3.7 Compat"
-    - name: "Python 3.8 Compat"
+    - name: "Setup Tests (Dev)"
+    - name: "Python 3.6 Next Env"
+    - name: "Python 3.7 Next Env"
+    - name: "Python 3.8 Next Env"
+    - name: "Python 3.6 Next Env Unit Tests"
+    - name: "Python 3.6 Master Branch Unit Tests"
+    - name: "Python 3.7 Next Env Unit Tests"
+    - name: "Python 3.8 Next Env Unit Tests"
 
   include:
     - stage: "Init"
@@ -77,8 +82,58 @@ jobs:
         - python ../scripts/test_setup.py pcds
         - readlink -f */run_tests.py
 
+    - stage: "Build"
+      name: "Python 3.6 Next Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py36
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+      script:
+        - cd scripts
+        - python update_tags.py pcds
+        - ./update_env.sh pcds-test pcds
+
+    - stage: "Build"
+      name: "Python 3.7 Next Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py37
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - conda install python=3.7
+      script:
+        - cd scripts
+        - python update_tags.py pcds
+        - ./update_env.sh pcds-test pcds
+
+    - stage: "Build"
+      name: "Python 3.8 Next Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py38
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - conda install python=3.8
+      script:
+        - cd scripts
+        - python update_tags.py pcds
+        - ./update_env.sh pcds-test pcds
+
     - stage: "Test"
-      name: "Python 3.6 Unit Tests"
+      name: "Current Env Unit Tests"
       workspaces:
         use:
         - conda_base
@@ -95,33 +150,69 @@ jobs:
         - ../scripts/run_all_tests.sh pcds
 
     - stage: "Test"
-      name: "New Tag Compat"
+      name: "Python 3.6 Next Env Unit Tests"
       workspaces:
-        use: conda_base
+        use:
+        - py36
+        - test_tag
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
+        - cd test_repos
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
       script:
-        - cd scripts
-        - python update_tags.py pcds
-        - ./update_env.sh pcds-test pcds
+        - ../scripts/run_all_tests.sh pcds
 
     - stage: "Test"
-      name: "Python 3.7 Compat"
+      name: "Python 3.6 Master Branch Unit Tests"
       workspaces:
-        use: conda_base
+        use:
+        - py36
+        - test_dev
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
+        - cd test_repos
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
       script:
-        - conda install python=3.7
+        - ../scripts/run_all_tests.sh pcds
 
     - stage: "Test"
-      name: "Python 3.8 Compat"
+      name: "Python 3.7 Next Env Unit Tests"
       workspaces:
-        use: conda_base
+        use:
+        - py37
+        - test_tag
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
+        - cd test_repos
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
       script:
-        - conda install python=3.8
+        - ../scripts/run_all_tests.sh pcds
+
+    - stage: "Test"
+      name: "Python 3.8 Next Env Unit Tests"
+      workspaces:
+        use:
+        - py38
+        - test_tag
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - cd test_repos
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
+      script:
+        - ../scripts/run_all_tests.sh pcds
