@@ -61,6 +61,7 @@ jobs:
         - conda activate pcds-test
         - mkdir test_repos
         - cd test_repos
+        - conda info -a
       script:
         - python ../scripts/test_setup.py pcds --tag
         - readlink -f */run_tests.py
@@ -78,6 +79,7 @@ jobs:
         - conda activate pcds-test
         - mkdir test_repos
         - cd test_repos
+        - conda info -a
       script:
         - python ../scripts/test_setup.py pcds
         - readlink -f */run_tests.py
@@ -93,6 +95,7 @@ jobs:
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
+        - conda info -a
       script:
         - cd scripts
         - python update_tags.py pcds
@@ -110,6 +113,7 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
         - timeout 5m conda install python=3.7
+        - conda info -a
       script:
         - cd scripts
         - python update_tags.py pcds
@@ -127,6 +131,7 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
         - timeout 5m conda install python=3.8
+        - conda info -a
       script:
         - cd scripts
         - python update_tags.py pcds
@@ -142,6 +147,7 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
         - cd test_repos
+        - conda info -a
       before_script:
         # Run windows manager
         - "herbstluftwm &"
@@ -159,6 +165,7 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
         - cd test_repos
+        - conda info -a
       before_script:
         # Run windows manager
         - "herbstluftwm &"
@@ -181,6 +188,7 @@ jobs:
           do
             export PYTHONPATH="$PYTHONPATH:$(readlink -f $repo)"
           done
+        - conda info -a
       before_script:
         # Run windows manager
         - "herbstluftwm &"
@@ -198,6 +206,7 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
         - cd test_repos
+        - conda info -a
       before_script:
         # Run windows manager
         - "herbstluftwm &"
@@ -215,6 +224,7 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
         - cd test_repos
+        - conda info -a
       before_script:
         # Run windows manager
         - "herbstluftwm &"
