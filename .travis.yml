@@ -96,10 +96,10 @@ jobs:
             - miniconda
       install:
         - source miniconda/etc/profile.d/conda.sh
+        - conda activate
         - conda activate pcds-test
         - conda info -a
       script:
-        - conda search --json archapp # CI debug
         - python scripts/update_tags.py pcds
         - timeout 10m ./update_env.sh pcds-test pcds
 
@@ -113,6 +113,7 @@ jobs:
             - miniconda
       install:
         - source miniconda/etc/profile.d/conda.sh
+        - conda activate
         - conda activate pcds-test
         - timeout 5m conda install python=3.7
         - conda info -a
@@ -130,6 +131,7 @@ jobs:
             - miniconda
       install:
         - source miniconda/etc/profile.d/conda.sh
+        - conda activate
         - conda activate pcds-test
         - timeout 5m conda install python=3.8
         - conda info -a
