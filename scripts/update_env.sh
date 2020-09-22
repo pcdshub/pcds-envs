@@ -21,9 +21,10 @@ source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 ENV_DIR="../envs/${BASE}"
 HASREL=`conda env list | grep "${NAME}"`
 if [ -z "${HASREL}" ]; then
-  conda env create --name "${ENVNAME}" --file "${ENV_DIR}/env.yaml"
+  conda env create -y --name "${ENVNAME}" --file "${ENV_DIR}/env.yaml"
 fi
 conda activate "${ENVNAME}"
-conda install python="${VER}" --file "${ENV_DIR}/conda-packages.txt"
+conda install -y python="${VER}"
+conda install -y --file "${ENV_DIR}/conda-packages.txt"
 pip install -r "${ENV_DIR}/pip-packages.txt"
 conda deactivate
