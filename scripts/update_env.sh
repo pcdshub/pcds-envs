@@ -25,7 +25,9 @@ if [ -z "${HASREL}" ]; then
 fi
 conda activate "${ENVNAME}"
 conda info -a
+echo "Installing python version ${VER}"
 conda install -y python="${VER}"
+echo "Updating tagged packages"
 conda install -y --file "${ENV_DIR}/conda-packages.txt"
 pip install -r "${ENV_DIR}/pip-packages.txt"
 conda list
