@@ -12,9 +12,9 @@ else
   BASE="${2}"
 fi
 if [ -z "${3}" ]; then
-  VER="${3}"
-else
   VER="3.6"
+else
+  VER="${3}"
 fi
 set -e
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
