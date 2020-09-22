@@ -99,6 +99,7 @@ jobs:
         - conda activate pcds-test
         - conda info -a
       script:
+        - conda search --json archapp # CI debug
         - python scripts/update_tags.py pcds
         - timeout 10m ./update_env.sh pcds-test pcds
 
