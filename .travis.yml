@@ -102,6 +102,7 @@ jobs:
         - cd scripts
         - python update_tags.py pcds
         - timeout 10m ./update_env.sh pcds-test pcds
+        - cd ..
 
     - stage: "Build"
       name: "Python 3.7 Next Env"
@@ -120,6 +121,7 @@ jobs:
         - cd scripts
         - python update_tags.py pcds
         - timeout 10m ./update_env.sh pcds-test pcds
+        - cd ..
 
     - stage: "Build"
       name: "Python 3.8 Next Env"
@@ -138,6 +140,7 @@ jobs:
         - cd scripts
         - python update_tags.py pcds
         - timeout 10m ./update_env.sh pcds-test pcds
+        - cd ..
 
     - stage: "Test"
       name: "Current Env Unit Tests"
