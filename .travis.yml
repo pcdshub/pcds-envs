@@ -14,8 +14,8 @@ jobs:
   fast_finish: true
 
   allow_failures:
-    - name: "Clone Tests (Dev)"
     - name: "Python 3.6 Next Env"
+    - name: "Python 3.6 Dev Env"
     - name: "Python 3.7 Next Env"
     - name: "Python 3.8 Next Env"
     - name: "Python 3.6 Next Env Unit Tests"
@@ -24,7 +24,7 @@ jobs:
     - name: "Python 3.8 Next Env Unit Tests"
 
   include:
-    - stage: "Load Env"
+    - stage: "Main Build"
       name: "Create Base Env from YAML"
       workspaces:
         create:
@@ -51,64 +51,24 @@ jobs:
         # Always create the environment from yaml
         - conda env create -q -n pcds-test -f envs/pcds/env.yaml
 
-    - stage: "Clone Tests"
-      name: "Clone Tests (Tag)"
-      workspaces:
-        use: conda_base
-        create:
-          name: test_tag
-          paths:
-            - test_repos
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test
-        - mkdir test_repos
-        - cd test_repos
-        - conda info -a
-        - which python
-      script:
-        - python ../scripts/test_setup.py pcds --tag
-        - readlink -f */run_tests.py
-        - cd ..
-
-    - stage: "Clone Tests"
-      name: "Clone Tests (Dev)"
-      workspaces:
-        use: conda_base
-        create:
-          name: test_dev
-          paths:
-            - test_repos
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test
-        - mkdir test_repos
-        - cd test_repos
-        - conda info -a
-        - which python
-      script:
-        - python ../scripts/test_setup.py pcds
-        - readlink -f */run_tests.py
-        - cd ..
-
     - stage: "Main Test"
       name: "Current Env Unit Tests"
       workspaces:
         use:
         - conda_base
-        - test_tag
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
-        - cd test_repos
         - conda info -a
         - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
       before_script:
         # Run windows manager
         - "herbstluftwm &"
         - sleep 1
       script:
-        - ../scripts/run_all_tests.sh pcds
+        - ./run_all_tests.sh pcds
 
     - stage: "Extra Builds"
       name: "Python 3.6 Next Env"
@@ -122,16 +82,32 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate
         - python scripts/update_tags.py pcds --debug
-        - conda activate pcds-test
         - conda info -a
         - which python
       script:
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds
-        - popd
-      after_failure:
-        # Nuke the miniconda to skip workspace creation
-        - rm -rf miniconda
+        - timeout 10m ./update_env.sh pcds-test pcds 3.6
+        - if [ "$?" == 0 ]; then popd; fi
+
+    - stage: "Extra Builds"
+      name: "Python 3.6 Dev Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py36-dev
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - conda config --add channels pcds-dev
+        - python scripts/update_tags.py pcds --debug
+        - conda info -a
+        - which python
+      script:
+        - pushd scripts
+        - timeout 10m ./update_env.sh pcds-test pcds 3.6
+        - if [ "$?" == 0 ]; then popd; fi
 
     - stage: "Extra Builds"
       name: "Python 3.7 Next Env"
@@ -145,17 +121,12 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate
         - python scripts/update_tags.py pcds --debug
-        - conda activate pcds-test
         - conda info -a
         - which python
       script:
-        - timeout 5m conda install python=3.7
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds
-        - popd
-      after_failure:
-        # Nuke the miniconda to skip workspace creation
-        - rm -rf miniconda
+        - timeout 10m ./update_env.sh pcds-test pcds 3.7
+        - if [ "$?" == 0 ]; then popd; fi
 
     - stage: "Extra Builds"
       name: "Python 3.8 Next Env"
@@ -169,95 +140,90 @@ jobs:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate
         - python scripts/update_tags.py pcds --debug
-        - conda activate pcds-test
         - conda info -a
         - which python
       script:
-        - timeout 5m conda install python=3.8
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds
-        - popd
-      after_failure:
-        # Nuke the miniconda to skip workspace creation
-        - rm -rf miniconda
+        - timeout 10m ./update_env.sh pcds-test pcds 3.8
+        - if [ "$?" == 0 ]; then popd; fi
 
     - stage: "Extra Tests"
       name: "Python 3.6 Next Env Unit Tests"
       workspaces:
         use:
         - py36
-        - test_tag
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
-        - cd test_repos
         - conda info -a
         - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
       before_script:
         # Run windows manager
         - "herbstluftwm &"
         - sleep 1
       script:
-        - ../scripts/run_all_tests.sh pcds
+        - ./run_all_tests.sh pcds
 
     - stage: "Extra Tests"
       name: "Python 3.6 Master Branch Unit Tests"
       workspaces:
         use:
-        - py36
-        - test_dev
+        - py36-dev
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
-        - cd test_repos
+        - conda info -a
+        - which python
+        - cd scripts
+        - python test_setup.py pcds
         - |
           for repo in *
           do
             export PYTHONPATH="$PYTHONPATH:$(readlink -f $repo)"
           done
-        - conda info -a
-        - which python
       before_script:
         # Run windows manager
         - "herbstluftwm &"
         - sleep 1
       script:
-        - ../scripts/run_all_tests.sh pcds
+        - ./run_all_tests.sh pcds
 
     - stage: "Extra Tests"
       name: "Python 3.7 Next Env Unit Tests"
       workspaces:
         use:
         - py37
-        - test_tag
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
-        - cd test_repos
         - conda info -a
         - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
       before_script:
         # Run windows manager
         - "herbstluftwm &"
         - sleep 1
       script:
-        - ../scripts/run_all_tests.sh pcds
+        - ./run_all_tests.sh pcds
 
     - stage: "Extra Tests"
       name: "Python 3.8 Next Env Unit Tests"
       workspaces:
         use:
         - py38
-        - test_tag
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
-        - cd test_repos
         - conda info -a
         - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
       before_script:
         # Run windows manager
         - "herbstluftwm &"
         - sleep 1
       script:
-        - ../scripts/run_all_tests.sh pcds
+        - ./run_all_tests.sh pcds

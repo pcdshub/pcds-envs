@@ -1,11 +1,20 @@
 #!/bin/bash
 # Updates the previous environment to a new latest, rather than starting from scratch.
 if [ -z "${1}" ]; then
-  echo "Usage: update_env.sh [envname] [base]"
+  echo "Usage: update_env.sh [envname] [base] [py_ver]"
   exit
 else
   ENVNAME="${1}"
+fi
+if [ -z "${2}" ]; then
+  BASE="pcds"
+else
   BASE="${2}"
+fi
+if [ -z "${3}" ]; then
+  VER="${3}"
+else
+  VER="3.6"
 fi
 set -e
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
@@ -15,6 +24,6 @@ if [ -z "${HASREL}" ]; then
   conda env create --name "${ENVNAME}" --file "${ENV_DIR}/env.yaml"
 fi
 conda activate "${ENVNAME}"
-conda install --file "${ENV_DIR}/conda-packages.txt"
+conda install python="${VER}" --file "${ENV_DIR}/conda-packages.txt"
 pip install -r "${ENV_DIR}/pip-packages.txt"
 conda deactivate
