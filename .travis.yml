@@ -87,7 +87,7 @@ jobs:
       script:
         - pushd scripts
         - timeout 10m ./update_env.sh pcds-test pcds 3.6
-        - if [ "$?" == 0 ]; then popd; fi
+        - if [ "$?" == "0" ]; then popd; fi
 
     - stage: "Extra Builds"
       name: "Python 3.6 Dev Env"
@@ -107,7 +107,7 @@ jobs:
       script:
         - pushd scripts
         - timeout 10m ./update_env.sh pcds-test pcds 3.6
-        - if [ "$?" == 0 ]; then popd; fi
+        - if [ "$?" == "0" ]; then popd; fi
 
     - stage: "Extra Builds"
       name: "Python 3.7 Next Env"
@@ -126,7 +126,7 @@ jobs:
       script:
         - pushd scripts
         - timeout 10m ./update_env.sh pcds-test pcds 3.7
-        - if [ "$?" == 0 ]; then popd; fi
+        - if [ "$?" == "0" ]; then popd; fi
 
     - stage: "Extra Builds"
       name: "Python 3.8 Next Env"
@@ -145,7 +145,7 @@ jobs:
       script:
         - pushd scripts
         - timeout 10m ./update_env.sh pcds-test pcds 3.8
-        - if [ "$?" == 0 ]; then popd; fi
+        - if [ "$?" == "0" ]; then popd; fi
 
     - stage: "Extra Tests"
       name: "Python 3.6 Next Env Unit Tests"
