@@ -54,7 +54,7 @@ fi
 
 # Do the environment's extra tests if they exist
 if [ -n "${1}" ]; then
-  EXTRA_TESTS="envs/${1}/extra-tests.sh"
+  EXTRA_TESTS="$(readlink -f $(dirname ${BASH_SOURCE[0]}))/../envs/${1}/extra-tests.sh"
   if [ -f "${EXTRA_TESTS}" ]; then
     echo "Running ${EXTRA_TESTS}"
     cat "${EXTRA_TESTS}"
