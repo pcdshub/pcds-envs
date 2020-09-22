@@ -10,107 +10,220 @@ addons:
       - herbstluftwm
       - libxkbcommon-x11-0
 
-matrix:
+jobs:
   fast_finish: true
-  include:
-    - name: Latest Env
-      env:
-      - VARIANT=yaml
-      - PY_VER=3.6
-    - name: py3.6 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.6
-    - name: py3.6 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.6
-    - name: py3.7 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.7
-    - name: py3.7 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.7
-    - name: py3.8 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.8
-    - name: py3.8 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.8
+
   allow_failures:
-    - name: py3.6 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.6
-    - name: py3.6 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.6
-    - name: py3.7 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.7
-    - name: py3.7 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.7
-    - name: py3.8 Newest Tags
-      env:
-      - VARIANT=tag
-      - PY_VER=3.8
-    - name: py3.8 Master Branch
-      env:
-      - VARIANT=dev
-      - PY_VER=3.8
- 
-install:
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - source "$HOME/miniconda/etc/profile.d/conda.sh"
-  - conda activate
-  - hash -r
-  # Use our condarc
-  - cp condarc ~/.condarc
-  - conda config --set always_yes yes --set changeps1 no
-  - conda install conda-build anaconda-client packaging
-  # Reboot conda after updating conda to avoid subtle path bugs
-  - conda deactivate
-  - conda activate
-  # Useful for debugging any issues with conda
-  - conda info -a
-  - |
-    if [ "$VARIANT" = "yaml" ]; then
-      # Create the environment from yaml
-      conda env create -q -n pcds-test -f envs/pcds/env.yaml
-    else
-      if [ "$VARIANT" = "dev" ]; then
-        # Add the dev channel to be first channel
-        conda config --add channels pcds-dev
-      fi
-      pushd scripts
-      python update_tags.py pcds
-      timeout 10m ./create_base_env.sh test pcds "$PY_VER"
-      popd
-    fi
-  - conda activate pcds-test
-  # Check out the tests for all of our packages
-  - |
-    if [ "$VARIANT" = "dev" ]; then
-      python scripts/test_setup.py pcds
-    else
-      python scripts/test_setup.py pcds --tag
-    fi
-  # Show us which test scripts exist
-  - readlink -f */run_tests.py
+    - name: "Python 3.6 Next Env"
+    - name: "Python 3.6 Dev Env"
+    - name: "Python 3.7 Next Env"
+    - name: "Python 3.8 Next Env"
+    - name: "Python 3.6 Next Env Unit Tests"
+    - name: "Python 3.6 Master Branch Unit Tests"
+    - name: "Python 3.7 Next Env Unit Tests"
+    - name: "Python 3.8 Next Env Unit Tests"
 
-before_script:
-  # Run windows manager
-  - "herbstluftwm &"
-  - sleep 1
+  include:
+    - stage: "Main Build"
+      name: "Create Base Env from YAML"
+      workspaces:
+        create:
+          name: conda_base
+          paths:
+            - miniconda
+      install:
+        - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+        - bash miniconda.sh -b -p miniconda
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - hash -r
+        # Use our condarc
+        - cp condarc miniconda/.condarc
+        - conda config --set always_yes yes --set changeps1 no
+        - conda install conda-build anaconda-client packaging
+        # Reboot conda after updating conda to avoid subtle path bugs
+        - conda deactivate
+        - conda activate
+        # Useful for debugging any issues with conda
+        - conda info -a
+        - which python
+      script:
+        # Always create the environment from yaml
+        - conda env create -q -n pcds-test -f envs/pcds/env.yaml
 
-script:
-  - scripts/run_all_tests.sh pcds
+    - stage: "Main Test"
+      name: "Current Env Unit Tests"
+      workspaces:
+        use:
+        - conda_base
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - conda info -a
+        - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
+      script:
+        - ./run_all_tests.sh pcds
+
+    - stage: "Extra Builds"
+      name: "Python 3.6 Next Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py36
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - python scripts/update_tags.py pcds --debug
+        - conda info -a
+        - which python
+      script:
+        - pushd scripts
+        - timeout 10m ./update_env.sh pcds-test pcds 3.6 && popd
+        - pwd
+
+    - stage: "Extra Builds"
+      name: "Python 3.6 Dev Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py36-dev
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - conda config --add channels pcds-dev
+        - python scripts/update_tags.py pcds --debug
+        - conda info -a
+        - which python
+      script:
+        - pushd scripts
+        - timeout 10m ./update_env.sh pcds-test pcds 3.6 && popd
+        - pwd
+
+    - stage: "Extra Builds"
+      name: "Python 3.7 Next Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py37
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - python scripts/update_tags.py pcds --debug
+        - conda info -a
+        - which python
+      script:
+        - pushd scripts
+        - timeout 10m ./update_env.sh pcds-test pcds 3.7 && popd
+        - pwd
+
+    - stage: "Extra Builds"
+      name: "Python 3.8 Next Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py38
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - python scripts/update_tags.py pcds --debug
+        - conda info -a
+        - which python
+      script:
+        - pushd scripts
+        - timeout 10m ./update_env.sh pcds-test pcds 3.8 && popd
+        - pwd
+
+    - stage: "Extra Tests"
+      name: "Python 3.6 Next Env Unit Tests"
+      workspaces:
+        use:
+        - py36
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - conda info -a
+        - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
+      script:
+        - ./run_all_tests.sh pcds
+
+    - stage: "Extra Tests"
+      name: "Python 3.6 Master Branch Unit Tests"
+      workspaces:
+        use:
+        - py36-dev
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - conda info -a
+        - which python
+        - cd scripts
+        - python test_setup.py pcds
+        - |
+          for repo in *
+          do
+            export PYTHONPATH="$PYTHONPATH:$(readlink -f $repo)"
+          done
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
+      script:
+        - ./run_all_tests.sh pcds
+
+    - stage: "Extra Tests"
+      name: "Python 3.7 Next Env Unit Tests"
+      workspaces:
+        use:
+        - py37
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - conda info -a
+        - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
+      script:
+        - ./run_all_tests.sh pcds
+
+    - stage: "Extra Tests"
+      name: "Python 3.8 Next Env Unit Tests"
+      workspaces:
+        use:
+        - py38
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test
+        - conda info -a
+        - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
+      script:
+        - ./run_all_tests.sh pcds

@@ -8,8 +8,12 @@ from packaging import version
 
 
 def latest_version(package):
-    info = subprocess.check_output(['conda', 'search', '--json', package],
-                                   universal_newlines=True)
+    try:
+        info = subprocess.check_output(['conda', 'search', '--json', package],
+                                       universal_newlines=True)
+    except Exception as exc:
+        print(exc.output)
+        raise
     info_list = json.loads(info)[package]
     latest_version = "0.0.0"
     for info_item in info_list:
@@ -75,6 +79,11 @@ def main(args):
         print(f'Found no packages in {keep_updated}, nothing to do')
         return
 
+    if args.debug:
+        conda_info = subprocess.check_output(['conda', 'info', '-a'],
+                                             universal_newlines=True)
+        print(conda_info)
+
     versions_dict = {}
     for package in packages:
         package = package.strip('\n')
@@ -92,5 +101,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('env')
     parser.add_argument('--dryrun', action='store_true')
+    parser.add_argument('--debug', action='store_true')
 
     main(parser.parse_args())
