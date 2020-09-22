@@ -8,8 +8,12 @@ from packaging import version
 
 
 def latest_version(package):
-    info = subprocess.check_output(['conda', 'search', '--json', package],
-                                   universal_newlines=True)
+    try:
+        info = subprocess.check_output(['conda', 'search', '--json', package],
+                                       universal_newlines=True)
+    except Exception as exc:
+        print(exc.output)
+        raise
     info_list = json.loads(info)[package]
     latest_version = "0.0.0"
     for info_item in info_list:
