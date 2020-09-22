@@ -86,8 +86,7 @@ jobs:
         - which python
       script:
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds 3.6
-        - if [ "$?" == "0" ]; then popd; fi
+        - timeout 10m ./update_env.sh pcds-test pcds 3.6 && popd
         - pwd
 
     - stage: "Extra Builds"
@@ -107,8 +106,7 @@ jobs:
         - which python
       script:
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds 3.6
-        - if [ "$?" == "0" ]; then popd; fi
+        - timeout 10m ./update_env.sh pcds-test pcds 3.6 && popd
         - pwd
 
     - stage: "Extra Builds"
@@ -127,8 +125,7 @@ jobs:
         - which python
       script:
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds 3.7
-        - if [ "$?" == "0" ]; then popd; fi
+        - timeout 10m ./update_env.sh pcds-test pcds 3.7 && popd
         - pwd
 
     - stage: "Extra Builds"
@@ -147,8 +144,7 @@ jobs:
         - which python
       script:
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds 3.8
-        - if [ "$?" == "0" ]; then popd; fi
+        - timeout 10m ./update_env.sh pcds-test pcds 3.8 && popd
         - pwd
 
     - stage: "Extra Tests"
