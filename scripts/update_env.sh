@@ -24,7 +24,9 @@ if [ -z "${HASREL}" ]; then
   conda env create -y --name "${ENVNAME}" --file "${ENV_DIR}/env.yaml"
 fi
 conda activate "${ENVNAME}"
+conda info -a
 conda install -y python="${VER}"
 conda install -y --file "${ENV_DIR}/conda-packages.txt"
 pip install -r "${ENV_DIR}/pip-packages.txt"
+conda list
 conda deactivate
