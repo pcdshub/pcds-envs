@@ -100,11 +100,11 @@ jobs:
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate
+        - python scripts/update_tags.py pcds --debug
         - conda activate pcds-test
         - conda info -a
         - which python
       script:
-        - python scripts/update_tags.py pcds --debug
         - timeout 10m ./update_env.sh pcds-test pcds
 
     - stage: "Build"
@@ -118,12 +118,12 @@ jobs:
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate
+        - python scripts/update_tags.py pcds --debug
         - conda activate pcds-test
-        - timeout 5m conda install python=3.7
         - conda info -a
         - which python
       script:
-        - python scripts/update_tags.py pcds --debug
+        - timeout 5m conda install python=3.7
         - timeout 10m ./update_env.sh pcds-test pcds
 
     - stage: "Build"
@@ -137,12 +137,12 @@ jobs:
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate
+        - python scripts/update_tags.py pcds --debug
         - conda activate pcds-test
-        - timeout 5m conda install python=3.8
         - conda info -a
         - which python
       script:
-        - python scripts/update_tags.py pcds --debug
+        - timeout 5m conda install python=3.8
         - timeout 10m ./update_env.sh pcds-test pcds
 
     - stage: "Test"
