@@ -11,6 +11,8 @@ addons:
       - libxkbcommon-x11-0
 
 jobs:
+  fast_finish: true
+
   allow_failures:
     - name: "Setup Tests (Dev)"
     - name: "Python 3.6 Next Env"
