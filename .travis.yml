@@ -105,7 +105,9 @@ jobs:
         - conda info -a
         - which python
       script:
+        - pushd scripts
         - timeout 10m ./update_env.sh pcds-test pcds
+        - popd
 
     - stage: "Build"
       name: "Python 3.7 Next Env"
@@ -124,7 +126,9 @@ jobs:
         - which python
       script:
         - timeout 5m conda install python=3.7
+        - pushd scripts
         - timeout 10m ./update_env.sh pcds-test pcds
+        - popd
 
     - stage: "Build"
       name: "Python 3.8 Next Env"
@@ -143,7 +147,9 @@ jobs:
         - which python
       script:
         - timeout 5m conda install python=3.8
+        - pushd scripts
         - timeout 10m ./update_env.sh pcds-test pcds
+        - popd
 
     - stage: "Test"
       name: "Current Env Unit Tests"
