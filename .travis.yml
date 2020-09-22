@@ -99,10 +99,8 @@ jobs:
         - conda activate pcds-test
         - conda info -a
       script:
-        - cd scripts
-        - python update_tags.py pcds
+        - python scripts/update_tags.py pcds
         - timeout 10m ./update_env.sh pcds-test pcds
-        - cd ..
 
     - stage: "Build"
       name: "Python 3.7 Next Env"
@@ -118,10 +116,8 @@ jobs:
         - timeout 5m conda install python=3.7
         - conda info -a
       script:
-        - cd scripts
-        - python update_tags.py pcds
+        - python scripts/update_tags.py pcds
         - timeout 10m ./update_env.sh pcds-test pcds
-        - cd ..
 
     - stage: "Build"
       name: "Python 3.8 Next Env"
@@ -137,10 +133,8 @@ jobs:
         - timeout 5m conda install python=3.8
         - conda info -a
       script:
-        - cd scripts
-        - python update_tags.py pcds
+        - python scripts/update_tags.py pcds
         - timeout 10m ./update_env.sh pcds-test pcds
-        - cd ..
 
     - stage: "Test"
       name: "Current Env Unit Tests"
