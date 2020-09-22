@@ -65,6 +65,7 @@ jobs:
       script:
         - python ../scripts/test_setup.py pcds --tag
         - readlink -f */run_tests.py
+        - cd ..
 
     - stage: "Build"
       name: "Setup Tests (Dev)"
@@ -83,6 +84,7 @@ jobs:
       script:
         - python ../scripts/test_setup.py pcds
         - readlink -f */run_tests.py
+        - cd ..
 
     - stage: "Build"
       name: "Python 3.6 Next Env"
