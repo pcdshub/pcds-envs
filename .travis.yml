@@ -44,6 +44,7 @@ jobs:
         - conda activate
         # Useful for debugging any issues with conda
         - conda info -a
+        - which python
       script:
         # Always create the environment from yaml
         - conda env create -q -n pcds-test -f envs/pcds/env.yaml
@@ -62,6 +63,7 @@ jobs:
         - mkdir test_repos
         - cd test_repos
         - conda info -a
+        - which python
       script:
         - python ../scripts/test_setup.py pcds --tag
         - readlink -f */run_tests.py
@@ -81,6 +83,7 @@ jobs:
         - mkdir test_repos
         - cd test_repos
         - conda info -a
+        - which python
       script:
         - python ../scripts/test_setup.py pcds
         - readlink -f */run_tests.py
@@ -99,6 +102,7 @@ jobs:
         - conda activate
         - conda activate pcds-test
         - conda info -a
+        - which python
       script:
         - python scripts/update_tags.py pcds --debug
         - timeout 10m ./update_env.sh pcds-test pcds
@@ -117,6 +121,7 @@ jobs:
         - conda activate pcds-test
         - timeout 5m conda install python=3.7
         - conda info -a
+        - which python
       script:
         - python scripts/update_tags.py pcds --debug
         - timeout 10m ./update_env.sh pcds-test pcds
@@ -135,6 +140,7 @@ jobs:
         - conda activate pcds-test
         - timeout 5m conda install python=3.8
         - conda info -a
+        - which python
       script:
         - python scripts/update_tags.py pcds --debug
         - timeout 10m ./update_env.sh pcds-test pcds
@@ -150,6 +156,7 @@ jobs:
         - conda activate pcds-test
         - cd test_repos
         - conda info -a
+        - which python
       before_script:
         # Run windows manager
         - "herbstluftwm &"
@@ -168,6 +175,7 @@ jobs:
         - conda activate pcds-test
         - cd test_repos
         - conda info -a
+        - which python
       before_script:
         # Run windows manager
         - "herbstluftwm &"
@@ -191,6 +199,7 @@ jobs:
             export PYTHONPATH="$PYTHONPATH:$(readlink -f $repo)"
           done
         - conda info -a
+        - which python
       before_script:
         # Run windows manager
         - "herbstluftwm &"
@@ -209,6 +218,7 @@ jobs:
         - conda activate pcds-test
         - cd test_repos
         - conda info -a
+        - which python
       before_script:
         # Run windows manager
         - "herbstluftwm &"
@@ -227,6 +237,7 @@ jobs:
         - conda activate pcds-test
         - cd test_repos
         - conda info -a
+        - which python
       before_script:
         # Run windows manager
         - "herbstluftwm &"
