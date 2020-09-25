@@ -1,0 +1,81 @@
+#!/bin/bash
+# conda_unpack_helper
+# Script to unpack a specific environment into a target directory
+
+usage()
+{
+cat << EOF
+Usage: $0 -s SOURCE_TAR -u UNPACK_DIR [-d]
+
+Unpack a packed conda env to a specific directory.
+Uses the conda-pack utility.
+Does not require a python environment active.
+
+Options:
+-s SOURCE_TAR: The packed tarball
+-u UNPACK_DIR: The directory to deploy to
+-d :           Dry-run, do not move any files around
+
+Example:
+$0 -s my_env.tar.gz -u /u1/conda
+This will create /u1/conda/my_env, which will be a working python env
+that can be activated using /u1/conda/my_env/bin/activate.
+EOF
+}
+set -e
+
+cmd=''
+
+while getopts 's:u:d' OPTION; do
+  case "${OPTION}" in
+    s)
+      SOURCE_TAR="${OPTARG}"
+      ;;
+    u)
+      UNPACK_DIR="${OPTARG}"
+      ;;
+    d)
+      DRY="DRY"
+      cmd=echo
+      ;;
+    ?)
+      usage
+      exit 0
+  esac
+done
+
+if [ -z "${SOURCE_TAR}" ] || [ -z "${UNPACK_DIR}" ]; then
+  usage
+  exit 1
+fi
+
+TARGET="${UNPACK_DIR}/${ENV}"
+ACTIVATE="${TARGET}/bin/activate"
+DEACTIVATE="${TARGET}/bin/deactivate"
+
+if [ -d "${TARGET}" ]; then
+  echo "${TARGET} already exists. Aborting."
+  exit 1
+fi
+
+if [ ! -f "${SOURCE_TAR}" ]; then
+  echo "Could not find ${SOURCE_TAR}. Aborting."
+  exit 1
+fi
+
+echo "Creating ${TARGET}"
+$cmd mkdir "${TARGET}"
+echo "Untarring ${SOURCE_TAR} into ${TARGET}"
+$cmd tar -xzf "${SOURCE_TAR}" -C "${TARGET}"
+
+if [ -z "${DRY}" ] && [ ! -f "${ACTIVATE}" ]; then
+  echo "Could not execute ${ACTIVATE}, something went wrong"
+  echo "Aborting"
+  exit 1
+fi
+
+echo "Unpacking conda environment"
+$cmd source "${ACTIVATE}"
+$cmd conda-unpack
+$cmd source "${DEACTIVATE}"
+echo "Done!"

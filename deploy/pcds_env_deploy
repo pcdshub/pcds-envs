@@ -1,0 +1,92 @@
+#!/bin/bash
+# pcds_env_deploy
+# Script to deploy specific conda envs to hard drive for an LCLS opr
+
+usage()
+{
+cat << EOF
+Usage: $0 [-e ENV] [-i INSTR] [-d]
+
+Deploy a pcds conda env to the operator machine hard drive.
+Uses conda_unpack_helper, which uses the conda-pack utility.
+Does not require a python environment active.
+
+Options:
+-e ENV:        The environment to deploy. If omitted, we'll deploy latest.
+-i INSTR:      The instrument/hutch to deploy for. If omitted, we'll call
+               get_hutch_name.
+-d :           Dry-run, do not move any files around.
+EOF
+}
+
+set -e
+cmd=''
+
+while getopts 'e:i:d' OPTION; do
+  case "${OPTION}" in
+    e)
+      ENV="${OPTARG}"
+      ;;
+    i)
+      HUTCH="${OPTARG}"
+      ;;
+    d)
+      DRY="DRY"
+      cmd=echo
+      ;;
+    ?)
+      usage
+      exit 0
+  esac
+done
+
+SOURCE_DIR="/reg/g/pcds/pyps/conda/packed_envs"
+
+if [ ! -d "${SOURCE_DIR}" ]; then
+  echo "${SOURCE_DIR} is missing. Aborting."
+  exit 1
+fi
+
+if [ ! -x "$(command -v conda_unpack_helper)" ]; then
+  echo "Script conda_unpack_helper not found. Aborting."
+  exit 1
+fi
+
+if [ -z "${ENV}" ]; then
+  TAR_NAME="$(ls ${SOURCE_DIR} | grep pcds | tail -n 1)"
+  SOURCE_TAR="${SOURCE_DIR}/${TAR_NAME}"
+  echo "Picked ${SOURCE_TAR} automatically."
+else
+  SOURCE_TAR="${SOURCE_DIR}/${ENV}.tar.gz"
+  echo "Picked ${SOURCE_TAR} from user arguments."
+fi
+
+if [ -z "${HUTCH}" ]; then
+  if [ -x "$(command -v get_hutch_name)" ]; then
+    HUTCH="$(get_hutch_name)"
+  else
+    echo "Script get_hutch_name not found. Aborting"
+    exit 1
+  fi
+fi
+
+HDD_DIR="/u1/${HUTCH}opr"
+UNPACK_DIR="${HDD_DIR}/conda"
+
+if [ ! -d "${HDD_DIR}" ]; then
+  echo "Did not find ${HDD_DIR}, something went wrong. Aborting."
+  exit 1
+fi
+
+if [ ! -d "${UNPACK_DIR}" ]; then
+  echo "Creating ${UNPACK_DIR}"
+  $cmd mkdir "${UNPACK_DIR}"
+fi
+
+UNPACK="conda_unpack_helper -s ${SOURCE_TAR} -u ${UNPACK_DIR}"
+
+if [ -z "${DRY}" ]; then
+  $UNPACK
+else
+  $UNPACK -d
+fi
