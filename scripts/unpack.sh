@@ -2,6 +2,7 @@
 # Script to unpack a specific environment into a target directory
 ENV="${1}"
 DIR="${2}"
+PACKS="${3}"
 
 if [ -z "${DIR}" ]; then
   echo "Usage: unpack.sh <ENV> <DIR>"
@@ -9,7 +10,11 @@ if [ -z "${DIR}" ]; then
   echo "This will install /u1/conda/pcds-3.3.4"
 fi
 
-ENV_FILE="/reg/g/pcds/pyps/conda/packed_envs/${ENV}.tar.gz"
+if [ -z "${PACKS}" ]; then
+  PACKS="/reg/g/pcds/pyps/conda/packed_envs"
+fi
+
+ENV_FILE="${PACKS}/${ENV}.tar.gz"
 TARGET="${DIR}/${ENV}"
 ACTIVATE="${TARGET}/bin/activate"
 DEACTIVATE="${TARGET}/bin/deactivate"
