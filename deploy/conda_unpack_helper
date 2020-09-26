@@ -12,9 +12,9 @@ Uses the conda-pack utility.
 Does not require a python environment active.
 
 Options:
--s SOURCE_TAR: The packed tarball
--u UNPACK_DIR: The directory to deploy to
--d :           Dry-run, do not move any files around
+-s SOURCE_TAR:  The packed tarball
+-u UNPACK_DIR:  The directory to deploy to
+-d :            Dry-run, do not move any files around
 
 Example:
 $0 -s my_env.tar.gz -u /u1/conda
@@ -49,12 +49,17 @@ if [ -z "${SOURCE_TAR}" ] || [ -z "${UNPACK_DIR}" ]; then
   exit 1
 fi
 
-TARGET="${UNPACK_DIR}/${ENV}"
-ACTIVATE="${TARGET}/bin/activate"
-DEACTIVATE="${TARGET}/bin/deactivate"
+ACTIVATE="${UNPACK_DIR}/bin/activate"
+DEACTIVATE="${UNPACK_DIR}/bin/deactivate"
 
-if [ -d "${TARGET}" ]; then
-  echo "${TARGET} already exists. Aborting."
+if [ -f "${UNPACK_DIR}" ]; then
+  echo "${UNPACK_DIR} already exists. Aborting."
+  exit 1
+fi
+
+if [ ! -d "${UNPACK_DIR}/.." ]; then
+  echo "${UNPACK_DIR} parent directory does not exist."
+  echo "Check that you used the correct path. Aborting."
   exit 1
 fi
 
@@ -63,13 +68,13 @@ if [ ! -f "${SOURCE_TAR}" ]; then
   exit 1
 fi
 
-echo "Creating ${TARGET}"
-$cmd mkdir "${TARGET}"
-echo "Untarring ${SOURCE_TAR} into ${TARGET}"
-$cmd tar -xzf "${SOURCE_TAR}" -C "${TARGET}"
+echo "Creating ${UNPACK_DIR}"
+$cmd mkdir "${UNPACK_DIR}"
+echo "Untarring ${SOURCE_TAR} into ${UNPACK_DIR}"
+$cmd tar -xzf "${SOURCE_TAR}" -C "${UNPACK_DIR}"
 
 if [ -z "${DRY}" ] && [ ! -f "${ACTIVATE}" ]; then
-  echo "Could not execute ${ACTIVATE}, something went wrong"
+  echo "Could not find ${ACTIVATE}, something went wrong"
   echo "Aborting"
   exit 1
 fi
