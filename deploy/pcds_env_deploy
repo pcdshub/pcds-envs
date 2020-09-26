@@ -5,30 +5,37 @@
 usage()
 {
 cat << EOF
-Usage: $0 [-e ENV] [-i INSTR] [-d]
+Usage: $0 [-e ENV] [-i INSTR] [-m] [-d]
 
 Deploy a pcds conda env to the operator machine hard drive.
 Uses conda_unpack_helper, which uses the conda-pack utility.
 Does not require a python environment active.
 
+This deploys environments from NFS at /reg/g/pcds/pyps/conda/packed_envs
+to the hard drive at /u1/<hutch>opr/envs
+
 Options:
--e ENV:        The environment to deploy. If omitted, we'll deploy latest.
--i INSTR:      The instrument/hutch to deploy for. If omitted, we'll call
-               get_hutch_name.
--d :           Dry-run, do not move any files around.
+-e ENV:    The environment to deploy. If omitted, we'll deploy latest.
+-i INSTR:  The instrument/hutch to deploy for. If omitted, we'll call
+           get_hutch_name.
+-m :       Memory, deploy to /dev/shm instead of to the HDD
+-d :       Dry-run, do not move any files around.
 EOF
 }
 
 set -e
 cmd=''
 
-while getopts 'e:i:d' OPTION; do
+while getopts 'e:i:md' OPTION; do
   case "${OPTION}" in
     e)
       ENV="${OPTARG}"
       ;;
     i)
-      HUTCH="${OPTARG}"
+      INSTR="${OPTARG}"
+      ;;
+    m)
+      DISK_DIR="/dev/shm"
       ;;
     d)
       DRY="DRY"
@@ -54,27 +61,30 @@ fi
 
 if [ -z "${ENV}" ]; then
   TAR_NAME="$(ls ${SOURCE_DIR} | grep pcds | tail -n 1)"
+  ENV="$(echo ${TAR_NAME} | cut -d '.' -f 1)"
   SOURCE_TAR="${SOURCE_DIR}/${TAR_NAME}"
-  echo "Picked ${SOURCE_TAR} automatically."
+  echo "Picked ${ENV}, ${SOURCE_TAR} automatically."
 else
   SOURCE_TAR="${SOURCE_DIR}/${ENV}.tar.gz"
   echo "Picked ${SOURCE_TAR} from user arguments."
 fi
 
-if [ -z "${HUTCH}" ]; then
-  if [ -x "$(command -v get_hutch_name)" ]; then
-    HUTCH="$(get_hutch_name)"
-  else
-    echo "Script get_hutch_name not found. Aborting"
-    exit 1
+if [ -z "${DISK_DIR}" ]; then
+  if [ -z "${INSTR}" ]; then
+    if [ -x "$(command -v get_hutch_name)" ]; then
+      INSTR="$(get_hutch_name)"
+    else
+      echo "Script get_hutch_name not found. Aborting"
+      exit 1
+    fi
   fi
+  DISK_DIR="/u1/${INSTR}opr"
 fi
 
-HDD_DIR="/u1/${HUTCH}opr"
-UNPACK_DIR="${HDD_DIR}/conda"
+UNPACK_DIR="${DISK_DIR}/envs"
 
-if [ ! -d "${HDD_DIR}" ]; then
-  echo "Did not find ${HDD_DIR}, something went wrong. Aborting."
+if [ ! -d "${DISK_DIR}" ]; then
+  echo "Did not find ${DISK_DIR}, something went wrong. Aborting."
   exit 1
 fi
 
@@ -83,7 +93,7 @@ if [ ! -d "${UNPACK_DIR}" ]; then
   $cmd mkdir "${UNPACK_DIR}"
 fi
 
-UNPACK="conda_unpack_helper -s ${SOURCE_TAR} -u ${UNPACK_DIR}"
+UNPACK="conda_unpack_helper -s ${SOURCE_TAR} -u ${UNPACK_DIR}/${ENV}"
 
 if [ -z "${DRY}" ]; then
   $UNPACK
