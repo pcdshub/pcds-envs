@@ -12,7 +12,7 @@ Uses conda_unpack_helper, which uses the conda-pack utility.
 Does not require a python environment active.
 
 This deploys environments from NFS at /reg/g/pcds/pyps/conda/packed_envs
-to the hard drive at /u1/<hutch>opr/envs
+to the hard drive at /u1/<instr>opr/envs
 
 Options:
 -e ENV:    The environment to deploy. If omitted, we'll deploy latest.
