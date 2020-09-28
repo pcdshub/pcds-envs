@@ -57,9 +57,10 @@ if [ -f "${UNPACK_DIR}" ]; then
   exit 1
 fi
 
-if [ -z "${DRY}" ] && [ ! -d "${UNPACK_DIR}/.." ]; then
-  echo "${UNPACK_DIR} parent directory does not exist."
-  echo "Check that you used the correct path. Aborting."
+UNPACK_PARENT="$(dirname ${UNPACK_DIR})"
+
+if [ -z "${DRY}" ] && [ ! -d "${UNPACK_PARENT}" ]; then
+  echo "${UNPACK_PARENT} directory does not exist. Aborting."
   exit 1
 fi
 
