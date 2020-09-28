@@ -68,7 +68,7 @@ fi
 
 if [ -z "${ENV}" ]; then
   TAR_NAME="$(ls ${SOURCE_DIR} | grep pcds | tail -n 1)"
-  ENV="$(echo ${TAR_NAME} | cut -d '.' -f 1)"
+  ENV="$(basename ${TAR_NAME} .tar.gz)"
   SOURCE_TAR="${SOURCE_DIR}/${TAR_NAME}"
   echo "Picked ${ENV}, ${SOURCE_TAR} automatically."
 else
