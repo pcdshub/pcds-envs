@@ -43,7 +43,7 @@ while getopts 'e:i:mt:d' OPTION; do
       ;;
     d)
       DRY="DRY"
-      CMD=echo
+      CMD="echo dry-run:"
       ;;
     ?)
       usage
