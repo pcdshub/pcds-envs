@@ -5,7 +5,7 @@
 usage()
 {
 cat << EOF
-Usage: $0 [-e ENV] [-i INSTR] [-m] [-d]
+Usage: $0 [-e ENV] [-i INSTR] [-m] [-d] [-t TARGET]
 
 Deploy a pcds conda env to the operator machine hard drive.
 Uses conda_unpack_helper, which uses the conda-pack utility.
@@ -20,13 +20,14 @@ Options:
            get_hutch_name.
 -m :       Memory, deploy to /dev/shm instead of to the HDD
 -d :       Dry-run, do not move any files around.
+-t TARGET: Install dir override for testing
 EOF
 }
 
 set -e
-cmd=''
+CMD=''
 
-while getopts 'e:i:md' OPTION; do
+while getopts 'e:i:mt:d' OPTION; do
   case "${OPTION}" in
     e)
       ENV="${OPTARG}"
@@ -37,9 +38,12 @@ while getopts 'e:i:md' OPTION; do
     m)
       DISK_DIR="/dev/shm"
       ;;
+    t)
+      DISK_DIR="${OPTARG}"
+      ;;
     d)
       DRY="DRY"
-      cmd=echo
+      CMD=echo
       ;;
     ?)
       usage
@@ -47,14 +51,17 @@ while getopts 'e:i:md' OPTION; do
   esac
 done
 
+HERE="$(dirname ${BASH_SOURCE[0]})"
 SOURCE_DIR="/reg/g/pcds/pyps/conda/packed_envs"
+GET_HUTCH="/reg/g/pcds/engineering_tools/latest/scripts/get_hutch_name"
+UNPACK="${HERE}/conda_unpack_helper"
 
 if [ ! -d "${SOURCE_DIR}" ]; then
   echo "${SOURCE_DIR} is missing. Aborting."
   exit 1
 fi
 
-if [ ! -x "$(command -v conda_unpack_helper)" ]; then
+if [ ! -x "$(command -v ${UNPACK})" ]; then
   echo "Script conda_unpack_helper not found. Aborting."
   exit 1
 fi
@@ -71,8 +78,8 @@ fi
 
 if [ -z "${DISK_DIR}" ]; then
   if [ -z "${INSTR}" ]; then
-    if [ -x "$(command -v get_hutch_name)" ]; then
-      INSTR="$(get_hutch_name)"
+    if [ -x "$(command -v ${GET_HUTCH})" ]; then
+      INSTR="$(${GET_HUTCH})"
     else
       echo "Script get_hutch_name not found. Aborting"
       exit 1
@@ -90,13 +97,13 @@ fi
 
 if [ ! -d "${UNPACK_DIR}" ]; then
   echo "Creating ${UNPACK_DIR}"
-  $cmd mkdir "${UNPACK_DIR}"
+  $CMD mkdir "${UNPACK_DIR}"
 fi
 
-UNPACK="conda_unpack_helper -s ${SOURCE_TAR} -u ${UNPACK_DIR}/${ENV}"
+UNPACK_ARGS="${UNPACK} -s ${SOURCE_TAR} -u ${UNPACK_DIR}/${ENV}"
 
 if [ -z "${DRY}" ]; then
-  $UNPACK
+  $UNPACK_ARGS
 else
-  $UNPACK -d
+  $UNPACK_ARGS -d
 fi
