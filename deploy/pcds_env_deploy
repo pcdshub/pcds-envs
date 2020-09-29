@@ -5,7 +5,7 @@
 usage()
 {
 cat << EOF
-Usage: $0 [-e ENV] [-i INSTR] [-m] [-d] [-t TARGET]
+Usage: $0 [-e ENV] [-i INSTR] [-m] [-d] [-t TARGET] [-h]
 
 Deploy a pcds conda env to the operator machine hard drive.
 Uses conda_unpack_helper, which uses the conda-pack utility.
@@ -19,15 +19,16 @@ Options:
 -i INSTR:  The instrument/hutch to deploy for. If omitted, we'll call
            get_hutch_name.
 -m :       Memory, deploy to /dev/shm instead of to the HDD
--d :       Dry-run, do not move any files around.
 -t TARGET: Install dir override for testing
+-d :       Dry-run, do not move any files around.
+-h :       Show usage
 EOF
 }
 
 set -e
 CMD=''
 
-while getopts 'e:i:mt:d' OPTION; do
+while getopts 'e:i:mt:dh' OPTION; do
   case "${OPTION}" in
     e)
       ENV="${OPTARG}"
@@ -45,9 +46,14 @@ while getopts 'e:i:mt:d' OPTION; do
       DRY="DRY"
       CMD="echo dry-run:"
       ;;
-    ?)
+    h)
       usage
       exit 0
+      ;;
+    ?)
+      usage
+      exit 1
+      ;;
   esac
 done
 

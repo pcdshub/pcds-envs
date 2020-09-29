@@ -5,7 +5,7 @@
 usage()
 {
 cat << EOF
-Usage: $0 -s SOURCE_TAR -u UNPACK_DIR [-d]
+Usage: $0 -s SOURCE_TAR -u UNPACK_DIR [-d] [-h]
 
 Unpack a packed conda env to a specific directory.
 Uses the conda-pack utility.
@@ -15,6 +15,7 @@ Options:
 -s SOURCE_TAR:  The packed tarball
 -u UNPACK_DIR:  The directory to deploy to
 -d :            Dry-run, do not move any files around
+-h :            Show usage
 
 Example:
 $0 -s my_env.tar.gz -u /u1/conda
@@ -26,7 +27,7 @@ set -e
 
 CMD=''
 
-while getopts 's:u:d' OPTION; do
+while getopts 's:u:dh' OPTION; do
   case "${OPTION}" in
     s)
       SOURCE_TAR="${OPTARG}"
@@ -38,9 +39,14 @@ while getopts 's:u:d' OPTION; do
       DRY="DRY"
       CMD="echo dry-run:"
       ;;
-    ?)
+    h)
       usage
       exit 0
+      ;;
+    ?)
+      usage
+      exit 1
+      ;;
   esac
 done
 
