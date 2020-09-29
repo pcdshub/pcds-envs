@@ -36,7 +36,6 @@ while getopts 'e:f:dh' OPTION; do
       FILE="${OPTARG}"
       ;;
     d)
-      DRY="DRY"
       CMD="echo dry-run:"
       INNER_ARGS="${INNER_ARGS} -d"
       ;;
