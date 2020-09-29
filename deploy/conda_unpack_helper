@@ -5,7 +5,7 @@
 usage()
 {
 cat << EOF
-Usage: $0 -s SOURCE_TAR -u UNPACK_DIR [-d] [-h]
+Usage: $0 -s SOURCE_TAR -u UNPACK_DIR -r [-h]
 
 Unpack a packed conda env to a specific directory.
 Uses the conda-pack utility.
@@ -14,7 +14,7 @@ Does not require a python environment active.
 Options:
 -s SOURCE_TAR:  The packed tarball
 -u UNPACK_DIR:  The directory to deploy to
--d :            Dry-run, do not move any files around
+-r :            Actually run the script. If omitted, does a dry run.
 -h :            Show usage
 
 Example:
@@ -25,9 +25,9 @@ EOF
 }
 set -e
 
-CMD=''
+CMD="echo dry-run:"
 
-while getopts 's:u:dh' OPTION; do
+while getopts 's:u:rh' OPTION; do
   case "${OPTION}" in
     s)
       SOURCE_TAR="${OPTARG}"
@@ -35,9 +35,8 @@ while getopts 's:u:dh' OPTION; do
     u)
       UNPACK_DIR="${OPTARG}"
       ;;
-    d)
-      DRY="DRY"
-      CMD="echo dry-run:"
+    r)
+      CMD=""
       ;;
     h)
       usage
@@ -65,7 +64,7 @@ fi
 
 UNPACK_PARENT="$(dirname ${UNPACK_DIR})"
 
-if [ -z "${DRY}" ] && [ ! -d "${UNPACK_PARENT}" ]; then
+if [ -n "${CMD}" ] && [ ! -d "${UNPACK_PARENT}" ]; then
   echo "${UNPACK_PARENT} directory does not exist. Aborting."
   exit 1
 fi
@@ -80,7 +79,7 @@ $CMD mkdir "${UNPACK_DIR}"
 echo "Untarring ${SOURCE_TAR} into ${UNPACK_DIR}"
 $CMD tar -xzf "${SOURCE_TAR}" -C "${UNPACK_DIR}"
 
-if [ -z "${DRY}" ] && [ ! -f "${ACTIVATE}" ]; then
+if [ -n "${CMD}" ] && [ ! -f "${ACTIVATE}" ]; then
   echo "Could not find ${ACTIVATE}, something went wrong"
   echo "Aborting"
   exit 1

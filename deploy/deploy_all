@@ -5,12 +5,13 @@
 usage()
 {
 cat << EOF
-Usage: $0 [-e ENV] [-f FILENAME] [-d] [-h]
+Usage: $0 -r [-e ENV] [-f FILENAME] [-h]
 
 Deploy pcds conda envs onto many servers at once.
 Uses ssh and pcds_env_deploy to do the installs.
 
 Options:
+-r :         Actually run the script. If omitted, does a dry run.
 -e ENV:      The environment to deploy, or latest if omitted.
 -f FILENAME: The file that contains a list of hosts to install to.
              Defaults to the hosts.txt file in this directory.
@@ -20,24 +21,24 @@ EOF
 }
 
 set -e
-CMD=''
+CMD="echo dry-run:"
 
 HERE="$(dirname ${BASH_SOURCE[0]})"
 FILE="${HERE}/hosts.txt"
 INNER_ARGS=""
 
-while getopts 'e:f:dh' OPTION; do
+while getopts 're:f:h' OPTION; do
   case "${OPTION}" in
+    r)
+      CMD=""
+      INNER_ARGS="${INNER_ARGS} -r"
+      ;;
     e)
       ENV="${OPTARG}"
       INNER_ARGS="${INNER_ARGS} -e ${ENV}"
       ;;
     f)
       FILE="${OPTARG}"
-      ;;
-    d)
-      CMD="echo dry-run:"
-      INNER_ARGS="${INNER_ARGS} -d"
       ;;
     h)
       usage
