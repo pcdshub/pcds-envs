@@ -27,6 +27,7 @@ EOF
 
 set -e
 CMD=''
+INNER_ARGS=""
 
 while getopts 'e:i:mt:dh' OPTION; do
   case "${OPTION}" in
@@ -43,8 +44,8 @@ while getopts 'e:i:mt:dh' OPTION; do
       DISK_DIR="${OPTARG}"
       ;;
     d)
-      DRY="DRY"
       CMD="echo dry-run:"
+      INNER_ARGS="${INNER_ARGS} -d"
       ;;
     h)
       usage
@@ -82,6 +83,8 @@ else
   echo "Picked ${SOURCE_TAR} from user arguments."
 fi
 
+INNER_ARGS="${INNER_ARGS} -s ${SOURCE_TAR}"
+
 if [ -z "${DISK_DIR}" ]; then
   if [ -z "${INSTR}" ]; then
     if [ -x "$(command -v ${GET_HUTCH})" ]; then
@@ -106,10 +109,6 @@ if [ ! -d "${UNPACK_DIR}" ]; then
   $CMD mkdir "${UNPACK_DIR}"
 fi
 
-UNPACK_ARGS="${UNPACK} -s ${SOURCE_TAR} -u ${UNPACK_DIR}/${ENV}"
+INNER_ARGS="${INNER_ARGS} -u ${UNPACK_DIR}/${ENV}"
 
-if [ -z "${DRY}" ]; then
-  $UNPACK_ARGS
-else
-  $UNPACK_ARGS -d
-fi
+"${UNPACK}${INNER_ARGS}"
