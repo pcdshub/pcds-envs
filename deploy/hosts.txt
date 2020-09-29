@@ -1,2 +1,4 @@
+mfx-control
+mfx-daq
 xpp-control
 xpp-daq

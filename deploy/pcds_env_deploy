@@ -58,7 +58,7 @@ while getopts 're:i:mt:dh' OPTION; do
   esac
 done
 
-HERE="$(dirname ${BASH_SOURCE[0]})"
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 SOURCE_DIR="/reg/g/pcds/pyps/conda/packed_envs"
 GET_HUTCH="/reg/g/pcds/engineering_tools/latest/scripts/get_hutch_name"
 UNPACK="${HERE}/conda_unpack_helper"

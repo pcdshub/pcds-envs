@@ -57,14 +57,14 @@ fi
 ACTIVATE="${UNPACK_DIR}/bin/activate"
 DEACTIVATE="${UNPACK_DIR}/bin/deactivate"
 
-if [ -f "${UNPACK_DIR}" ]; then
+if [ -d "${UNPACK_DIR}" ]; then
   echo "${UNPACK_DIR} already exists. Aborting."
   exit 1
 fi
 
 UNPACK_PARENT="$(dirname ${UNPACK_DIR})"
 
-if [ -n "${CMD}" ] && [ ! -d "${UNPACK_PARENT}" ]; then
+if [ -z "${CMD}" ] && [ ! -d "${UNPACK_PARENT}" ]; then
   echo "${UNPACK_PARENT} directory does not exist. Aborting."
   exit 1
 fi
@@ -79,7 +79,7 @@ $CMD mkdir "${UNPACK_DIR}"
 echo "Untarring ${SOURCE_TAR} into ${UNPACK_DIR}"
 $CMD tar -xzf "${SOURCE_TAR}" -C "${UNPACK_DIR}"
 
-if [ -n "${CMD}" ] && [ ! -f "${ACTIVATE}" ]; then
+if [ -z "${CMD}" ] && [ ! -f "${ACTIVATE}" ]; then
   echo "Could not find ${ACTIVATE}, something went wrong"
   echo "Aborting"
   exit 1
