@@ -1,0 +1,13 @@
+#!/bin/bash
+# This is the command the cronjob will run.
+# It will call deploy_all and tee the output into a file.
+
+HERE="$(dirname ${BASH_SOURCE[0]})"
+LOGS="${HERE}/logs"
+FILE="${HERE}/logs/$(date -Iseconds)"
+
+if [ ! -d "${LOGS}" ]; then
+  mkdir "${LOGS}"
+fi
+
+${HERE}/deploy_all $@ | tee ${FILE}
