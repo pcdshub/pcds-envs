@@ -110,4 +110,4 @@ fi
 
 INNER_ARGS="${INNER_ARGS} -u ${UNPACK_DIR}/${ENV}"
 
-"${UNPACK}""${INNER_ARGS}"
+eval "${UNPACK}""${INNER_ARGS}"
