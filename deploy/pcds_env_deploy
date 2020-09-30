@@ -1,0 +1,124 @@
+#!/bin/bash
+# pcds_env_deploy
+# Script to deploy specific conda envs to hard drive for an LCLS opr
+
+usage()
+{
+cat << EOF
+Usage: $0 -r [-e ENV] [-i INSTR] [-m] [-t TARGET] [-h]
+
+Deploy a pcds conda env to the operator machine hard drive.
+Uses conda_unpack_helper, which uses the conda-pack utility.
+Does not require a python environment active.
+
+This deploys environments from NFS at /reg/g/pcds/pyps/conda/packed_envs
+to the hard drive at /u1/<instr>opr/envs
+
+Options:
+-r :       Actually run the script. If omitted, does a dry run.
+-e ENV:    The environment to deploy. If omitted, we'll deploy latest.
+-i INSTR:  The instrument/hutch to deploy for. If omitted, we'll call
+           get_hutch_name.
+-m :       Memory, deploy to /dev/shm instead of to the HDD
+-t TARGET: Install dir override for testing
+-h :       Show usage
+EOF
+}
+
+CMD="echo dry-run:"
+INNER_ARGS=""
+
+while getopts 're:i:mt:dh' OPTION; do
+  case "${OPTION}" in
+    r)
+      CMD=""
+      INNER_ARGS="${INNER_ARGS} -r"
+      ;;
+    e)
+      ENV="${OPTARG}"
+      ;;
+    i)
+      INSTR="${OPTARG}"
+      ;;
+    m)
+      DISK_DIR="/dev/shm"
+      ;;
+    t)
+      DISK_DIR="${OPTARG}"
+      ;;
+    h)
+      usage
+      exit 0
+      ;;
+    ?)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+SOURCE_DIR="/reg/g/pcds/pyps/conda/packed_envs"
+
+echo "Checking for NFS issues..."
+timeout 10s ls ${SOURCE_DIR} >/dev/null 2>&1
+if [ "$?" == 0 ]; then
+  echo "NFS seems ok, proceeding."
+else
+  echo "NFS seems bad, aborting."
+  exit 1
+fi
+
+set -e
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+GET_HUTCH="/reg/g/pcds/engineering_tools/latest/scripts/get_hutch_name"
+UNPACK="${HERE}/conda_unpack_helper"
+
+if [ ! -d "${SOURCE_DIR}" ]; then
+  echo "${SOURCE_DIR} is missing. Aborting."
+  exit 1
+fi
+
+if [ ! -x "$(command -v "${UNPACK}")" ]; then
+  echo "Script conda_unpack_helper not found. Aborting."
+  exit 1
+fi
+
+if [ -z "${ENV}" ]; then
+  SOURCE_TAR="$(find "${SOURCE_DIR}" -maxdepth 1 -name "pcds-*.tar.gz" | sort --version-sort | tail -n 1)"
+  ENV="$(basename "${SOURCE_TAR}" .tar.gz)"
+  echo "Picked ${ENV}, ${SOURCE_TAR} automatically."
+else
+  SOURCE_TAR="${SOURCE_DIR}/${ENV}.tar.gz"
+  echo "Picked ${SOURCE_TAR} from user arguments."
+fi
+
+INNER_ARGS="${INNER_ARGS} -s ${SOURCE_TAR}"
+
+if [ -z "${DISK_DIR}" ]; then
+  if [ -z "${INSTR}" ]; then
+    if [ -x "$(command -v ${GET_HUTCH})" ]; then
+      INSTR="$(${GET_HUTCH})"
+    else
+      echo "Script get_hutch_name not found. Aborting"
+      exit 1
+    fi
+  fi
+  DISK_DIR="/u1/${INSTR}opr"
+fi
+
+UNPACK_DIR="${DISK_DIR}/conda_envs"
+
+if [ ! -d "${DISK_DIR}" ]; then
+  echo "Did not find ${DISK_DIR}, something went wrong. Aborting."
+  exit 1
+fi
+
+if [ ! -d "${UNPACK_DIR}" ]; then
+  echo "Creating ${UNPACK_DIR}"
+  $CMD mkdir "${UNPACK_DIR}"
+fi
+
+INNER_ARGS="${INNER_ARGS} -u ${UNPACK_DIR}/${ENV}"
+
+eval "${UNPACK}""${INNER_ARGS}"

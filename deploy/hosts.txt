@@ -1,0 +1,12 @@
+cxi-control
+cxi-daq
+mec-control
+mec-daq
+mfx-control
+mfx-daq
+tmo-control
+tmo-daq
+xcs-control
+xcs-daq
+xpp-control
+xpp-daq

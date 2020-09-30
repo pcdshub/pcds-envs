@@ -1,0 +1,73 @@
+#!/bin/bash
+# deploy_all
+# Script to run pcds_env_deploy on all scheduled servers
+
+usage()
+{
+cat << EOF
+Usage: $0 -r [-e ENV] [-f FILENAME] [-h]
+
+Deploy pcds conda envs onto many servers at once.
+Uses ssh and pcds_env_deploy to do the installs.
+
+Options:
+-r :         Actually run the script. If omitted, does a dry run.
+-e ENV:      The environment to deploy, or latest if omitted.
+-f FILENAME: The file that contains a list of hosts to install to.
+             Defaults to the hosts.txt file in this directory.
+-d :         Dry-run, do not move any files around.
+-h :         Show usage
+EOF
+}
+
+set -e
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+FILE="${HERE}/hosts.txt"
+INNER_ARGS=""
+
+while getopts 're:f:h' OPTION; do
+  case "${OPTION}" in
+    r)
+      INNER_ARGS="${INNER_ARGS} -r"
+      ;;
+    e)
+      ENV="${OPTARG}"
+      INNER_ARGS="${INNER_ARGS} -e ${ENV}"
+      ;;
+    f)
+      FILE="${OPTARG}"
+      ;;
+    h)
+      usage
+      exit 0
+      ;;
+    ?)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+DEPLOY="${HERE}/pcds_env_deploy"
+
+if [ ! -x "$(command -v "${DEPLOY}")" ]; then
+  echo "Script pcds_env_deploy not found. Aborting."
+  exit 1
+fi
+
+if [ ! -f "${FILE}" ]; then
+  echo "Could not find hosts file ${FILE}. Aborting."
+  exit 1
+fi
+
+echo "Deploying conda env to all operator machines."
+
+set +e
+while read -r line; do
+  echo "Deploying on ${line}"
+  ssh -n "${line}" "${DEPLOY}${INNER_ARGS}"
+done < "${FILE}"
+set -e
+
+echo "Done deploying conda env to all operator machines."
