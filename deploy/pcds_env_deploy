@@ -25,7 +25,6 @@ Options:
 EOF
 }
 
-set -e
 CMD="echo dry-run:"
 INNER_ARGS=""
 
@@ -58,8 +57,20 @@ while getopts 're:i:mt:dh' OPTION; do
   esac
 done
 
-HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 SOURCE_DIR="/reg/g/pcds/pyps/conda/packed_envs"
+
+echo "Checking for NFS issues..."
+timeout 10s ls ${SOURCE_DIR} >/dev/null 2>&1
+if [ "$?" == 0 ]; then
+  echo "NFS seems ok, proceeding."
+else
+  echo "NFS seems bad, aborting."
+  exit 1
+fi
+
+set -e
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 GET_HUTCH="/reg/g/pcds/engineering_tools/latest/scripts/get_hutch_name"
 UNPACK="${HERE}/conda_unpack_helper"
 
