@@ -74,9 +74,8 @@ if [ ! -x "$(command -v ${UNPACK})" ]; then
 fi
 
 if [ -z "${ENV}" ]; then
-  TAR_NAME="$(ls ${SOURCE_DIR} | grep pcds | tail -n 1)"
-  ENV="$(basename ${TAR_NAME} .tar.gz)"
-  SOURCE_TAR="${SOURCE_DIR}/${TAR_NAME}"
+  SOURCE_TAR="$(ls ${SOURCE_DIR}/pcds-*.tar.gz | sort --version-sort | tail -n 1)"
+  ENV="$(basename ${SOURCE_TAR} .tar.gz)"
   echo "Picked ${ENV}, ${SOURCE_TAR} automatically."
 else
   SOURCE_TAR="${SOURCE_DIR}/${ENV}.tar.gz"
