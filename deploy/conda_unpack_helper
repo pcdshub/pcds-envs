@@ -62,7 +62,7 @@ if [ -d "${UNPACK_DIR}" ]; then
   exit 1
 fi
 
-UNPACK_PARENT="$(dirname ${UNPACK_DIR})"
+UNPACK_PARENT="$(dirname "${UNPACK_DIR}")"
 
 if [ -z "${CMD}" ] && [ ! -d "${UNPACK_PARENT}" ]; then
   echo "${UNPACK_PARENT} directory does not exist. Aborting."

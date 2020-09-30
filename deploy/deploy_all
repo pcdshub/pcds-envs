@@ -21,7 +21,6 @@ EOF
 }
 
 set -e
-CMD="echo dry-run:"
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 FILE="${HERE}/hosts.txt"
@@ -30,7 +29,6 @@ INNER_ARGS=""
 while getopts 're:f:h' OPTION; do
   case "${OPTION}" in
     r)
-      CMD=""
       INNER_ARGS="${INNER_ARGS} -r"
       ;;
     e)
@@ -53,7 +51,7 @@ done
 
 DEPLOY="${HERE}/pcds_env_deploy"
 
-if [ ! -x "$(command -v ${DEPLOY})" ]; then
+if [ ! -x "$(command -v "${DEPLOY}")" ]; then
   echo "Script pcds_env_deploy not found. Aborting."
   exit 1
 fi

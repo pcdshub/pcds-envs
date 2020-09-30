@@ -68,14 +68,14 @@ if [ ! -d "${SOURCE_DIR}" ]; then
   exit 1
 fi
 
-if [ ! -x "$(command -v ${UNPACK})" ]; then
+if [ ! -x "$(command -v "${UNPACK}")" ]; then
   echo "Script conda_unpack_helper not found. Aborting."
   exit 1
 fi
 
 if [ -z "${ENV}" ]; then
-  SOURCE_TAR="$(ls ${SOURCE_DIR}/pcds-*.tar.gz | sort --version-sort | tail -n 1)"
-  ENV="$(basename ${SOURCE_TAR} .tar.gz)"
+  SOURCE_TAR="$(find "${SOURCE_DIR}" -maxdepth 1 -name "pcds-*.tar.gz" | sort --version-sort | tail -n 1)"
+  ENV="$(basename "${SOURCE_TAR}" .tar.gz)"
   echo "Picked ${ENV}, ${SOURCE_TAR} automatically."
 else
   SOURCE_TAR="${SOURCE_DIR}/${ENV}.tar.gz"
@@ -110,4 +110,4 @@ fi
 
 INNER_ARGS="${INNER_ARGS} -u ${UNPACK_DIR}/${ENV}"
 
-${UNPACK}${INNER_ARGS}
+"${UNPACK}""${INNER_ARGS}"

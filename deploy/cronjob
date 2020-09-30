@@ -10,4 +10,4 @@ if [ ! -d "${LOGS}" ]; then
   mkdir "${LOGS}"
 fi
 
-${HERE}/deploy_all $@ 2>&1 | tee ${FILE}
+"${HERE}"/deploy_all "$@" 2>&1 | tee "${FILE}"
