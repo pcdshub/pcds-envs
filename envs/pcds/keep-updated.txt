@@ -8,6 +8,7 @@ hxrsnd
 lightpath
 lucid
 ophyd
+pcdscalc
 pcdsdaq
 pcdsdevices
 pcdsutils
