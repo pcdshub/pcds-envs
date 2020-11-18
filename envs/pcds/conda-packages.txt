@@ -13,6 +13,8 @@ doctr
 elog>=0.1.2
 epicscorelibs=7.0.3.99.1.0
 flake8
+fzf
+gh
 h5py
 happi>=1.8.2
 holoviews>=1.10.9
