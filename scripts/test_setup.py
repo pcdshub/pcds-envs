@@ -95,7 +95,9 @@ def main(args):
     else:
         tags = None
 
-    setup_all_tests(repo_file, tags=tags)
+    os.mkdir('tests')
+    with pushd('tests'):
+        setup_all_tests(repo_file, tags=tags)
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@ ERR_PKGS=""
 WARN_PKGS=""
 RETRIES=5
 
-for dir in *
+for dir in tests/*
 do
   retries=$RETRIES
   echo "Running tests for ${dir}"
