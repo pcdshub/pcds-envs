@@ -27,6 +27,7 @@ line_profiler
 lucid>=0.7.2
 lxml
 mysqlclient
+nabs>=0.1.0
 numpy>=1.14
 opencv
 ophyd>=1.5.4
