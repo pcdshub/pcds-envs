@@ -1,5 +1,5 @@
 anaconda-client
-bluesky>=1.6.6
+bluesky>=1.6.7
 bokeh>=1.0.1
 caproto>=0.6.0
 coloredlogs
@@ -13,8 +13,10 @@ doctr
 elog>=0.1.2
 epicscorelibs=7.0.3.99.1.0
 flake8
+fzf
+gh
 h5py
-happi>=1.8.2
+happi>=1.8.3
 holoviews>=1.10.9
 hutch-python>=1.8.0
 hxrsnd>=0.2.1
@@ -25,6 +27,7 @@ line_profiler
 lucid>=0.7.2
 lxml
 mysqlclient
+nabs>=0.1.0
 numpy>=1.14
 opencv
 ophyd>=1.5.4
@@ -32,9 +35,9 @@ pandas
 panel
 papermill
 pcaspy
-pcdscalc>=0.0.0
+pcdscalc>=0.1.0
 pcdsdaq>=2.3.0
-pcdsdevices>=3.2.0
+pcdsdevices>=3.3.0
 pcdsutils>=0.4.0
 pcdswidgets>=0.4.2
 periodictable
@@ -54,7 +57,7 @@ pytest-benchmark
 pytest-qt
 pytest-timeout
 python-graphviz
-pytmc>=2.7.6
+pytmc>=2.7.7
 qdarkstyle
 scikit-image
 scikit-learn

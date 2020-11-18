@@ -4,11 +4,12 @@ pcdshub/hutch-python
 pcdshub/hxrsnd
 pcdshub/lightpath
 pcdshub/lucid
+pcdshub/nabs
+pcdshub/pcdscalc
 pcdshub/pcdsdaq
 pcdshub/pcdsdevices
 pcdshub/pcdsutils
 pcdshub/pcdswidgets
-pcdshub/pmgr
 slaclab/psdm_qs_cli
 pcdshub/pswalker
 slaclab/pyca
