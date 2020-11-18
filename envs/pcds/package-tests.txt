@@ -4,6 +4,7 @@ pcdshub/hutch-python
 pcdshub/hxrsnd
 pcdshub/lightpath
 pcdshub/lucid
+pcdshub/pcdscalc
 pcdshub/pcdsdaq
 pcdshub/pcdsdevices
 pcdshub/pcdsutils
