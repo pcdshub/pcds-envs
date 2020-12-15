@@ -1,1 +1,1 @@
-0 14 * * 1-5 /reg/g/pcds/pyps/conda/pcds_envs/deploy/cronjob -r
+0 14 * * 1-5 /reg/g/pcds/pyps/conda/pcds-envs/deploy/cronjob -r
