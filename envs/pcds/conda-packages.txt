@@ -15,6 +15,7 @@ epicscorelibs=7.0.3.99.1.0
 flake8
 fzf
 gh
+grpcio-tools
 h5py
 happi>=1.8.3
 holoviews>=1.10.9
