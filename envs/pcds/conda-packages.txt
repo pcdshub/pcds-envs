@@ -71,3 +71,4 @@ transfocate>=0.3.3
 typhos>=1.1.2
 versioneer
 xarray
+xraylib
