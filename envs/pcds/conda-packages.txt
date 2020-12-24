@@ -20,7 +20,7 @@ h5py
 happi>=1.8.3
 holoviews>=1.10.9
 hutch-python>=1.9.0
-hxrsnd>=0.2.1
+hxrsnd>=0.2.2
 ipython>=7.1
 jupyter
 lightpath>=0.6.6
