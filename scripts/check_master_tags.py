@@ -4,13 +4,25 @@ import pathlib
 import shutil
 import subprocess
 import sys
+import time
 
 
 def get_master_tag(repo):
     tmp_dir = 'check_tag_tmp'
     shutil.rmtree(tmp_dir, ignore_errors=True)
-    subprocess.run(['git', 'clone', '--depth', '1', f'git@github.com:{repo}',
-                    tmp_dir], check=True)
+
+    clone_tries = 10
+    while clone_tries > 0:
+        try:
+            subprocess.run(['git', 'clone', '--depth', '1', f'git@github.com:{repo}',
+                            tmp_dir], check=True)
+            break
+        except subprocess.CalledProcessError:
+            time.sleep(5)
+            clone_tries -= 1
+            if clone_tries <= 0:
+                raise
+
     os.chdir(tmp_dir)
     try:
         tag = subprocess.check_output(['git', 'describe', '--tags'],
