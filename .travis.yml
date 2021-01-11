@@ -21,6 +21,7 @@ jobs:
     - name: "Python 3.9 Next Env"
     - name: "Python 3.6 Next Env Unit Tests"
     - name: "Python 3.6 Master Branch Unit Tests"
+    - name: "Python 3.7 Conda Debug"
     - name: "Python 3.7 Next Env Unit Tests"
     - name: "Python 3.8 Next Env Unit Tests"
     - name: "Python 3.9 Next Env Unit Tests"
@@ -210,6 +211,17 @@ jobs:
         - sleep 1
       script:
         - ./run_all_tests.sh pcds
+
+    - stage: "Extra Tests"
+      name: "Python 3.7 Conda Debug"
+      workspaces:
+        use:
+        - conda_base
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+      script:
+        - cd scripts
+        - ./conda_debug.sh pcds 3.7
 
     - stage: "Extra Tests"
       name: "Python 3.7 Next Env Unit Tests"
