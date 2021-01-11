@@ -5,17 +5,25 @@
 # incompatible, since the output from a failure to install 1 package
 # is more readable than the output for failing to install 50.
 if [ -z "${1}" ]; then
-  echo "Usage: conda_debug.sh [env]"
+  echo "Usage: conda_debug.sh [env] [py_ver]"
   exit
 else
   ENV="${1}"
 fi
+
+if [ -z "${1}" ]; then
+  echo "Usage: conda_debug.sh [env] [py_ver]"
+  exit
+else
+  PY_VER="${2}"
+fi
+
 set -e
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 
 echo "Beginning debug build." | tee -a conda_debug.log
 conda info | tee -a conda_debug.log
-conda create -y --name conda_debug python=3.6 | tee -a conda_debug.log
+conda create -y --name conda_debug python="${PY_VER}" | tee -a conda_debug.log
 conda activate conda_debug
 
 PACKAGES="../envs/${ENV}/conda-packages.txt"
