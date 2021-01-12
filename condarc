@@ -1,11 +1,11 @@
-# Use ours first, then conda-forge for maximum compatibility
+# Use conda-forge first, for best results, ours as a fallback, defaults as a fallback fallback
 channels:
-  - pcds-tag
   - conda-forge
+  - pcds-tag
   - defaults
 
 # Stop at first channel with a valid version
-channel_priority: true
+channel_priority: strict
 
 # Only change what I asked for!
 update_dependencies: false
