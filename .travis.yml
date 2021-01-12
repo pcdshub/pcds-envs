@@ -18,10 +18,12 @@ jobs:
     - name: "Python 3.6 Dev Env"
     - name: "Python 3.7 Next Env"
     - name: "Python 3.8 Next Env"
+    - name: "Python 3.9 Next Env"
     - name: "Python 3.6 Next Env Unit Tests"
     - name: "Python 3.6 Master Branch Unit Tests"
     - name: "Python 3.7 Next Env Unit Tests"
     - name: "Python 3.8 Next Env Unit Tests"
+    - name: "Python 3.9 Next Env Unit Tests"
 
   include:
     - stage: "Main Build"
@@ -125,7 +127,7 @@ jobs:
         - which python
       script:
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds 3.7 && popd
+        - timeout 20m ./create_base_env.sh test-py37 pcds 3.7 && popd
         - pwd
 
     - stage: "Extra Builds"
@@ -144,7 +146,26 @@ jobs:
         - which python
       script:
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds 3.8 && popd
+        - timeout 20m ./create_base_env.sh test-py38 pcds 3.8 && popd
+        - pwd
+
+    - stage: "Extra Builds"
+      name: "Python 3.9 Next Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py39
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - python scripts/update_tags.py pcds --debug
+        - conda info -a
+        - which python
+      script:
+        - pushd scripts
+        - timeout 20m ./create_base_env.sh test-py39 pcds 3.9 && popd
         - pwd
 
     - stage: "Extra Tests"
@@ -197,7 +218,7 @@ jobs:
         - py37
       install:
         - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test
+        - conda activate pcds-test-py37
         - conda info -a
         - which python
         - cd scripts
@@ -216,7 +237,26 @@ jobs:
         - py38
       install:
         - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test
+        - conda activate pcds-test-py38
+        - conda info -a
+        - which python
+        - cd scripts
+        - python test_setup.py pcds --tag
+      before_script:
+        # Run windows manager
+        - "herbstluftwm &"
+        - sleep 1
+      script:
+        - ./run_all_tests.sh pcds
+
+    - stage: "Extra Tests"
+      name: "Python 3.9 Next Env Unit Tests"
+      workspaces:
+        use:
+        - py39
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate pcds-test-py39
         - conda info -a
         - which python
         - cd scripts
