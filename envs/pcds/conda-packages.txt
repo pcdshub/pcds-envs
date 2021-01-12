@@ -53,7 +53,7 @@ pyepics>=3.4.3
 pyfiglet
 pymongo
 pytables
-pytest<4
+pytest
 pytest-benchmark
 pytest-qt
 pytest-timeout
