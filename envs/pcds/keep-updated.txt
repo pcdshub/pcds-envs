@@ -15,6 +15,7 @@ pcdsdevices
 pcdsutils
 pcdswidgets
 pmgr
+psdaq
 psdm_qs_cli
 pswalker
 pyca
