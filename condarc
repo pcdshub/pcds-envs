@@ -1,15 +1,10 @@
-# Use ours first, then conda-forge for maximum compatibility
+# Use conda-forge first, for best results, ours as a fallback
 channels:
-  - pcds-tag
   - conda-forge
-  - defaults
+  - pcds-tag
 
 # Stop at first channel with a valid version
-channel_priority: true
+channel_priority: strict
 
 # Only change what I asked for!
 update_dependencies: false
-
-# Revert to old behavior that uses the "free" channel from defaults. We need a package from here...
-# https://conda.io/projects/conda/en/latest/user-guide/configuration/free-channel.html
-restore_free_channel: true
