@@ -21,6 +21,7 @@ pyca
 pydm
 pyepics
 pytmc
+tc_release
 timechart
 transfocate
 typhos
