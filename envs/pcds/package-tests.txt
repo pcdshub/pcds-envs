@@ -14,7 +14,7 @@ slaclab/psdm_qs_cli
 pcdshub/pswalker
 slaclab/pyca
 slaclab/pydm
-slaclab/pytmc
+pcdshub/pytmc
 slaclab/timechart
 pcdshub/transfocate
 pcdshub/typhos
