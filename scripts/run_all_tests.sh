@@ -82,6 +82,7 @@ fi
 # Do a pip dependencies check
 if [ -x "$(command -v pip)" ]; then
   pip check
+  (( ERROR += $? ))
 fi
 
 exit $ERROR
