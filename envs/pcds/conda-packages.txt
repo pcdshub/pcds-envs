@@ -1,6 +1,7 @@
 ads-async>=0.0.2
 anaconda-client
 bluesky>=1.6.7
+bluesky-live
 bokeh>=1.0.1
 caproto>=0.7.1
 coloredlogs

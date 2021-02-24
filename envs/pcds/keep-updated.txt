@@ -2,6 +2,7 @@ ads-async
 archapp
 bluesky
 caproto
+databroker
 elog
 happi
 hutch-python
