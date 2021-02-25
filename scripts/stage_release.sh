@@ -32,11 +32,16 @@ if [ -z "${HASREL}" ]; then
 else
   echo "Using existing environment ${NAME}"
 fi
+CONDA_TAGS="../envs/${BASE}/conda-packages.txt"
+PIP_TAGS="../envs/${BASE}/pip-packages.txt"
+
 echo "Exporting yaml file"
 YAML="../envs/${BASE}/env.yaml"
 conda env export -n "${NAME}" -f "${YAML}" --no-builds
 echo "Committing and pushing"
 git add "${YAML}"
+git add "${CONDA_TAGS}"
+git add "${PIP_TAGS}"
 git commit -m "ENH: updated ${BASE} to ${REL}"
 git push origin "${BRANCH}"
 if [ -x "$(command -v conda-pack)" ]; then
