@@ -79,4 +79,10 @@ else
   echo "Skipping extra-tests.sh, did not input an environment name as argument 1"
 fi
 
+# Do a pip dependencies check
+if [ -x "$(command -v pip)" ]; then
+  pip check
+  (( ERROR += $? ))
+fi
+
 exit $ERROR
