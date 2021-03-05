@@ -62,6 +62,7 @@ pytest-benchmark
 pytest-qt
 pytest-timeout
 python-graphviz
+python-ldap
 pytmc>=2.8.1
 qdarkstyle
 scikit-image
