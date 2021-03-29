@@ -1,6 +1,8 @@
+ads-async
 archapp
 bluesky
 caproto
+databroker
 elog
 happi
 hutch-python
@@ -22,6 +24,7 @@ pyca
 pydm
 pyepics
 pytmc
+tc_release
 timechart
 transfocate
 typhos
