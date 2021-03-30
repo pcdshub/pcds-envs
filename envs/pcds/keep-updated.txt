@@ -17,7 +17,7 @@ pcdsdevices
 pcdsutils
 pcdswidgets
 pmgr
-psdaq
+psdaq-control-minimal
 psdm_qs_cli
 pswalker
 pyca
