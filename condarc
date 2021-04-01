@@ -2,6 +2,7 @@
 channels:
   - conda-forge
   - pcds-tag
+  - lcls-ii
 
 # Stop at first channel with a valid version
 channel_priority: strict
