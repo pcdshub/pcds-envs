@@ -1,15 +1,15 @@
-ads-async>=0.0.2
+ads-async>=0.1.0
 anaconda-client
 bluesky>=1.6.7
 bluesky-live
 bokeh>=1.0.1
-caproto>=0.7.1
+caproto>=0.8.0
 coloredlogs
 conda-pack
 conda-smithy
 cookiecutter
 coverage
-databroker>=1.2.2
+databroker>=1.2.3
 datashader
 doctr
 elog>=1.0.2
@@ -52,7 +52,7 @@ psdm_qs_cli>=0.3.1
 pswalker>=1.0.6
 pyaudio
 pyca>=3.1.1
-pydm>=1.10.7
+pydm>=1.11.0
 pyepics>=3.4.3
 pyfiglet
 pymongo
@@ -76,7 +76,7 @@ sphinx
 sphinx_rtd_theme
 tc_release>=0.2.1
 timechart>=1.2.3
-transfocate>=0.3.4
+transfocate>=0.4.0
 typhos>=1.1.4
 versioneer
 xarray
