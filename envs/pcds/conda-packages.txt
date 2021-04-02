@@ -40,9 +40,9 @@ panel
 papermill
 pcaspy
 pcdscalc>=0.2.0
-pcdsdaq>=2.3.3
-pcdsdevices>=4.2.0
-pcdsutils>=0.4.1
+pcdsdaq>=2.3.4
+pcdsdevices>=4.3.0
+pcdsutils>=0.4.2
 pcdswidgets>=0.5.1
 periodictable
 pmgr>=1.1.4
@@ -64,7 +64,7 @@ pytest-qt
 pytest-timeout
 python-graphviz
 python-ldap
-pytmc>=2.8.1
+pytmc>=2.9.0
 qdarkstyle
 scikit-image
 scikit-learn
@@ -77,7 +77,7 @@ sphinx_rtd_theme
 tc_release>=0.2.1
 timechart>=1.2.3
 transfocate>=0.4.0
-typhos>=1.1.4
+typhos>=1.1.5
 versioneer
 xarray
 xraylib
