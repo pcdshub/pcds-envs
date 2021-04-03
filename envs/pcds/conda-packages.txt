@@ -52,7 +52,7 @@ psdm_qs_cli>=0.3.1
 pswalker>=1.0.6
 pyaudio
 pyca>=3.1.1
-pydm=1.10.7
+pydm>=1.11.0
 pyepics>=3.4.3
 pyfiglet
 pymongo
@@ -64,7 +64,7 @@ pytest-qt
 pytest-timeout
 python-graphviz
 python-ldap
-pytmc=2.8.1
+pytmc>=2.9.0
 qdarkstyle
 scikit-image
 scikit-learn
