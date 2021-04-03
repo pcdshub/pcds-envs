@@ -41,7 +41,7 @@ papermill
 pcaspy
 pcdscalc>=0.2.0
 pcdsdaq>=2.3.4
-pcdsdevices>=4.3.0
+pcdsdevices>=4.3.1
 pcdsutils>=0.4.2
 pcdswidgets>=0.5.1
 periodictable
@@ -64,7 +64,7 @@ pytest-qt
 pytest-timeout
 python-graphviz
 python-ldap
-pytmc>=2.9.0
+pytmc=2.8.1
 qdarkstyle
 scikit-image
 scikit-learn
