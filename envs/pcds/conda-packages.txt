@@ -41,7 +41,7 @@ papermill
 pcaspy
 pcdscalc>=0.2.0
 pcdsdaq>=2.3.4
-pcdsdevices>=4.3.1
+pcdsdevices>=4.3.2
 pcdsutils>=0.4.2
 pcdswidgets>=0.5.1
 periodictable
@@ -75,9 +75,9 @@ simplejson
 sphinx
 sphinx_rtd_theme
 tc_release>=0.2.1
-timechart>=1.2.3
+timechart>=1.2.4
 transfocate>=0.4.0
-typhos>=1.1.5
+typhos>=1.1.6
 versioneer
 xarray
 xraylib
