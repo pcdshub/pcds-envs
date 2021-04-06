@@ -12,6 +12,7 @@ coverage
 databroker>=1.2.3
 datashader
 doctr
+docutils=0.16
 elog>=1.0.2
 epicscorelibs=7.0.3.99.4.0
 flake8
