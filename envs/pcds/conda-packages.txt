@@ -22,7 +22,7 @@ grpcio-tools
 h5py
 happi>=1.9.0
 holoviews>=1.10.9
-hutch-python>=1.9.1
+hutch-python>=1.10.0
 hxrsnd>=0.2.4
 ipython>=7.1
 isort
@@ -42,7 +42,7 @@ papermill
 pcaspy
 pcdscalc>=0.2.0
 pcdsdaq>=2.3.4
-pcdsdevices>=4.3.2
+pcdsdevices>=4.4.0
 pcdsutils>=0.4.2
 pcdswidgets>=0.5.1
 periodictable
