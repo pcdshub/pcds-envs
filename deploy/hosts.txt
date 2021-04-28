@@ -4,6 +4,10 @@ mec-control
 mec-daq
 mfx-control
 mfx-daq
+rix-console
+rix-control
+rix-daq
+rix-monitor
 tmo-control
 tmo-daq
 xcs-control
