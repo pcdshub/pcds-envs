@@ -78,7 +78,7 @@ sphinx
 sphinx_rtd_theme
 tc_release>=0.2.1
 timechart>=1.2.4
-transfocate>=0.5.1
+transfocate=0.5.0
 typhos>=1.1.6
 versioneer
 xarray

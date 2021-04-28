@@ -26,5 +26,4 @@ pyepics
 pytmc
 tc_release
 timechart
-transfocate
 typhos
