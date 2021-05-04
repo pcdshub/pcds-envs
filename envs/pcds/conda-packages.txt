@@ -68,7 +68,7 @@ python-graphviz
 python-ldap
 pytmc>=2.9.1
 qdarkstyle
-scikit-image
+scikit-image=0.17.2
 scikit-learn
 scipy
 seaborn
