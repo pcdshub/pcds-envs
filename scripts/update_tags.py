@@ -7,6 +7,8 @@ from pathlib import Path
 from packaging import version
 
 
+CHANNELS = ['conda-forge', 'pcds-tag', 'lcls-ii']
+
 def latest_version(package):
     try:
         info = subprocess.check_output(['conda', 'search', '--json', package],
@@ -15,11 +17,26 @@ def latest_version(package):
         print(exc.output)
         raise
     info_list = json.loads(info)[package]
+    channel_versions = {}
     latest_version = "0.0.0"
     for info_item in info_list:
         item_version = info_item['version']
+        item_channel = info_item['channel']
+        for ch in CHANNELS:
+            if ch in item_channel:
+                item_channel = ch
+                break
         if version.parse(item_version) > version.parse(latest_version):
             latest_version = item_version
+        latest_ch_ver = channel_versions.setdefault(item_channel, "0.0.0")
+        if version.parse(item_version) > version.parse(latest_ch_ver):
+            channel_versions[item_channel] = item_version
+    if channel_versions.get('conda-forge', latest_version) != latest_version:
+        print(
+            f'Warning! {package}={latest_version} '
+            'is not ready on conda-forge! '
+            'Building with this config is likely to fail!'
+            )
     return latest_version
 
 
