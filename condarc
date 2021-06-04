@@ -4,8 +4,8 @@ channels:
   - pcds-tag
   - lcls-ii
 
-# Stop at first channel with a valid version
-channel_priority: strict
+# Allow pcds-tag channel while conda-forge has issues
+channel_priority: flexible
 
 # Only change what I asked for!
 update_dependencies: false
