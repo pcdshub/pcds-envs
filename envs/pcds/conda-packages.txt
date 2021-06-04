@@ -64,7 +64,7 @@ py-spy
 pytables
 pytest
 pytest-benchmark
-pytest-qt
+pytest-qt=3.3.0
 pytest-timeout
 python-graphviz
 python-ldap
