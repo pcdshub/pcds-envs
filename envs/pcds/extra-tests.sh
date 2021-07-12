@@ -4,6 +4,7 @@ set -e
 # Check for basic entry point failures
 hutch-python --help
 lightpath --help
+pmgrLauncher.sh --help
 pydm --help
 pytmc --help
 typhos --help
