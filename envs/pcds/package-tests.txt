@@ -1,3 +1,4 @@
+klauer/blark
 pcdshub/elog
 pcdshub/happi
 pcdshub/hutch-python

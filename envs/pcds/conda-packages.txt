@@ -1,5 +1,6 @@
 ads-async>=0.1.2
 anaconda-client
+blark>=0.1.6
 bluesky>=1.7.0
 bluesky-live
 bokeh>=1.0.1
