@@ -45,7 +45,7 @@ papermill
 pcaspy
 pcdscalc>=0.3.2
 pcdsdaq>=2.3.4
-pcdsdevices>=4.7.0
+pcdsdevices>=4.7.1
 pcdsutils>=0.5.0
 pcdswidgets>=0.5.1
 periodictable
