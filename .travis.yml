@@ -14,12 +14,12 @@ jobs:
   fast_finish: true
 
   allow_failures:
-    - name: "Python 3.8 Next Env"
-    - name: "Python 3.8 Dev Env"
     - name: "Python 3.9 Next Env"
-    - name: "Python 3.8 Next Env Unit Tests"
-    - name: "Python 3.8 Master Branch Unit Tests"
+    - name: "Python 3.9 Dev Env"
+    - name: "Python 3.10 Next Env"
     - name: "Python 3.9 Next Env Unit Tests"
+    - name: "Python 3.9 Master Branch Unit Tests"
+    - name: "Python 3.10 Next Env Unit Tests"
 
   include:
     - stage: "Main Build"
@@ -69,11 +69,11 @@ jobs:
         - ./run_all_tests.sh pcds
 
     - stage: "Extra Builds"
-      name: "Python 3.8 Dev Env"
+      name: "Python 3.9 Dev Env"
       workspaces:
         use: conda_base
         create:
-          name: py38-dev
+          name: py39-dev
           paths:
             - miniconda
       install:
@@ -85,26 +85,7 @@ jobs:
         - which python
       script:
         - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds 3.8 && popd
-        - pwd
-
-    - stage: "Extra Builds"
-      name: "Python 3.8 Next Env"
-      workspaces:
-        use: conda_base
-        create:
-          name: py38
-          paths:
-            - miniconda
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate
-        - python scripts/update_tags.py pcds --debug
-        - conda info -a
-        - which python
-      script:
-        - pushd scripts
-        - timeout 20m ./create_base_env.sh test-py38 pcds 3.8 && popd
+        - timeout 10m ./update_env.sh pcds-test pcds 3.9 && popd
         - pwd
 
     - stage: "Extra Builds"
@@ -126,11 +107,30 @@ jobs:
         - timeout 20m ./create_base_env.sh test-py39 pcds 3.9 && popd
         - pwd
 
+    - stage: "Extra Builds"
+      name: "Python 3.10 Next Env"
+      workspaces:
+        use: conda_base
+        create:
+          name: py310
+          paths:
+            - miniconda
+      install:
+        - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - python scripts/update_tags.py pcds --debug
+        - conda info -a
+        - which python
+      script:
+        - pushd scripts
+        - timeout 20m ./create_base_env.sh test-py310 pcds 3.10 && popd
+        - pwd
+
     - stage: "Extra Tests"
-      name: "Python 3.8 Master Branch Unit Tests"
+      name: "Python 3.9 Master Branch Unit Tests"
       workspaces:
         use:
-        - py38-dev
+        - py39-dev
       install:
         - source miniconda/etc/profile.d/conda.sh
         - conda activate pcds-test
@@ -151,13 +151,13 @@ jobs:
         - ./run_all_tests.sh pcds
 
     - stage: "Extra Tests"
-      name: "Python 3.8 Next Env Unit Tests"
+      name: "Python 3.9 Next Env Unit Tests"
       workspaces:
         use:
-        - py38
+        - py39
       install:
         - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test-py38
+        - conda activate pcds-test-py39
         - conda info -a
         - which python
         - cd scripts
@@ -170,13 +170,13 @@ jobs:
         - ./run_all_tests.sh pcds
 
     - stage: "Extra Tests"
-      name: "Python 3.9 Next Env Unit Tests"
+      name: "Python 3.10 Next Env Unit Tests"
       workspaces:
         use:
-        - py39
+        - py310
       install:
         - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test-py39
+        - conda activate pcds-test-py310
         - conda info -a
         - which python
         - cd scripts
