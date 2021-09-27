@@ -19,8 +19,7 @@ jobs:
     - name: "Python 3.10 Next Env Unit Tests"
 
   include:
-    - stage: "Main Test"
-      name: "Current Env Unit Tests"
+    - name: "Current Env Unit Tests"
       install:
         - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
         - bash miniconda.sh -b -p miniconda
@@ -49,8 +48,7 @@ jobs:
       script:
         - ./run_all_tests.sh pcds
 
-    - stage: "Extra Tests"
-      name: "Python 3.9 Master Branch Unit Tests"
+    - name: "Python 3.9 Master Branch Unit Tests"
       install:
         - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
         - bash miniconda.sh -b -p miniconda
@@ -86,8 +84,7 @@ jobs:
       script:
         - ./run_all_tests.sh pcds
 
-    - stage: "Extra Tests"
-      name: "Python 3.9 Next Env Unit Tests"
+    - name: "Python 3.9 Next Env Unit Tests"
       install:
         - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
         - bash miniconda.sh -b -p miniconda
@@ -117,8 +114,7 @@ jobs:
       script:
         - ./run_all_tests.sh pcds
 
-    - stage: "Extra Tests"
-      name: "Python 3.10 Next Env Unit Tests"
+    - name: "Python 3.10 Next Env Unit Tests"
       install:
         - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
         - bash miniconda.sh -b -p miniconda
