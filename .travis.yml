@@ -38,7 +38,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
@@ -47,7 +47,7 @@ jobs:
         - which python
       script:
         # Always create the environment from yaml
-        - conda env create -q -n pcds-test -f envs/pcds/env.yaml
+        - mamba env create -q -n pcds-test -f envs/pcds/env.yaml
 
     - stage: "Main Test"
       name: "Current Env Unit Tests"
