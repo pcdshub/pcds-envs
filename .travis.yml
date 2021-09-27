@@ -67,6 +67,7 @@ jobs:
         - conda info -a
         - which python
         - cd scripts
+        - python update_tags.py pcds
         - timeout 20m ./create_base_env.sh dev-3.9 pcds 3.9
         - conda activate pcds-dev-3.9
         # Set up the tests
@@ -101,6 +102,7 @@ jobs:
         - conda info -a
         - which python
         - cd scripts
+        - python update_tags.py pcds
         - timeout 20m ./create_base_env.sh next-3.9 pcds 3.9
         - conda activate pcds-next-3.9
         # Set up the tests
@@ -130,6 +132,7 @@ jobs:
         - conda info -a
         - which python
         - cd scripts
+        - python update_tags.py pcds
         - timeout 20m ./create_base_env.sh next-3.10 pcds 3.10
         - conda activate pcds-next-3.10
         # Set up the tests
