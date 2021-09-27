@@ -49,44 +49,6 @@ jobs:
       script:
         - ./run_all_tests.sh pcds
 
-    - stage: "Extra Builds"
-      name: "Python 3.9 Next Env"
-      workspaces:
-        use: conda_base
-        create:
-          name: py39
-          paths:
-            - miniconda
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate
-        - python scripts/update_tags.py pcds --debug
-        - conda info -a
-        - which python
-      script:
-        - pushd scripts
-        - timeout 20m ./create_base_env.sh test-py39 pcds 3.9 && popd
-        - pwd
-
-    - stage: "Extra Builds"
-      name: "Python 3.10 Next Env"
-      workspaces:
-        use: conda_base
-        create:
-          name: py310
-          paths:
-            - miniconda
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate
-        - python scripts/update_tags.py pcds --debug
-        - conda info -a
-        - which python
-      script:
-        - pushd scripts
-        - timeout 20m ./create_base_env.sh test-py310 pcds 3.10 && popd
-        - pwd
-
     - stage: "Extra Tests"
       name: "Python 3.9 Master Branch Unit Tests"
       install:
