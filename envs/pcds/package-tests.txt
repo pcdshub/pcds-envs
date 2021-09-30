@@ -19,4 +19,3 @@ pcdshub/pytmc
 slaclab/timechart
 pcdshub/transfocate
 pcdshub/typhos
-pcdshub/whatrecord
