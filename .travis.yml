@@ -14,7 +14,6 @@ jobs:
   fast_finish: true
 
   allow_failures:
-    - name: "Python 3.9 Next Env Unit Tests"
     - name: "Python 3.9 Master Branch Unit Tests"
     - name: "Python 3.10 Next Env Unit Tests"
 
