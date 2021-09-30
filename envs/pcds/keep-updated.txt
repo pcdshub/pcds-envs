@@ -29,4 +29,3 @@ tc_release
 timechart
 transfocate
 typhos
-whatrecord
