@@ -66,7 +66,9 @@ pytables
 pytest
 pytest-benchmark
 pytest-qt=3.3.0
+pytest-repeat
 pytest-timeout
+pytest-xdist
 python-graphviz
 python-ldap
 pytmc>=2.10.0
@@ -82,7 +84,7 @@ sphinx
 sphinx_rtd_theme
 tc_release>=0.2.1
 timechart>=1.2.4
-transfocate=0.5.0
+transfocate>=0.5.0
 typhos>=2.0.0
 versioneer
 xarray
