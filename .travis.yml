@@ -14,21 +14,12 @@ jobs:
   fast_finish: true
 
   allow_failures:
-    - name: "Python 3.9 Next Env"
-    - name: "Python 3.9 Dev Env"
-    - name: "Python 3.10 Next Env"
     - name: "Python 3.9 Next Env Unit Tests"
     - name: "Python 3.9 Master Branch Unit Tests"
     - name: "Python 3.10 Next Env Unit Tests"
 
   include:
-    - stage: "Main Build"
-      name: "Create Base Env from YAML"
-      workspaces:
-        create:
-          name: conda_base
-          paths:
-            - miniconda
+    - name: "Current Env Unit Tests"
       install:
         - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
         - bash miniconda.sh -b -p miniconda
@@ -38,27 +29,16 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
         # Useful for debugging any issues with conda
         - conda info -a
         - which python
-      script:
         # Always create the environment from yaml
-        - conda env create -q -n pcds-test -f envs/pcds/env.yaml
-
-    - stage: "Main Test"
-      name: "Current Env Unit Tests"
-      workspaces:
-        use:
-        - conda_base
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test
-        - conda info -a
-        - which python
+        - mamba env create -q -n pcds-test -f envs/pcds/env.yaml
+        # Set up the tests
         - cd scripts
         - python test_setup.py pcds --tag
       before_script:
@@ -68,75 +48,29 @@ jobs:
       script:
         - ./run_all_tests.sh pcds
 
-    - stage: "Extra Builds"
-      name: "Python 3.9 Dev Env"
-      workspaces:
-        use: conda_base
-        create:
-          name: py39-dev
-          paths:
-            - miniconda
+    - name: "Python 3.9 Master Branch Unit Tests"
       install:
+        - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+        - bash miniconda.sh -b -p miniconda
         - source miniconda/etc/profile.d/conda.sh
+        - conda activate
+        - hash -r
+        # Use our condarc
+        - cp condarc miniconda/.condarc
+        - conda config --set always_yes yes --set changeps1 no
+        - conda install conda-build anaconda-client packaging mamba
+        # Reboot conda after updating conda to avoid subtle path bugs
+        - conda deactivate
         - conda activate
         - conda config --add channels pcds-dev
-        - python scripts/update_tags.py pcds --debug
-        - conda info -a
-        - which python
-      script:
-        - pushd scripts
-        - timeout 10m ./update_env.sh pcds-test pcds 3.9 && popd
-        - pwd
-
-    - stage: "Extra Builds"
-      name: "Python 3.9 Next Env"
-      workspaces:
-        use: conda_base
-        create:
-          name: py39
-          paths:
-            - miniconda
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate
-        - python scripts/update_tags.py pcds --debug
-        - conda info -a
-        - which python
-      script:
-        - pushd scripts
-        - timeout 20m ./create_base_env.sh test-py39 pcds 3.9 && popd
-        - pwd
-
-    - stage: "Extra Builds"
-      name: "Python 3.10 Next Env"
-      workspaces:
-        use: conda_base
-        create:
-          name: py310
-          paths:
-            - miniconda
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate
-        - python scripts/update_tags.py pcds --debug
-        - conda info -a
-        - which python
-      script:
-        - pushd scripts
-        - timeout 20m ./create_base_env.sh test-py310 pcds 3.10 && popd
-        - pwd
-
-    - stage: "Extra Tests"
-      name: "Python 3.9 Master Branch Unit Tests"
-      workspaces:
-        use:
-        - py39-dev
-      install:
-        - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test
+        # Useful for debugging any issues with conda
         - conda info -a
         - which python
         - cd scripts
+        - python update_tags.py pcds
+        - timeout 20m ./create_base_env.sh dev-3.9 pcds 3.9
+        - conda activate pcds-dev-3.9
+        # Set up the tests
         - python test_setup.py pcds
         - |
           for repo in *
@@ -150,17 +84,28 @@ jobs:
       script:
         - ./run_all_tests.sh pcds
 
-    - stage: "Extra Tests"
-      name: "Python 3.9 Next Env Unit Tests"
-      workspaces:
-        use:
-        - py39
+    - name: "Python 3.9 Next Env Unit Tests"
       install:
+        - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+        - bash miniconda.sh -b -p miniconda
         - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test-py39
+        - conda activate
+        - hash -r
+        # Use our condarc
+        - cp condarc miniconda/.condarc
+        - conda config --set always_yes yes --set changeps1 no
+        - conda install conda-build anaconda-client packaging mamba
+        # Reboot conda after updating conda to avoid subtle path bugs
+        - conda deactivate
+        - conda activate
+        # Useful for debugging any issues with conda
         - conda info -a
         - which python
         - cd scripts
+        - python update_tags.py pcds
+        - timeout 20m ./create_base_env.sh next-3.9 pcds 3.9
+        - conda activate pcds-next-3.9
+        # Set up the tests
         - python test_setup.py pcds --tag
       before_script:
         # Run windows manager
@@ -169,17 +114,28 @@ jobs:
       script:
         - ./run_all_tests.sh pcds
 
-    - stage: "Extra Tests"
-      name: "Python 3.10 Next Env Unit Tests"
-      workspaces:
-        use:
-        - py310
+    - name: "Python 3.10 Next Env Unit Tests"
       install:
+        - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+        - bash miniconda.sh -b -p miniconda
         - source miniconda/etc/profile.d/conda.sh
-        - conda activate pcds-test-py310
+        - conda activate
+        - hash -r
+        # Use our condarc
+        - cp condarc miniconda/.condarc
+        - conda config --set always_yes yes --set changeps1 no
+        - conda install conda-build anaconda-client packaging mamba
+        # Reboot conda after updating conda to avoid subtle path bugs
+        - conda deactivate
+        - conda activate
+        # Useful for debugging any issues with conda
         - conda info -a
         - which python
         - cd scripts
+        - python update_tags.py pcds
+        - timeout 20m ./create_base_env.sh next-3.10 pcds 3.10
+        - conda activate pcds-next-3.10
+        # Set up the tests
         - python test_setup.py pcds --tag
       before_script:
         # Run windows manager

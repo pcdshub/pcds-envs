@@ -24,7 +24,7 @@ echo "Checking for tag ${TAG}"
 git fetch origin
 git checkout "${TAG}"
 echo "Building environment"
-conda env create -n "${NAME}" -f "${YAML}"
+mamba env create -n "${NAME}" -f "${YAML}"
 CONDA_BIN=`dirname $(which conda)`
 echo "Write-protecting new env"
 pushd "${CONDA_BIN}/../envs"

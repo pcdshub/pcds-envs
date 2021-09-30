@@ -19,16 +19,19 @@ fi
 set -e
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 ENV_DIR="../envs/${BASE}"
-HASREL=`conda env list | grep "${NAME}"`
+HASREL=`mamba env list | grep "${NAME}"`
 if [ -z "${HASREL}" ]; then
-  conda env create -y --name "${ENVNAME}" --file "${ENV_DIR}/env.yaml"
+  mamba env create -y --name "${ENVNAME}" --file "${ENV_DIR}/env.yaml"
 fi
 conda activate "${ENVNAME}"
 conda info -a
 echo "Installing python version ${VER}"
-conda install -y python="${VER}"
+conda activate base
+conda info -a
+mamba install -y -n "${ENVNAME}" python="${VER}"
 echo "Updating tagged packages"
-conda install -y --file "${ENV_DIR}/conda-packages.txt"
+mamba install -y -n "${ENVNAME}" --file "${ENV_DIR}/conda-packages.txt"
+conda activate "${ENVNAME}"
 pip install -r "${ENV_DIR}/pip-packages.txt"
 conda list
 conda deactivate

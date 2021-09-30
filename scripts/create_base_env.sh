@@ -20,7 +20,7 @@ ENVNAME="${BASE}-${REL}"
 set -e
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 ENV_DIR="../envs/${BASE}"
-conda create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt"
+mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt"
 conda activate "${ENVNAME}"
 pip install -r "${ENV_DIR}/pip-packages.txt"
 conda deactivate
