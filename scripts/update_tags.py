@@ -1,6 +1,7 @@
 import argparse
 import json
 import re
+import requests
 import subprocess
 from pathlib import Path
 
@@ -14,7 +15,6 @@ def latest_version(package):
         info = subprocess.check_output(['conda', 'search', '--json', package],
                                        universal_newlines=True)
     except Exception as exc:
-        print(exc.output)
         raise
     info_list = json.loads(info)[package]
     channel_versions = {}
@@ -38,6 +38,20 @@ def latest_version(package):
             'Building with this config is likely to fail!'
             )
     return latest_version
+
+
+pypi_version_re = re.compile(f'-(\d\.\d\.\d).tar.gz')
+
+def pypi_latest_version_no_search(package):
+    req = requests.get(f'https://pypi.org/project/{package}')
+    matches = set(pypi_version_re.findall(req.text))
+    if not matches:
+        raise RuntimeError(f'{package} not found on pypi.')
+    latest_version = '0.0.0'
+    for ver in matches:
+        if version.parse(ver) > version.parse(latest_version):
+            latest_version = ver
+    return ver
 
 
 def update_specs(path, versions_dict, dry_run=False):
@@ -104,7 +118,10 @@ def main(args):
     versions_dict = {}
     for package in packages:
         package = package.strip('\n')
-        latest = latest_version(package)
+        try:
+            latest = latest_version(package)
+        except Exception:
+            latest = pypi_latest_version_no_search(package)
         versions_dict[package] = latest
         print(f'Latest version of {package} is {latest}')
 
