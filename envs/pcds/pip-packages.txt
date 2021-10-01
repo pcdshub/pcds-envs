@@ -1,2 +1,2 @@
 epicscorelibs==7.0.4.99.1.2
-whatrecord>=0.1.2
+whatrecord>=0.1.3
