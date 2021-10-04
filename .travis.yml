@@ -14,7 +14,6 @@ jobs:
   fast_finish: true
 
   allow_failures:
-    - name: "Python 3.9 Next Env Unit Tests"
     - name: "Python 3.9 Master Branch Unit Tests"
     - name: "Python 3.10 Next Env Unit Tests"
 
@@ -38,6 +37,7 @@ jobs:
         - which python
         # Always create the environment from yaml
         - mamba env create -q -n pcds-test -f envs/pcds/env.yaml
+        - conda activate pcds-test
         # Set up the tests
         - cd scripts
         - python test_setup.py pcds --tag
