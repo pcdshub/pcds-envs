@@ -218,7 +218,7 @@ def main(args):
         print(header)
         print('-' * len(header))
         print()
-        for pkg in added_pkgs:
+        for pkg in sorted(added_pkgs):
             print(f'- {pkg}')
         print()
     if removed_pkgs:
@@ -226,7 +226,7 @@ def main(args):
         print(header)
         print('-' * len(header))
         print()
-        for pkg in removed_pkgs:
+        for pkg in sorted(removed_pkgs):
             print(f'- {pkg}')
         print()
     # Next, updates by category
