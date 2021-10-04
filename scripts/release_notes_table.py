@@ -37,7 +37,7 @@ PCDS_PACKAGES = [
     'nabs',
     'pcdscalc',
     'pcdsdaq',
-    'pcdsdevices'
+    'pcdsdevices',
     'pcdsutils',
     'pcdswidgets',
     'pmgr',
@@ -93,10 +93,15 @@ PACKAGES = {
     'community': COMMUNITY_PACKAGES,
 }
 
+# For looking through a git diff
 # First capture group is + or - (new version or old version)
 # Second capture group is package name
 # Third capture group is version string
 ver_change_regex = re.compile(r'^(\+|\-)\s+\- ([^=\n]*)=+([^=\n]*)$', flags=re.M)
+
+# For looking through the normal file
+# Capture group is the package name
+package_name_regex = re.compile(r'\s+\- ([^=\n]*)=+[^=\n]*$', flags=re.M)
 
 
 @dataclasses.dataclass
@@ -201,9 +206,28 @@ def build_tables(
     return tables
 
 
+def audit_package_lists(path):
+    """Find typos in the package list globals."""
+    with open(path, 'r') as fd:
+        lines = fd.read()
+
+    packages = set(package_name_regex.findall(lines))
+    err = []
+    for package_list in PACKAGES.values():
+        for package_name in package_list:
+            if package_name not in packages:
+                err.append(package_name)
+    if err:
+        raise RuntimeError(
+            'Found package names that are not installed! '
+            'Check your spelling and environment! '
+            f'{err}'
+        )
+
 def main(args):
     env_name = args[0]
     path = '../envs/pcds/env.yaml'
+    audit_package_lists(path)
     updates = get_package_updates(path)
     # First, added/removed packages
     added_pkgs = []
