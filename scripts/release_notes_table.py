@@ -213,30 +213,33 @@ def main(args):
             added_pkgs.append(update.package_name)
         elif update.removed:
             removed_pkgs.append(update.package_name)
-    header = 'Added the Following New Packages'
-    print(header)
-    print('-' * len(header))
-    print()
-    for pkg in added_pkgs:
-        print(f'- {pkg}')
-    print()
-    header = 'Removed the Following Packages'
-    print(header)
-    print('-' * len(header))
-    print()
-    for pkg in removed_pkgs:
-        print(f'- {pkg}')
-    print()
+    if added_pkgs:
+        header = 'Added the Following Packages'
+        print(header)
+        print('-' * len(header))
+        print()
+        for pkg in added_pkgs:
+            print(f'- {pkg}')
+        print()
+    if removed_pkgs:
+        header = 'Removed the Following Packages'
+        print(header)
+        print('-' * len(header))
+        print()
+        for pkg in removed_pkgs:
+            print(f'- {pkg}')
+        print()
     # Next, updates by category
     tables = build_tables(updates)
     for name, table in tables.items():
-        print(HEADERS[name])
-        divider = '-' * len(HEADERS[name])
-        print(divider)
-        print()
-        table.set_style(prettytable.MARKDOWN)
-        print(table)
-        print()
+        if len(list(table)) > 0:
+            print(HEADERS[name])
+            divider = '-' * len(HEADERS[name])
+            print(divider)
+            print()
+            table.set_style(prettytable.MARKDOWN)
+            print(table)
+            print()
 
 
 if __name__ == '__main__':
