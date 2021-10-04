@@ -136,6 +136,14 @@ class Update:
             f'/releases/tag/v{self.new_version}'
         )
 
+    @property
+    def added(self) -> bool:
+        return self.old_version is None and self.new_version is not None
+
+    @property
+    def removed(self) -> bool:
+        return self.new_version is None and self.old_version is not None
+
 
 def get_package_updates(
     path: typing.Union[str, pathlib.Path],
@@ -175,7 +183,9 @@ def build_tables(
     for name in table_names[1:]:
         tables[name].field_names = headers
     for update in updates.values():
-        added = False
+        if update.added or update.removed:
+            continue
+        row_added = False
         for group, package_list in PACKAGES.items():
             if update.package_name in package_list:
                 if update.ver_depth() <= VER_DEPTH[group]:
@@ -184,9 +194,9 @@ def build_tables(
                     if group == 'pcds':
                         row += [update.release_link()]
                     tables[group].add_row(row)
-                    added = True
+                    row_added = True
                     break
-        if not added and update.ver_depth() <= VER_DEPTH['other']:
+        if not row_added and update.ver_depth() <= VER_DEPTH['other']:
             tables['other'].add_row(update.get_row())
     return tables
 
@@ -195,6 +205,29 @@ def main(args):
     env_name = args[0]
     path = '../envs/pcds/env.yaml'
     updates = get_package_updates(path)
+    # First, added/removed packages
+    added_pkgs = []
+    removed_pkgs = []
+    for update in updates.values():
+        if update.added:
+            added_pkgs.append(update.package_name)
+        elif update.removed:
+            removed_pkgs.append(update.package_name)
+    header = 'Added the Following New Packages'
+    print(header)
+    print('-' * len(header))
+    print()
+    for pkg in added_pkgs:
+        print(f'- {pkg}')
+    print()
+    header = 'Removed the Following Packages'
+    print(header)
+    print('-' * len(header))
+    print()
+    for pkg in removed_pkgs:
+        print(f'- {pkg}')
+    print()
+    # Next, updates by category
     tables = build_tables(updates)
     for name, table in tables.items():
         print(HEADERS[name])
@@ -204,6 +237,7 @@ def main(args):
         table.set_style(prettytable.MARKDOWN)
         print(table)
         print()
+
 
 if __name__ == '__main__':
     main(sys.argv)
