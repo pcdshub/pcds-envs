@@ -18,9 +18,9 @@ VER_DEPTH = {
 
 # Section headers
 HEADERS = {
-    'pcds': 'PCDS Packages',
-    'slac': 'SLAC Packages',
-    'lab': 'Lab Community Packages',
+    'pcds': 'PCDS Package Updates',
+    'slac': 'SLAC Package Updates',
+    'lab': 'Lab Community Package Updates',
     'community': 'Python Community Core Package Updates',
     'other': 'Other Python Community Major Updates',
 }
