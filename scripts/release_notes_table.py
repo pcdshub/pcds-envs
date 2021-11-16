@@ -77,6 +77,7 @@ COMMUNITY_PACKAGES = [
     'numpy',
     'opencv',
     'pandas',
+    'python',
     'pytest',
     'scikit-image',
     'scikit-learn',
