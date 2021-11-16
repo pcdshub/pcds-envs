@@ -1,5 +1,6 @@
 ads-async>=0.1.2
 anaconda-client
+atlassian-python-api
 blark>=0.1.7
 bluesky>=1.8.0
 bluesky-live
@@ -75,6 +76,7 @@ python-ldap
 pytmc>=2.10.0
 pytorch
 qdarkstyle
+qrcode
 scikit-image=0.17.2
 scikit-learn
 scipy
