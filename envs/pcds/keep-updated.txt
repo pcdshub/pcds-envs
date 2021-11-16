@@ -21,7 +21,6 @@ pmgr
 psdaq-control-minimal
 psdm_qs_cli
 pswalker
-pyca
 pydm
 pyepics
 pytmc
