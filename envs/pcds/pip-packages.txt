@@ -1,1 +1,1 @@
-whatrecord>=0.1.3
+whatrecord>=0.2.1

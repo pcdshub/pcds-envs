@@ -37,7 +37,7 @@ PIP_TAGS="../envs/${BASE}/pip-packages.txt"
 
 echo "Exporting yaml file"
 YAML="../envs/${BASE}/env.yaml"
-mamba env export -n "${NAME}" -f "${YAML}" --no-builds
+mamba env export -n "${NAME}" -f "${YAML}"
 echo "Committing and pushing"
 git add "${YAML}"
 git add "${CONDA_TAGS}"

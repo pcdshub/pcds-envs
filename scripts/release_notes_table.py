@@ -1,4 +1,5 @@
 import dataclasses
+import itertools
 import pathlib
 import re
 import subprocess
@@ -77,6 +78,7 @@ COMMUNITY_PACKAGES = [
     'numpy',
     'opencv',
     'pandas',
+    'python',
     'pytest',
     'scikit-image',
     'scikit-learn',
@@ -97,11 +99,11 @@ PACKAGES = {
 # First capture group is + or - (new version or old version)
 # Second capture group is package name
 # Third capture group is version string
-ver_change_regex = re.compile(r'^(\+|\-)\s+\- ([^=\n]*)=+([^=\n]*)$', flags=re.M)
+ver_change_regex = re.compile(r'^(\+|\-)\s+\- ([^=\n]*)=+([^=\n]*)=?.*$', flags=re.M)
 
 # For looking through the normal file
 # Capture group is the package name
-package_name_regex = re.compile(r'\s+\- ([^=\n]*)=+[^=\n]*$', flags=re.M)
+package_name_regex = re.compile(r'\s+\- ([^=\n]*)=+[^=\n]*=.*$', flags=re.M)
 
 
 @dataclasses.dataclass
@@ -127,10 +129,15 @@ class Update:
             return 0
         old_parts = self.old_version.split('.')
         new_parts = self.new_version.split('.')
-        for depth, (old, new) in enumerate(zip(old_parts, new_parts)):
+        for depth, (old, new) in enumerate(
+            itertools.zip_longest(old_parts, new_parts, fillvalue='0')
+        ):
             if old != new:
                 return depth + 1
-        raise RuntimeError(f'No update for package {self.package_name}')
+        raise RuntimeError(
+            f'Could not interpret update for package "{self.package_name}" '
+            f'from "{self.old_version}" to "{self.new_version}"'
+        )
 
     def get_row(self) -> list[str]:
         return [self.package_name, self.old_version, self.new_version]
@@ -148,6 +155,10 @@ class Update:
     @property
     def removed(self) -> bool:
         return self.new_version is None and self.old_version is not None
+
+    @property
+    def updated(self) -> bool:
+        return self.new_version != self.old_version
 
 
 def get_package_updates(
@@ -193,7 +204,7 @@ def build_tables(
         row_added = False
         for group, package_list in PACKAGES.items():
             if update.package_name in package_list:
-                if update.ver_depth() <= VER_DEPTH[group]:
+                if update.updated and update.ver_depth() <= VER_DEPTH[group]:
                     # Include this in the table
                     row = update.get_row()
                     if group == 'pcds':
@@ -201,7 +212,11 @@ def build_tables(
                     tables[group].add_row(row)
                     row_added = True
                     break
-        if not row_added and update.ver_depth() <= VER_DEPTH['other']:
+        if (
+            update.updated
+            and not row_added
+            and update.ver_depth() <= VER_DEPTH['other']
+        ):
             tables['other'].add_row(update.get_row())
     return tables
 
