@@ -84,7 +84,13 @@ shellcheck
 simplejson
 sphinx
 sphinx_rtd_theme
+suitcase-csv
+suitcase-json-metadata
+suitcase-jsonl
 suitcase-mongo
+suitcase-msgpack
+suitcase-specfile
+suitcase-tiff
 tc_release>=0.2.1
 timechart>=1.2.4
 transfocate>=0.5.2
