@@ -27,7 +27,7 @@ happi>=1.10.1
 holoviews>=1.10.9
 hutch-python>=1.13.0
 hxrsnd>=0.2.6
-ipython>=7.1
+ipython=7.29.0
 isort
 jupyter
 lightpath>=0.6.9
