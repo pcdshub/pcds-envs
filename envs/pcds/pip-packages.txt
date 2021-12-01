@@ -1,2 +1,2 @@
-tiled[full]
+tiled[all]
 whatrecord>=0.2.1
