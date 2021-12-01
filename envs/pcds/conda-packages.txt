@@ -45,7 +45,7 @@ papermill
 pcaspy
 pcdscalc>=0.3.2
 pcdsdaq>=2.3.4
-pcdsdevices>=5.0.0
+pcdsdevices>=5.0.1
 pcdsutils>=0.6.0
 pcdswidgets>=0.6.0
 periodictable
@@ -91,10 +91,10 @@ suitcase-mongo
 suitcase-msgpack
 suitcase-specfile
 suitcase-tiff
-tc_release>=0.2.1
+tc_release>=0.2.2
 timechart>=1.2.4
 transfocate>=0.5.2
-typhos>=2.1.0
+typhos>=2.2.0
 versioneer
 xarray
 xraylib
