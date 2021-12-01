@@ -12,7 +12,6 @@ conda-pack
 conda-smithy
 cookiecutter
 coverage
-databroker>=1.2.4
 datashader
 doctr
 docutils=0.16
@@ -85,6 +84,7 @@ shellcheck
 simplejson
 sphinx
 sphinx_rtd_theme
+suitcase-mongo
 tc_release>=0.2.1
 timechart>=1.2.4
 transfocate>=0.5.2
