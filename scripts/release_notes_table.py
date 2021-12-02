@@ -240,12 +240,7 @@ def audit_package_lists(path):
             f'{err}'
         )
 
-def main(args):
-    env_name = args[1]
-    try:
-        reference = args[2]
-    except IndexError:
-        reference = 'master'
+def main(env_name='pcds', reference='master'):
     path = f'../envs/{env_name}/env.yaml'
     audit_package_lists(path)
     updates = get_package_updates(path, reference)
@@ -287,4 +282,4 @@ def main(args):
 
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main(*sys.argv[1:])
