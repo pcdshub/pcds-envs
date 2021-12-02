@@ -163,10 +163,11 @@ class Update:
 
 def get_package_updates(
     path: typing.Union[str, pathlib.Path],
+    reference: str = 'master',
 ) -> dict[str, Update]:
     """Scans a git diff of the env.yaml file for changes."""
     diff_output = subprocess.check_output(
-        ['git', 'diff', 'master', str(path)],
+        ['git', 'diff', reference, str(path)],
         universal_newlines=True,
     )
     matches = ver_change_regex.findall(diff_output)
@@ -241,9 +242,13 @@ def audit_package_lists(path):
 
 def main(args):
     env_name = args[0]
+    try:
+        reference = args[1]
+    except IndexError:
+        reference = 'master'
     path = '../envs/pcds/env.yaml'
     audit_package_lists(path)
-    updates = get_package_updates(path)
+    updates = get_package_updates(path, reference)
     # First, added/removed packages
     added_pkgs = []
     removed_pkgs = []
