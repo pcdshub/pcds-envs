@@ -49,6 +49,7 @@ pcdsdevices>=5.0.2
 pcdsutils>=0.6.0
 pcdswidgets>=0.6.0
 periodictable
+pipdeptree
 pmgr>=2.0.2
 pre-commit
 psdaq-control-minimal>=3.3.19
