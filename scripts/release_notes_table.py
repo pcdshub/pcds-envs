@@ -241,12 +241,12 @@ def audit_package_lists(path):
         )
 
 def main(args):
-    env_name = args[0]
+    env_name = args[1]
     try:
-        reference = args[1]
+        reference = args[2]
     except IndexError:
         reference = 'master'
-    path = '../envs/pcds/env.yaml'
+    path = f'../envs/{env_name}/env.yaml'
     audit_package_lists(path)
     updates = get_package_updates(path, reference)
     # First, added/removed packages
