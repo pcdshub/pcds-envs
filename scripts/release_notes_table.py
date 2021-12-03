@@ -251,7 +251,8 @@ def build_reverse_deps_cache() -> dict[str, set]:
         for variant in variants:
             reqs = pkg_resources.require(variant)
             for req in reqs:
-                reverse_deps_cache[req.key].add(pkg_name)
+                if req.key != pkg_name:
+                    reverse_deps_cache[req.key].add(pkg_name)
     return reverse_deps_cache
 
 
@@ -286,7 +287,7 @@ def main(env_name='pcds', reference='master'):
             added_pkgs.add(update.package_name)
         elif update.removed:
             removed_pkgs.append(update.package_name)
-    added_reqs = {pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 1}
+    added_reqs = {pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 0}
     added_specs = added_pkgs.difference(added_reqs)
     if added_specs:
         header = 'Added the Following Packages'
