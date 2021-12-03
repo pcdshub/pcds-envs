@@ -1,3 +1,4 @@
+import collections
 import dataclasses
 import itertools
 import pathlib
@@ -6,6 +7,7 @@ import subprocess
 import sys
 import typing
 
+import pkg_resources
 import prettytable
 
 # How much of a change is enough to include in the table?
@@ -86,7 +88,7 @@ COMMUNITY_PACKAGES = [
     'sphinx',
     'xarray',
 ]
-# If missing from all above, beloings in OTHER table
+# If missing from all above, belongs in OTHER table
 # TODO if any of the above strings are not found in the env, error
 PACKAGES = {
     'pcds': PCDS_PACKAGES,
@@ -240,25 +242,67 @@ def audit_package_lists(path):
             f'{err}'
         )
 
+
+def build_reverse_deps_cache() -> dict[str, set]:
+    """For each installed package, find the packages that require it."""
+    reverse_deps_cache = collections.defaultdict(set)
+    for pkg_name, dist in pkg_resources.working_set.by_key.items():
+        variants = [pkg_name] + list(determine_installed_extras(pkg_name))
+        for variant in variants:
+            reqs = pkg_resources.require(variant)
+            for req in reqs:
+                reverse_deps_cache[req.key].add(pkg_name)
+    return reverse_deps_cache
+
+
+def determine_installed_extras(package: str) -> list[str]:
+    """Figure out which extras variants of package are installed."""
+    distribution = pkg_resources.get_distribution(package)
+    all_extras = distribution.extras
+    installed_extras = set()
+    for extra in all_extras:
+        try:
+            variant = f'{package}[{extra}]'
+            pkg_resources.require(variant)
+        except (
+            pkg_resources.DistributionNotFound,
+            pkg_resources.ContextualVersionConflict,
+        ):
+            continue
+        installed_extras.add(variant)
+    return installed_extras
+
+
 def main(env_name='pcds', reference='master'):
     path = f'../envs/{env_name}/env.yaml'
     audit_package_lists(path)
     updates = get_package_updates(path, reference)
+    reverse_deps_cache = build_reverse_deps_cache()
     # First, added/removed packages
-    added_pkgs = []
+    added_pkgs = set()
     removed_pkgs = []
     for update in updates.values():
         if update.added:
-            added_pkgs.append(update.package_name)
+            added_pkgs.add(update.package_name)
         elif update.removed:
             removed_pkgs.append(update.package_name)
-    if added_pkgs:
+    added_reqs = {pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 1}
+    added_specs = added_pkgs.difference(added_reqs)
+    if added_specs:
         header = 'Added the Following Packages'
         print(header)
         print('-' * len(header))
         print()
-        for pkg in sorted(added_pkgs):
+        for pkg in sorted(added_specs):
             print(f'- {pkg}')
+        print()
+    if added_reqs:
+        header = 'Added the Following Dependencies'
+        print(header)
+        print('-' * len(header))
+        print()
+        for pkg in sorted(added_reqs):
+            print(f'- {pkg} (required by {", ".join(sorted(reverse_deps_cache[pkg]))})')
         print()
     if removed_pkgs:
         header = 'Removed the Following Packages'
