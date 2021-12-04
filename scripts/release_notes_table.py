@@ -1,6 +1,7 @@
 import collections
 import dataclasses
 import itertools
+import json
 import pathlib
 import re
 import subprocess
@@ -70,6 +71,12 @@ LAB_PACKAGES = [
     'ophyd',
     'pcaspy',
     'pyepics',
+    'suitcase-csv',
+    'suitcase-json-metadata',
+    'suitcase-jsonl',
+    'suitcase-specfile',
+    'suitcase-tiff',
+    'tiled',
 ]
 # List of packages to include in (notable) COMMUNITY table
 COMMUNITY_PACKAGES = [
@@ -243,16 +250,46 @@ def audit_package_lists(path):
         )
 
 
-def build_reverse_deps_cache() -> dict[str, set]:
-    """For each installed package, find the packages that require it."""
+def build_reverse_deps_cache(
+    subset: typing.Optional[typing.Iterable[str]] = None
+) -> dict[str, set]:
+    """
+    For each installed package, find the packages that require it.
+
+    Some packages are pypi-only, some packages are conda-only, and some
+    share their dependencies with both.
+
+    This finds all the python packages with well-formed dependencies, as this
+    is discoverable in any given python environment, then extends the info
+    using the "subset" argument if provided, or with the info discovered
+    from mamba list. Afterwards, mamba repoquery seems to be the fastest
+    way to build the dependency tree.
+    """
     reverse_deps_cache = collections.defaultdict(set)
+    # Use the standard python info
     for pkg_name, dist in pkg_resources.working_set.by_key.items():
+        print(f'checking pkg_resources for {pkg_name}')
         variants = [pkg_name] + list(determine_installed_extras(pkg_name))
         for variant in variants:
             reqs = pkg_resources.require(variant)
             for req in reqs:
                 if req.key != pkg_name:
                     reverse_deps_cache[req.key].add(pkg_name)
+    # Use the mamba info to augment the above
+    if subset is None:
+        for pkg_name in mamba_list():
+            print(f'checking mamba for {pkg_name}')
+            dependencies = mamba_repoquery('depends', pkg_name)
+            for dep in dependencies:
+                if dep != pkg_name:
+                    reverse_deps_cache[dep].add(pkg_name)
+    else:
+        for pkg_name in subset:
+            print(f'checking mamba for {pkg_name}')
+            needs = mamba_repoquery('whoneeds', pkg_name)
+            reverse_deps_cache[pkg_name].update(
+                [nd for nd in needs if nd != pkg_name]
+            )
     return reverse_deps_cache
 
 
@@ -274,11 +311,35 @@ def determine_installed_extras(package: str) -> list[str]:
     return installed_extras
 
 
+def mamba_repoquery(command: str, package: str) -> list[str]:
+    response = json.loads(
+        subprocess.check_output([
+            'mamba',
+            'repoquery',
+            command,
+            '--offline',
+            '--json',
+            package,
+        ])
+    )
+    return [spec['name'] for spec in response['result']['pkgs']]
+
+
+def mamba_list() -> list[str]:
+    response = json.loads(
+        subprocess.check_output([
+            'mamba',
+            'list',
+            '--json',
+        ])
+    )
+    return [spec['name'] for spec in response]
+
+
 def main(env_name='pcds', reference='master'):
     path = f'../envs/{env_name}/env.yaml'
     audit_package_lists(path)
     updates = get_package_updates(path, reference)
-    reverse_deps_cache = build_reverse_deps_cache()
     # First, added/removed packages
     added_pkgs = set()
     removed_pkgs = []
@@ -287,8 +348,11 @@ def main(env_name='pcds', reference='master'):
             added_pkgs.add(update.package_name)
         elif update.removed:
             removed_pkgs.append(update.package_name)
+    reverse_deps_cache = build_reverse_deps_cache(added_pkgs)
+    # Split based on what pkg_resources knows about dependencies
     added_reqs = {pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 0}
     added_specs = added_pkgs.difference(added_reqs)
+    # Further refine the split based on mamba's knowledge
     if added_specs:
         header = 'Added the Following Packages'
         print(header)
