@@ -269,9 +269,13 @@ def build_reverse_deps_cache(
     # Use the standard python info
     for pkg_name, dist in pkg_resources.working_set.by_key.items():
         print(f'checking pkg_resources for {pkg_name}')
-        variants = [pkg_name] + list(determine_installed_extras(pkg_name))
-        for variant in variants:
-            reqs = pkg_resources.require(variant)
+        extras = [None] + list(determine_installed_extras(pkg_name))
+        distribution = pkg_resources.get_distribution(pkg_name)
+        for extra in extras:
+            if extra is None:
+                reqs = distribution.requires()
+            else:
+                reqs = distribution.requires([extra])
             for req in reqs:
                 if req.key != pkg_name:
                     reverse_deps_cache[req.key].add(pkg_name)
@@ -307,7 +311,7 @@ def determine_installed_extras(package: str) -> list[str]:
             pkg_resources.ContextualVersionConflict,
         ):
             continue
-        installed_extras.add(variant)
+        installed_extras.add(extra)
     return installed_extras
 
 
