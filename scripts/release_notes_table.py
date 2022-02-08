@@ -27,6 +27,7 @@ HEADERS = {
     'lab': 'Lab Community Package Updates',
     'community': 'Python Community Core Package Updates',
     'other': 'Other Python Community Major Updates',
+    'degraded': 'Packages With Degraded Versions',
 }
 
 # List of packages to include in PCDS table
@@ -169,6 +170,12 @@ class Update:
     def updated(self) -> bool:
         return self.new_version != self.old_version
 
+    @property
+    def degraded(self) -> bool:
+        new = pkg_resources.parse_version(self.new_version)
+        old = pkg_resources.parse_version(self.old_version)
+        return new < old
+
 
 def get_package_updates(
     path: typing.Union[str, pathlib.Path],
@@ -203,7 +210,7 @@ def build_tables(
 ) -> dict[str, prettytable.PrettyTable]:
     """Makes the tables that we'd like to display in the update notes."""
     headers = ('Package', 'Old', 'New')
-    table_names = ('pcds', 'slac', 'lab', 'community', 'other')
+    table_names = ('pcds', 'slac', 'lab', 'community', 'other', 'degraded')
     tables = {name: prettytable.PrettyTable() for name in table_names}
     tables['pcds'].field_names = list(headers) + ['Release_Notes']
     for name in table_names[1:]:
@@ -228,6 +235,8 @@ def build_tables(
             and update.ver_depth() <= VER_DEPTH['other']
         ):
             tables['other'].add_row(update.get_row())
+        if update.degraded:
+            tables['degraded'].add_row(update.get_row())
     return tables
 
 
