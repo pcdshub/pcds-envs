@@ -71,7 +71,7 @@ pytest-qt=3.3.0
 pytest-repeat
 pytest-timeout
 pytest-xdist
-python-graphviz
+python-graphviz<0.18
 python-ldap
 pytmc>=2.11.0
 pytorch
