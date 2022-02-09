@@ -1,4 +1,5 @@
 import collections
+import copy
 import dataclasses
 import itertools
 import json
@@ -7,6 +8,7 @@ import re
 import subprocess
 import sys
 import typing
+import warnings
 
 import pkg_resources
 import prettytable
@@ -27,6 +29,7 @@ HEADERS = {
     'lab': 'Lab Community Package Updates',
     'community': 'Python Community Core Package Updates',
     'other': 'Other Python Community Major Updates',
+    'degraded': 'Packages With Degraded Versions',
 }
 
 # List of packages to include in PCDS table
@@ -87,6 +90,7 @@ COMMUNITY_PACKAGES = [
     'numpy',
     'opencv',
     'pandas',
+    'pre-commit',
     'python',
     'pytest',
     'scikit-image',
@@ -169,6 +173,12 @@ class Update:
     def updated(self) -> bool:
         return self.new_version != self.old_version
 
+    @property
+    def degraded(self) -> bool:
+        new = pkg_resources.parse_version(self.new_version)
+        old = pkg_resources.parse_version(self.old_version)
+        return new < old
+
 
 def get_package_updates(
     path: typing.Union[str, pathlib.Path],
@@ -203,7 +213,7 @@ def build_tables(
 ) -> dict[str, prettytable.PrettyTable]:
     """Makes the tables that we'd like to display in the update notes."""
     headers = ('Package', 'Old', 'New')
-    table_names = ('pcds', 'slac', 'lab', 'community', 'other')
+    table_names = ('pcds', 'slac', 'lab', 'community', 'other', 'degraded')
     tables = {name: prettytable.PrettyTable() for name in table_names}
     tables['pcds'].field_names = list(headers) + ['Release_Notes']
     for name in table_names[1:]:
@@ -228,6 +238,8 @@ def build_tables(
             and update.ver_depth() <= VER_DEPTH['other']
         ):
             tables['other'].add_row(update.get_row())
+        if update.degraded:
+            tables['degraded'].add_row(update.get_row())
     return tables
 
 
@@ -341,6 +353,7 @@ def mamba_list() -> list[str]:
 
 
 def main(env_name='pcds', reference='master'):
+    warnings.simplefilter('ignore')
     path = f'../envs/{env_name}/env.yaml'
     audit_package_lists(path)
     updates = get_package_updates(path, reference)
@@ -370,8 +383,48 @@ def main(env_name='pcds', reference='master'):
         print(header)
         print('-' * len(header))
         print()
+        core_packages = []
+        for package_list in PACKAGES.values():
+            core_packages.extend(package_list)
         for pkg in sorted(added_reqs):
-            print(f'- {pkg} (required by {", ".join(sorted(reverse_deps_cache[pkg]))})')
+            if pkg in core_packages:
+                print(f'- {pkg} (new core package)')
+            else:
+                first_required = sorted(reverse_deps_cache[pkg])
+                first_required_text = ', '.join(first_required)
+                core_required = set()
+                unresolved_chains = [[pkg]]
+                while unresolved_chains:
+                    for chain in copy.copy(unresolved_chains):
+                        unresolved_chains.remove(chain)
+                        deps = sorted(reverse_deps_cache.get(chain[0], []))
+                        if not deps:
+                            continue
+                        for dep in deps:
+                            if dep in chain:
+                                continue
+                            new_chain = [dep] + chain
+                            if dep in core_packages:
+                                # Include the core requires
+                                core_required.add(dep)
+                            else:
+                                unresolved_chains.append(new_chain)
+                for req in first_required:
+                    try:
+                        core_required.remove(req)
+                    except KeyError:
+                        pass
+                if core_required:
+                    if len(first_required) > 1:
+                        are = 'are'
+                    else:
+                        are = 'is'
+                    print(
+                        f'- {pkg} (required by {first_required_text}, which '
+                        f'{are} used in {", ".join(sorted(core_required))})'
+                    )
+                else:
+                    print(f'- {pkg} (required by {first_required_text})')
         print()
     if removed_pkgs:
         header = 'Removed the Following Packages'
