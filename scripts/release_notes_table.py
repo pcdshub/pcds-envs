@@ -155,9 +155,9 @@ class Update:
     def get_row(self) -> list[str]:
         return [self.package_name, self.old_version, self.new_version]
 
-    def release_link(self) -> str:
+    def release_link(self, org='pcdshub') -> str:
         return (
-            f'https://github.com/pcdshub/{self.package_name}'
+            f'https://github.com/{org}/{self.package_name}'
             f'/releases/tag/v{self.new_version}'
         )
 
@@ -216,6 +216,7 @@ def build_tables(
     table_names = ('pcds', 'slac', 'lab', 'community', 'other', 'degraded')
     tables = {name: prettytable.PrettyTable() for name in table_names}
     tables['pcds'].field_names = list(headers) + ['Release Notes']
+    tables['slac'].field_names = list(headers) + ['Release Notes']
     for name in table_names[1:]:
         tables[name].field_names = headers
     for update in updates.values():
@@ -228,7 +229,9 @@ def build_tables(
                     # Include this in the table
                     row = update.get_row()
                     if group == 'pcds':
-                        row += [update.release_link()]
+                        row += [update.release_link('pcdshub')]
+                    elif group == 'slac':
+                        row += [update.release_link('slaclab')]
                     tables[group].add_row(row)
                     row_added = True
                     break
