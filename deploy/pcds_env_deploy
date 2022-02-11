@@ -119,6 +119,9 @@ if [ ! -d "${UNPACK_DIR}" ]; then
   $CMD mkdir "${UNPACK_DIR}"
 fi
 
+echo "Checking available disk space in ${UNPACK_DIR}"
+df -h "${UNPACK_DIR}"
+
 INNER_ARGS="${INNER_ARGS} -u ${UNPACK_DIR}/${ENV}"
 
 eval "${UNPACK}""${INNER_ARGS}"
