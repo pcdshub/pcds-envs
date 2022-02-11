@@ -215,7 +215,7 @@ def build_tables(
     headers = ('Package', 'Old', 'New')
     table_names = ('pcds', 'slac', 'lab', 'community', 'other', 'degraded')
     tables = {name: prettytable.PrettyTable() for name in table_names}
-    tables['pcds'].field_names = list(headers) + ['Release_Notes']
+    tables['pcds'].field_names = list(headers) + ['Release Notes']
     for name in table_names[1:]:
         tables[name].field_names = headers
     for update in updates.values():
