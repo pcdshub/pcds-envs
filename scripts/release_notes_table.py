@@ -360,7 +360,20 @@ def main(env_name='pcds', reference='master'):
     path = f'../envs/{env_name}/env.yaml'
     audit_package_lists(path)
     updates = get_package_updates(path, reference)
-    # First, added/removed packages
+
+    # First, updates by category
+    tables = build_tables(updates)
+    for name, table in tables.items():
+        if len(list(table)) > 0:
+            print(HEADERS[name])
+            divider = '-' * len(HEADERS[name])
+            print(divider)
+            print()
+            table.set_style(prettytable.MARKDOWN)
+            print(table)
+            print()
+
+    # Then, added/removed packages
     added_pkgs = set()
     removed_pkgs = []
     for update in updates.values():
@@ -437,18 +450,6 @@ def main(env_name='pcds', reference='master'):
         for pkg in sorted(removed_pkgs):
             print(f'- {pkg}')
         print()
-    # Next, updates by category
-    tables = build_tables(updates)
-    for name, table in tables.items():
-        if len(list(table)) > 0:
-            print(HEADERS[name])
-            divider = '-' * len(HEADERS[name])
-            print(divider)
-            print()
-            table.set_style(prettytable.MARKDOWN)
-            print(table)
-            print()
-
 
 if __name__ == '__main__':
     main(*sys.argv[1:])
