@@ -155,9 +155,9 @@ class Update:
     def get_row(self) -> list[str]:
         return [self.package_name, self.old_version, self.new_version]
 
-    def release_link(self) -> str:
+    def release_link(self, org='pcdshub') -> str:
         return (
-            f'https://github.com/pcdshub/{self.package_name}'
+            f'https://github.com/{org}/{self.package_name}'
             f'/releases/tag/v{self.new_version}'
         )
 
@@ -215,8 +215,9 @@ def build_tables(
     headers = ('Package', 'Old', 'New')
     table_names = ('pcds', 'slac', 'lab', 'community', 'other', 'degraded')
     tables = {name: prettytable.PrettyTable() for name in table_names}
-    tables['pcds'].field_names = list(headers) + ['Release_Notes']
-    for name in table_names[1:]:
+    tables['pcds'].field_names = list(headers) + ['Release Notes']
+    tables['slac'].field_names = list(headers) + ['Release Notes']
+    for name in table_names[2:]:
         tables[name].field_names = headers
     for update in updates.values():
         if update.added or update.removed:
@@ -228,7 +229,9 @@ def build_tables(
                     # Include this in the table
                     row = update.get_row()
                     if group == 'pcds':
-                        row += [update.release_link()]
+                        row += [update.release_link('pcdshub')]
+                    elif group == 'slac':
+                        row += [update.release_link('slaclab')]
                     tables[group].add_row(row)
                     row_added = True
                     break
@@ -357,7 +360,8 @@ def main(env_name='pcds', reference='master'):
     path = f'../envs/{env_name}/env.yaml'
     audit_package_lists(path)
     updates = get_package_updates(path, reference)
-    # First, added/removed packages
+
+    # Prep work to build the dependency chain
     added_pkgs = set()
     removed_pkgs = []
     for update in updates.values():
@@ -366,6 +370,20 @@ def main(env_name='pcds', reference='master'):
         elif update.removed:
             removed_pkgs.append(update.package_name)
     reverse_deps_cache = build_reverse_deps_cache(added_pkgs)
+
+    # First, show updates by category
+    tables = build_tables(updates)
+    for name, table in tables.items():
+        if len(list(table)) > 0:
+            print(HEADERS[name])
+            divider = '-' * len(HEADERS[name])
+            print(divider)
+            print()
+            table.set_style(prettytable.MARKDOWN)
+            print(table)
+            print()
+
+    # Then, show added/removed packages
     # Split based on what pkg_resources knows about dependencies
     added_reqs = {pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 0}
     added_specs = added_pkgs.difference(added_reqs)
@@ -434,18 +452,6 @@ def main(env_name='pcds', reference='master'):
         for pkg in sorted(removed_pkgs):
             print(f'- {pkg}')
         print()
-    # Next, updates by category
-    tables = build_tables(updates)
-    for name, table in tables.items():
-        if len(list(table)) > 0:
-            print(HEADERS[name])
-            divider = '-' * len(HEADERS[name])
-            print(divider)
-            print()
-            table.set_style(prettytable.MARKDOWN)
-            print(table)
-            print()
-
 
 if __name__ == '__main__':
     main(*sys.argv[1:])
