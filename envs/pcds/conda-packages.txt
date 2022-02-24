@@ -4,6 +4,7 @@ atlassian-python-api
 blark>=0.1.7
 bluesky>=1.8.2
 bluesky-live
+bluesky-queueserver
 bokeh>=1.0.1
 botorch
 caproto>=0.8.1
@@ -34,6 +35,7 @@ lightpath>=0.6.9
 line_profiler
 lucid>=0.9.0
 lxml
+markupsafe=2.0.1
 mysqlclient
 nabs>=1.2.0
 numpy>=1.14
@@ -61,7 +63,6 @@ pydm>=1.13.0
 pyepics>=3.5.0
 pyfiglet
 pymongo
-pyqtgraph=0.11.0
 py-spy
 pytables
 pytest
