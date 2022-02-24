@@ -35,6 +35,7 @@ lightpath>=0.6.9
 line_profiler
 lucid>=0.9.0
 lxml
+markupsafe=2.0.1
 mysqlclient
 nabs>=1.2.0
 numpy>=1.14
