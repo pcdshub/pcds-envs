@@ -4,6 +4,7 @@ atlassian-python-api
 blark>=0.1.7
 bluesky>=1.8.2
 bluesky-live
+bluesky-queueserver
 bokeh>=1.0.1
 botorch
 caproto>=0.8.1
