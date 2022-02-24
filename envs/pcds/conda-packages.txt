@@ -62,7 +62,6 @@ pydm>=1.13.0
 pyepics>=3.5.0
 pyfiglet
 pymongo
-pyqtgraph=0.11.0
 py-spy
 pytables
 pytest
