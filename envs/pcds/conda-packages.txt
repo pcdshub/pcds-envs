@@ -5,6 +5,7 @@ blark>=0.1.7
 bluesky>=1.8.2
 bluesky-live
 bluesky-queueserver
+bluesky-widgets
 bokeh>=1.0.1
 botorch
 caproto>=0.8.1
