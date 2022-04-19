@@ -25,6 +25,7 @@ git fetch origin
 git checkout "${TAG}"
 echo "Building environment"
 mamba env create -n "${NAME}" -f "${YAML}"
+./install_activate.sh "${BASE}" "${NAME}"
 CONDA_BIN=`dirname $(which conda)`
 echo "Write-protecting new env"
 pushd "${CONDA_BIN}/../envs"

@@ -24,4 +24,5 @@ mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-
 conda activate "${ENVNAME}"
 pip install -r "${ENV_DIR}/pip-packages.txt"
 ${ENV_DIR}/extra-install-steps.sh
+./install_activate.sh "${BASE}" "${ENVNAME}"
 conda deactivate
