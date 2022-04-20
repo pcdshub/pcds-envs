@@ -14,16 +14,27 @@ else
   DEST="${2}"
 fi
 
-ACTIVE_ENV="${CONDA_PREFIX}/envs"
-BASE_ENV="${CONDA_PREFIX_1}/envs"
-if [ -d "${ACTIVE_ENV}" ]; then
-    ENVS_DIR="${ACTIVE_ENV}"
-elif [ -d "${BASE_ENV}" ]; then
-    ENVS_DIR="${BASE_ENV}"
-else
-    echo "Could not find envs dir!"
-    exit 1
+CONDA_EXE="$(which conda)"
+if [ -z "${CONDA_EXE}" ]; then
+  echo "No conda environment is active!"
+  exit 1
 fi
+CONDA_LOCATION="$(dirname "${CONDA_EXE}")"
+# If base env or no env is active
+ENVS_DIR_1="${CONDA_LOCATION}/../envs"
+# If any other env is active
+ENVS_DIR_2="${CONDA_LOCATION}/../../../envs"
+if [ -d "${ENVS_DIR_1}" ]; then
+  ENVS_DIR="${ENVS_DIR_1}"
+elif [ -d "${ENVS_DIR_2}" ]; then
+  ENVS_DIR="${ENVS_DIR_2}"
+else
+  echo "Could not find envs dir!"
+  echo "Neither ${ENVS_DIR_1} or ${ENVS_DIR_2} exists!"
+  exit 1
+fi
+ENVS_DIR="$(readlink -f "${ENVS_DIR}")"
+
 STARTUP_DIR="${ENVS_DIR}/${DEST}/etc/conda"
 ACTIVATE_DIR="${STARTUP_DIR}/activate.d"
 DEACTIVATE_DIR="${STARTUP_DIR}/deactivate.d"
