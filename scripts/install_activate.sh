@@ -3,13 +3,13 @@
 USAGE="Usage: install_activate.sh [base] [dest_env]"
 if [ -z "${1}" ]; then
   echo "${USAGE}"
-  exit
+  exit 1
 else
   BASE="${1}"
 fi
 if [ -z "${2}" ]; then
   echo "${USAGE}"
-  exit
+  exit 1
 else
   DEST="${2}"
 fi
