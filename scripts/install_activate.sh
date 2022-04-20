@@ -42,29 +42,29 @@ ENV_CONFIG_DIR="../envs/${BASE}"
 
 AT_LEAST_ONE=''
 if [ -d "${ACTIVATE_DIR}" ]; then
-    for script_path in "${ENV_CONFIG_DIR}"/*_activate.sh; do
-        AT_LEAST_ONE='1'
-        echo "Copying ${script_path} to ${ACTIVATE_DIR}"
-        cp "${script_path}" "${ACTIVATE_DIR}"
-    done
-    if [ -z "${AT_LEAST_ONE}" ]; then
-        echo "No activate scripts copied."
-    fi
+  for script_path in "${ENV_CONFIG_DIR}"/*_activate.sh; do
+    AT_LEAST_ONE='1'
+    echo "Copying ${script_path} to ${ACTIVATE_DIR}"
+    cp "${script_path}" "${ACTIVATE_DIR}"
+  done
+  if [ -z "${AT_LEAST_ONE}" ]; then
+    echo "No activate scripts copied."
+  fi
 else
-    echo "Could not locate ${ACTIVATE_DIR}"
+  echo "Could not locate ${ACTIVATE_DIR}"
 fi
 
 AT_LEAST_ONE=''
 if [ -d "${DEACTIVATE_DIR}" ]; then
-    for script_path in "${ENV_CONFIG_DIR}"/*_deactivate.sh; do
-        AT_LEAST_ONE='1'
-        echo "Copying ${script_path} to ${DEACTIVATE_DIR}"
-        cp "${script_path}" "${DEACTIVATE_DIR}"
-    done
-    if [ -z "${AT_LEAST_ONE}" ]; then
-        echo "No deactivate scripts copied."
-    fi
+  for script_path in "${ENV_CONFIG_DIR}"/*_deactivate.sh; do
+    AT_LEAST_ONE='1'
+    echo "Copying ${script_path} to ${DEACTIVATE_DIR}"
+    cp "${script_path}" "${DEACTIVATE_DIR}"
+  done
+  if [ -z "${AT_LEAST_ONE}" ]; then
+    echo "No deactivate scripts copied."
+  fi
 else
-    echo "Could not locate ${DEACTIVATE_DIR}"
+  echo "Could not locate ${DEACTIVATE_DIR}"
 fi
 
