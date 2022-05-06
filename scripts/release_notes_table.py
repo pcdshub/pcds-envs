@@ -40,6 +40,7 @@ PCDS_PACKAGES = [
     'happi',
     'hutch-python',
     'hxrsnd',
+    'krtc',
     'lightpath',
     'lucid',
     'nabs',
