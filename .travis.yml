@@ -28,7 +28,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging mamba=0.21.0
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
@@ -59,7 +59,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging mamba=0.21.0
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
@@ -96,7 +96,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging mamba=0.21.0
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
@@ -127,7 +127,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging mamba=0.21.0
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
