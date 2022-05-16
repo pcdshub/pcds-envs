@@ -69,7 +69,7 @@ jobs:
         - which python
         - cd scripts
         - python update_tags.py pcds
-        - travis_wait 21 timeout 20m ./create_base_env.sh dev-3.9 pcds 3.9
+        - travis_wait 31 timeout 30m ./create_base_env.sh dev-3.9 pcds 3.9
         - conda activate pcds-dev-3.9
         - conda list
         # Set up the tests
@@ -105,7 +105,7 @@ jobs:
         - which python
         - cd scripts
         - python update_tags.py pcds
-        - travis_wait 21 timeout 20m ./create_base_env.sh next-3.9 pcds 3.9
+        - travis_wait 31 timeout 30m ./create_base_env.sh next-3.9 pcds 3.9
         - conda activate pcds-next-3.9
         - conda list
         # Set up the tests
@@ -136,7 +136,7 @@ jobs:
         - which python
         - cd scripts
         - python update_tags.py pcds
-        - travis_wait 21 timeout 20m ./create_base_env.sh next-3.10 pcds 3.10
+        - travis_wait 31 timeout 30m ./create_base_env.sh next-3.10 pcds 3.10
         - conda activate pcds-next-3.10
         - conda list
         # Set up the tests
