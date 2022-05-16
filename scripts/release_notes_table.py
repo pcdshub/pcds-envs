@@ -36,9 +36,11 @@ HEADERS = {
 PCDS_PACKAGES = [
     'ads-async',
     'blark',
+    'elog',
     'happi',
     'hutch-python',
     'hxrsnd',
+    'krtc',
     'lightpath',
     'lucid',
     'nabs',
@@ -58,7 +60,6 @@ PCDS_PACKAGES = [
 ]
 # List of packages to include in SLAC table
 SLAC_PACKAGES = [
-    'elog',
     'psdaq-control-minimal',
     'psdm_qs_cli',
     'pydm',

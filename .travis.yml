@@ -28,7 +28,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging mamba=0.21.0
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
@@ -59,7 +59,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging mamba=0.21.0
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
@@ -69,7 +69,7 @@ jobs:
         - which python
         - cd scripts
         - python update_tags.py pcds
-        - timeout 20m ./create_base_env.sh dev-3.9 pcds 3.9
+        - travis_wait 31 timeout 30m ./create_base_env.sh dev-3.9 pcds 3.9
         - conda activate pcds-dev-3.9
         - conda list
         # Set up the tests
@@ -96,7 +96,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging mamba=0.21.0
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
@@ -105,7 +105,7 @@ jobs:
         - which python
         - cd scripts
         - python update_tags.py pcds
-        - timeout 20m ./create_base_env.sh next-3.9 pcds 3.9
+        - travis_wait 31 timeout 30m ./create_base_env.sh next-3.9 pcds 3.9
         - conda activate pcds-next-3.9
         - conda list
         # Set up the tests
@@ -127,7 +127,7 @@ jobs:
         # Use our condarc
         - cp condarc miniconda/.condarc
         - conda config --set always_yes yes --set changeps1 no
-        - conda install conda-build anaconda-client packaging mamba=0.21.0
+        - conda install conda-build anaconda-client packaging mamba
         # Reboot conda after updating conda to avoid subtle path bugs
         - conda deactivate
         - conda activate
@@ -136,7 +136,7 @@ jobs:
         - which python
         - cd scripts
         - python update_tags.py pcds
-        - timeout 20m ./create_base_env.sh next-3.10 pcds 3.10
+        - travis_wait 31 timeout 30m ./create_base_env.sh next-3.10 pcds 3.10
         - conda activate pcds-next-3.10
         - conda list
         # Set up the tests
