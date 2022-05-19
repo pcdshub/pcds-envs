@@ -1,0 +1,39 @@
+#!/bin/bash
+# validate_unpack
+# script to make sure the deploy went well
+# lets you know if the env exists and is unpacked
+
+usage()
+{
+cat << EOF
+Usage: $0 ENV_DIR
+
+Check that a particular conda pack env exists and is unpacked.
+EOF
+}
+
+ENV_DIR="${1}"
+
+if [ -z "${ENV_DIR}" ]; then
+  usage
+  exit 1
+fi
+
+if [ ! -d "${ENV_DIR}" ]; then
+  echo "${ENV_DIR} does not exist or is not a directory!"
+  exit 1
+fi
+
+if [ ! -d "${ENV_DIR}/etc" ]; then
+  echo "${ENV_DIR} is definitely not an environment."
+  exit 1
+fi
+
+grep -r placehold_placehold "${ENV_DIR}/etc" > /dev/null
+
+if [ "${?}" -eq "0" ]; then
+  echo "${ENV_DIR} was never unpacked!"
+  exit 1
+fi
+
+echo "${ENV_DIR} was installed correctly."
