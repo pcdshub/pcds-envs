@@ -29,6 +29,11 @@ if [ ! -d "${ENV_DIR}/etc" ]; then
   exit 1
 fi
 
+# Check for lingering placehold_placehold_placehold_ chains
+# These chains exist prior to a conda-unpack.
+# A few of these still linger in bin and some conda-specific folders afterwards.
+# Here, I only check etc because it is small and it should have no more
+# placehold_ chains after calling conda-pack.
 grep -r placehold_placehold "${ENV_DIR}/etc" > /dev/null
 
 if [ "${?}" -eq "0" ]; then
