@@ -21,9 +21,21 @@ fi
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 FILE="${HERE}/hosts.txt"
 
+ERROR_COUNT=0
+ERROR_HOSTS=""
 while read -r host; do
   echo "Validating ${host}"
   ENV_DIR="/u1/${host%%-*}opr/conda_envs/${ENV_NAME}"
   ssh -n "${host}" "${HERE}/validate_unpack ${ENV_DIR}"
+  if [ $? -neq 0 ], then
+    ERROR_HOSTS="${ERROR_HOSTS}\n${host}"
+    (( ERROR_COUNT += 1 ))
+  fi
 done < "${FILE}"
 
+if [ $ERROR_COUNT -gt 0 ]; then
+  echo "Verify finished with errors on the following hosts: ${ERROR_HOSTS}"
+  exit $ERROR_COUNT
+fi
+
+echo "Done verifying conda env ${ENV_NAME} on all operator machines."

@@ -63,11 +63,22 @@ fi
 
 echo "Deploying conda env to all operator machines."
 
+ERROR_COUNT=0
+ERROR_HOSTS=""
 set +e
 while read -r host; do
   echo "Deploying on ${host}"
   ssh -n "${host}" "${DEPLOY}${INNER_ARGS}"
+  if [ $? -neq 0 ], then
+    ERROR_HOSTS="${ERROR_HOSTS}\n${host}"
+    (( ERROR_COUNT += 1 ))
+  fi
 done < "${FILE}"
 set -e
+
+if [ $ERROR_COUNT -gt 0 ]; then
+  echo "Deploy finished with errors on the following hosts: ${ERROR_HOSTS}"
+  exit $ERROR_COUNT
+fi
 
 echo "Done deploying conda env to all operator machines."
