@@ -27,7 +27,7 @@ while read -r host; do
   echo "Validating ${host}"
   ENV_DIR="/u1/${host%%-*}opr/conda_envs/${ENV_NAME}"
   ssh -n "${host}" "${HERE}/validate_unpack ${ENV_DIR}"
-  if [ $? -neq 0 ], then
+  if [ $? -ne 0 ]; then
     ERROR_HOSTS="${ERROR_HOSTS}\n${host}"
     (( ERROR_COUNT += 1 ))
   fi

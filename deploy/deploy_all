@@ -69,7 +69,7 @@ set +e
 while read -r host; do
   echo "Deploying on ${host}"
   ssh -n "${host}" "${DEPLOY}${INNER_ARGS}"
-  if [ $? -neq 0 ], then
+  if [ $? -ne 0 ]; then
     ERROR_HOSTS="${ERROR_HOSTS}\n${host}"
     (( ERROR_COUNT += 1 ))
   fi
