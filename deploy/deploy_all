@@ -64,9 +64,9 @@ fi
 echo "Deploying conda env to all operator machines."
 
 set +e
-while read -r line; do
-  echo "Deploying on ${line}"
-  ssh -n "${line}" "${DEPLOY}${INNER_ARGS}"
+while read -r host; do
+  echo "Deploying on ${host}"
+  ssh -n "${host}" "${DEPLOY}${INNER_ARGS}"
 done < "${FILE}"
 set -e
 
