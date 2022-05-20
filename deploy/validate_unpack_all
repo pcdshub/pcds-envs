@@ -34,7 +34,7 @@ while read -r host; do
 done < "${FILE}"
 
 if [ $ERROR_COUNT -gt 0 ]; then
-  echo "Verify finished with errors on the following hosts: ${ERROR_HOSTS}"
+  echo -e "Verify finished with errors on the following hosts: ${ERROR_HOSTS}"
   exit $ERROR_COUNT
 fi
 
