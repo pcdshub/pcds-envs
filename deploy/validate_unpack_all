@@ -1,0 +1,41 @@
+#!/bin/bash
+# validate_unpack_all
+# run validate_unpack on all hosts for a given environment
+
+usage()
+{
+cat <<EOF
+Usage: $0 ENV_NAME
+
+Check all hosts to see if ENV_NAME was installed correctly.
+EOF
+}
+
+ENV_NAME="${1}"
+
+if [ -z "${ENV_NAME}" ]; then
+  usage
+  exit 1
+fi
+
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+FILE="${HERE}/hosts.txt"
+
+ERROR_COUNT=0
+ERROR_HOSTS=""
+while read -r host; do
+  echo "Validating ${host}"
+  ENV_DIR="/u1/${host%%-*}opr/conda_envs/${ENV_NAME}"
+  ssh -n "${host}" "${HERE}/validate_unpack ${ENV_DIR}"
+  if [ $? -ne 0 ]; then
+    ERROR_HOSTS="${ERROR_HOSTS}\n${host}"
+    (( ERROR_COUNT += 1 ))
+  fi
+done < "${FILE}"
+
+if [ $ERROR_COUNT -gt 0 ]; then
+  echo -e "Verify finished with errors on the following hosts: ${ERROR_HOSTS}"
+  exit $ERROR_COUNT
+fi
+
+echo "Done verifying conda env ${ENV_NAME} on all operator machines."
