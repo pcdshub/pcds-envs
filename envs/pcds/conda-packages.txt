@@ -18,7 +18,7 @@ datashader
 doctr
 docutils=0.16
 elog>=1.2.0
-epicscorelibs=7.0.4.99.1.2
+epicscorelibs=7.0.6.99.2.0
 flake8
 fzf
 gh
@@ -61,7 +61,7 @@ psdaq-control-minimal>=3.3.19
 psdm_qs_cli>=0.3.5
 pswalker>=1.0.6
 pyaudio
-pyca=3.1.1=py39hde0f152_2
+pyca=3.2.0
 pydm>=1.15.1
 pyepics>=3.5.0
 pyfiglet
