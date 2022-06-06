@@ -16,7 +16,6 @@ cookiecutter
 coverage
 datashader
 doctr
-docutils=0.16
 elog>=1.2.1
 epicscorelibs=7.0.6.99.2.0
 flake8
