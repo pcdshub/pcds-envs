@@ -32,6 +32,7 @@ ipython>=7.30.1
 isort
 jinja2=3.0.3
 jupyter
+jupyter_client=7.3.1
 lightpath>=0.6.9
 line_profiler
 lucid>=0.9.1
