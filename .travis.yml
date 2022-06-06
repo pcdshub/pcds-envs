@@ -64,6 +64,8 @@ jobs:
         - conda deactivate
         - conda activate
         - conda config --add channels pcds-dev
+        # Strict priority often breaks the dev channels
+        - conda config --set channel_priority true
         # Useful for debugging any issues with conda
         - conda info -a
         - which python
