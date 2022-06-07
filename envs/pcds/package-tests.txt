@@ -3,6 +3,7 @@ pcdshub/elog
 pcdshub/happi
 pcdshub/hutch-python
 pcdshub/hxrsnd
+pcdshub/krtc
 pcdshub/lightpath
 pcdshub/lucid
 pcdshub/nabs

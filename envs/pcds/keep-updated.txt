@@ -8,6 +8,7 @@ elog
 happi
 hutch-python
 hxrsnd
+krtc
 lightpath
 lucid
 nabs
