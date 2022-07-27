@@ -70,7 +70,7 @@ pydm>=1.16.1
 pyepics>=3.5.0
 pyfiglet
 pymongo
-pyqt=5.15
+pyqt=5.12.3
 py-spy
 pytables
 pytest
