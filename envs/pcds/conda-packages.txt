@@ -19,7 +19,9 @@ doctr
 elog>=1.2.1
 epicscorelibs=7.0.6.99.2.0
 flake8
+flask
 fzf
+gammaray
 gh
 gpytorch<1.5.0
 grpcio-tools
@@ -48,6 +50,7 @@ ophyd>=1.6.4
 pandas
 panel
 papermill
+paramiko
 pcaspy
 pcdscalc>=0.3.2
 pcdsdaq>=2.3.5
