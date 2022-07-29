@@ -26,9 +26,9 @@ gh
 gpytorch<1.5.0
 grpcio-tools
 h5py
-happi>=1.13.0
+happi>=1.14.0
 holoviews>=1.10.9
-hutch-python>=1.16.0
+hutch-python>=1.17.0
 hxrsnd>=0.2.8
 ipython=8.4.0
 isort
@@ -52,10 +52,10 @@ panel
 papermill
 paramiko
 pcaspy
-pcdscalc>=0.3.2
+pcdscalc>=0.3.3
 pcdsdaq>=2.3.5
-pcdsdevices>=6.1.0
-pcdsutils>=0.10.0
+pcdsdevices>=6.3.0
+pcdsutils>=0.11.0
 pcdswidgets>=0.7.0
 periodictable
 pipdeptree
@@ -66,7 +66,7 @@ psdm_qs_cli>=0.3.5
 pswalker>=1.0.6
 pyaudio
 pyca=3.2.0
-pydm>=1.16.1
+pydm>=1.16.3
 pyepics>=3.5.0
 pyfiglet
 pymongo
@@ -82,7 +82,7 @@ pytest-timeout
 pytest-xdist
 python-graphviz<0.18
 python-ldap
-pytmc>=2.12.0
+pytmc>=2.13.0
 pytorch
 qdarkstyle
 qrcode
@@ -106,8 +106,8 @@ suitcase-specfile
 suitcase-tiff
 tc_release>=0.2.2
 timechart>=1.5.0
-transfocate>=0.5.5
-typhos>=2.3.1
+transfocate>=0.5.6
+typhos>=2.3.2
 versioneer
 xarray
 xraylib
