@@ -20,6 +20,7 @@ if [ -z "${3}" ]; then
 else
   GIT_REF="${3}"
 fi
+set -e
 
 ENVNAME="${BASE}-${REL}"
 ENV_DIR="../envs/${BASE}"
