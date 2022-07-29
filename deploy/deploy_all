@@ -15,7 +15,6 @@ Options:
 -e ENV:      The environment to deploy, or latest if omitted.
 -f FILENAME: The file that contains a list of hosts to install to.
              Defaults to the hosts.txt file in this directory.
--d :         Dry-run, do not move any files around.
 -h :         Show usage
 EOF
 }
@@ -24,7 +23,8 @@ set -e
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 FILE="${HERE}/hosts.txt"
-INNER_ARGS=""
+# -d makes us delete old envs
+INNER_ARGS="-d"
 
 while getopts 're:f:h' OPTION; do
   case "${OPTION}" in
@@ -68,7 +68,9 @@ ERROR_HOSTS=""
 set +e
 while read -r host; do
   echo "Deploying on ${host}"
-  ssh -n "${host}" "${DEPLOY}${INNER_ARGS}"
+  echo "ssh -n ${host} ${DEPLOY} ${INNER_ARGS}"
+  ssh -n "${host}" "${DEPLOY} ${INNER_ARGS}"
+  echo "Done with ${host}"
   if [ $? -ne 0 ]; then
     ERROR_HOSTS="${ERROR_HOSTS}\n${host}"
     (( ERROR_COUNT += 1 ))

@@ -132,7 +132,7 @@ def main(dry_run=True):
     else:
         for path in paths:
             print(f'Deleting {path}')
-            # shutil.rmtree(path)
+            shutil.rmtree(path)
 
 
 if __name__ == '__main__':
