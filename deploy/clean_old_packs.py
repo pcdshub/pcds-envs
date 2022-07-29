@@ -3,9 +3,13 @@ Script to clean up old conda pack relics
 """
 from dataclasses import dataclass
 from typing import Tuple, List
+import argparse
 import os
 import os.path
 import re
+import shutil
+import socket
+import sys
 
 
 HUTCH_PYTHON_ENV = '/cds/group/pcds/pyps/apps/hutch-python/{hutch}/{hutch}env'
@@ -105,3 +109,41 @@ def get_older_paths(hutch: str, buffer: int = 5) -> List[str]:
         else:
             old_envs.append(env.path)
     return list(reversed(old_envs))
+
+
+def get_current_hutch() -> str:
+    """
+    Quick and simple: get the hutch name from our server name.
+    """
+    hostname = socket.gethostname()
+    return hostname.split('-')[0]
+
+
+def main(dry_run=True):
+    print('Cleaning up old hutch python directories.')
+    hutch = get_current_hutch()
+    paths = get_older_paths(hutch)
+    if not paths:
+        print('Did not find any paths to clean up')
+        return
+    print(f'Found old paths: {paths}')
+    if dry_run:
+        print('Dry run: not deleting paths')
+    else:
+        for path in paths:
+            print(f'Deleting {path}')
+            # shutil.rmtree(path)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='Remove old hutch python directories to save disk space',
+    )
+    parser.add_argument(
+        '--delete',
+        action='store_true',
+        help='Set this flag to delete files instead of doing a dry run.',
+    )
+    args = parser.parse_args()
+    main(dry_run=not args.delete)
+
