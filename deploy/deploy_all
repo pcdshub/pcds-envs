@@ -68,8 +68,9 @@ ERROR_HOSTS=""
 set +e
 while read -r host; do
   echo "Deploying on ${host}"
-  echo "ssh -n ${host} ${DEPLOY} ${INNER_ARGS}"
+  set -x
   ssh -n "${host}" "${DEPLOY} ${INNER_ARGS}"
+  set +x
   echo "Done with ${host}"
   if [ $? -ne 0 ]; then
     ERROR_HOSTS="${ERROR_HOSTS}\n${host}"
