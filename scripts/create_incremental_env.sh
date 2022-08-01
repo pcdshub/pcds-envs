@@ -33,7 +33,7 @@ git show "${GIT_REF}:envs/pcds/env.yaml" > "${TEMP_ENV}"
 mamba env create -n "${ENVNAME}" -f "${TEMP_ENV}"
 
 # Update the copy minimally with our new specs
-mamba install -n "${ENVNAME}" --file "${ENV_DIR}/conda-packages.txt"
+mamba install -n "${ENVNAME}" --file "${ENV_DIR}/conda-packages.txt" --no-update-deps
 conda activate "${ENVNAME}"
 pip install -r "${ENV_DIR}/pip-packages.txt"
 ${ENV_DIR}/extra-install-steps.sh
