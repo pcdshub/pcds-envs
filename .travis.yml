@@ -108,7 +108,7 @@ jobs:
         - cd scripts
         - python update_tags.py pcds
         - travis_wait 31 timeout 30m ./create_incremental_env.sh next-incr pcds master
-        - conda activate next-incr
+        - conda activate pcds-next-incr
         - conda list
         # Set up the tests
         - python test_setup.py pcds --tag
