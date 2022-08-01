@@ -24,6 +24,7 @@ set -e
 
 ENVNAME="${BASE}-${REL}"
 ENV_DIR="../envs/${BASE}"
+source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 
 # Make a temp environment descriptor
 TEMP_ENV=".temp_env.yaml"

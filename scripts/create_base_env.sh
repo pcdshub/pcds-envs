@@ -16,8 +16,8 @@ if [ -z "${3}" ]; then
 else
   PY_VER="${3}"
 fi
-ENVNAME="${BASE}-${REL}"
 set -e
+ENVNAME="${BASE}-${REL}"
 source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
 ENV_DIR="../envs/${BASE}"
 mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt"
