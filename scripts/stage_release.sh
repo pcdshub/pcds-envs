@@ -1,7 +1,7 @@
 #!/bin/bash
 # Runs create_base_env if needed, then pushes a new yaml
 if [ -z "${1}" ]; then
-  echo "Usage: stage_release.sh [relnum] [base]"
+  echo "Usage: stage_release.sh [relnum] [base] [git_ref]"
   exit
 else
   REL="${1}"
@@ -10,6 +10,9 @@ if [ -z "${2}" ]; then
   BASE="pcds"
 else
   BASE="${2}"
+fi
+if [ -n "${3}" ]; then
+  GIT_REF="${3}"
 fi
 BRANCH="rel-${REL}"
 NAME="${BASE}-${REL}"
@@ -28,7 +31,11 @@ if [ -z "${HASREL}" ]; then
   echo "Automatically updating ${BASE} environment specs"
   python update_tags.py "${BASE}"
   echo "Building environment ${NAME}"
-  ./create_base_env.sh "${REL}" "${BASE}"
+  if [ -z "${GIT_REF}" ]; then
+    ./create_base_env.sh "${REL}" "${BASE}"
+  else
+    ./create_incremental_env.sh "${REL}" "${BASE}" "${GIT_REF}"
+  fi
 else
   echo "Using existing environment ${NAME}"
 fi

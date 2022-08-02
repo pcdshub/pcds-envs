@@ -21,6 +21,7 @@ Options:
            get_hutch_name.
 -m :       Memory, deploy to /dev/shm instead of to the HDD
 -t TARGET: Install dir override for testing
+-d :       Include the "remove old directories" routines
 -h :       Show usage
 EOF
 }
@@ -46,6 +47,9 @@ while getopts 're:i:mt:dh' OPTION; do
     t)
       DISK_DIR="${OPTARG}"
       ;;
+    d)
+      REMOVE_OLD="1"
+      ;;
     h)
       usage
       exit 0
@@ -57,6 +61,21 @@ while getopts 're:i:mt:dh' OPTION; do
   esac
 done
 
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+# Delete old first
+if [ -n "${REMOVE_OLD}" ]; then
+  export PCDS_CONDA_VER="pcds-5.4.1"
+  source /cds/group/pcds/pyps/conda/pcds_conda
+  REMOVE="${HERE}/clean_old_packs.py"
+  if [ -z "${CMD}" ]; then
+    python ${REMOVE} --delete
+  else
+    python ${REMOVE}
+  fi
+fi
+
+# Now add the new one
 SOURCE_DIR="/reg/g/pcds/pyps/conda/packed_envs"
 
 echo "Checking for NFS issues..."
@@ -70,7 +89,6 @@ fi
 
 set -e
 
-HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 GET_HUTCH="/reg/g/pcds/engineering_tools/latest/scripts/get_hutch_name"
 UNPACK="${HERE}/conda_unpack_helper"
 
