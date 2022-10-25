@@ -54,7 +54,7 @@ paramiko
 pcaspy
 pcdscalc>=0.3.3
 pcdsdaq>=2.3.5
-pcdsdevices>=6.3.0
+pcdsdevices>=7.0.0
 pcdsutils>=0.11.0
 pcdswidgets>=0.7.1
 periodictable
