@@ -28,7 +28,7 @@ grpcio-tools
 h5py
 happi>=2.0.0
 holoviews>=1.10.9
-hutch-python>=1.17.0
+hutch-python>=1.18.0
 hxrsnd>=0.2.9
 ipython=8.4.0
 isort
@@ -54,7 +54,7 @@ paramiko
 pcaspy
 pcdscalc>=0.3.3
 pcdsdaq>=2.3.5
-pcdsdevices>=7.0.0
+pcdsdevices>=7.0.1
 pcdsutils>=0.11.0
 pcdswidgets>=0.7.1
 periodictable
