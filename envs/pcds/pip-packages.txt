@@ -1,4 +1,5 @@
+epicsmacrolib>=0.5.2
 p4p
 pip-audit
 tiled[all]
-whatrecord>=0.3.5
+whatrecord>=0.4.1

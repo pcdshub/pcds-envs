@@ -5,6 +5,7 @@ bluesky
 caproto
 databroker
 elog
+epicsmacrolib
 happi
 hutch-python
 hxrsnd
