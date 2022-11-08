@@ -11,7 +11,7 @@ typhos --help
 whatrecord --help
 
 # Check for inclusions in PYQTDESIGNERPATH
-for package in pydm typhos pcdswidgets; do
+for package in pydm; do
   if [[ "${PYQTDESIGNERPATH}" != *"${package}"* ]]; then
     echo "Did not find ${package} in PYQTDESIGNERPATH=${PYQTDESIGNERPATH}"
     exit 1
