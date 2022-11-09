@@ -1,3 +1,4 @@
+rix-console
 cxi-control
 cxi-daq
 cxi-monitor
@@ -7,7 +8,6 @@ mec-daq
 mfx-control
 mfx-daq
 mfx-console
-rix-console
 rix-control
 rix-daq
 rix-monitor
