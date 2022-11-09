@@ -22,6 +22,7 @@ flake8
 flask
 fzf
 gammaray
+gdb
 gh
 gpytorch<1.5.0
 grpcio-tools
