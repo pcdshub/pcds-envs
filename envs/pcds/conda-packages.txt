@@ -89,7 +89,7 @@ qrcode
 qtpy=2.1.0
 regex
 rich
-scikit-image=0.17.2
+scikit-image
 scikit-learn
 scipy
 seaborn
