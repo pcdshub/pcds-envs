@@ -22,13 +22,12 @@ do
     retcode=$?
     if [ "${retcode}" -eq "0" ]; then
       break
-    elif [ "${retcode}" -eq "124" ]; then
-      echo "Test timed out after 10 minutes, killed with SIGTERM"
-      break
-    elif [ "${retcode}" -eq "137" ]; then
-      echo "Test timed out after 10 minutes, killed with SIGKILL"
-      break
     else
+      if [ "${retcode}" -eq "124" ]; then
+        echo "Test timed out after 10 minutes, killed with SIGTERM"
+      elif [ "${retcode}" -eq "137" ]; then
+        echo "Test timed out after 10 minutes, killed with SIGKILL"
+      fi
       (( retries -= 1 ))
     fi
   done

@@ -22,6 +22,7 @@ flake8
 flask
 fzf
 gammaray
+gdb
 gh
 gpytorch<1.5.0
 grpcio-tools
@@ -76,7 +77,7 @@ pytables
 pytest
 pytest-aiohttp
 pytest-benchmark
-pytest-qt=3.3.0
+pytest-qt
 pytest-repeat
 pytest-timeout
 pytest-xdist
@@ -89,7 +90,7 @@ qrcode
 qtpy=2.1.0
 regex
 rich
-scikit-image=0.17.2
+scikit-image
 scikit-learn
 scipy
 seaborn
