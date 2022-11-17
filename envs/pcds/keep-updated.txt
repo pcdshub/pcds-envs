@@ -3,7 +3,6 @@ archapp
 blark
 bluesky
 caproto
-databroker
 elog
 epicsmacrolib
 happi
