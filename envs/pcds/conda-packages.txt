@@ -14,6 +14,7 @@ conda-pack
 conda-smithy
 cookiecutter
 coverage
+databroker<2.0.0
 datashader
 doctr
 elog>=1.2.1
