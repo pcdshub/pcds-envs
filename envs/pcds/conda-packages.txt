@@ -31,7 +31,7 @@ h5py
 happi>=2.0.0
 holoviews>=1.10.9
 hutch-python>=1.18.0
-hxrsnd>=0.2.9
+hxrsnd>=0.2.11
 ipython=8.4.0
 isort
 jinja2=3.0.3
@@ -54,10 +54,10 @@ panel
 papermill
 paramiko
 pcaspy
-pcdscalc>=0.3.3
+pcdscalc>=0.4.0
 pcdsdaq>=2.3.5
 pcdsdevices>=7.1.0
-pcdsutils>=0.11.0
+pcdsutils>=0.12.0
 pcdswidgets>=0.7.1
 periodictable
 pipdeptree
@@ -65,10 +65,10 @@ pmgr>=2.1.1
 pre-commit
 psdaq-control-minimal>=3.3.19
 psdm_qs_cli>=0.3.5
-pswalker>=1.0.6
+pswalker>=1.0.8
 pyaudio
 pyca=3.2.0
-pydm>=1.18.0
+pydm>=1.18.1
 pyepics>=3.5.0
 pyfiglet
 pymongo
