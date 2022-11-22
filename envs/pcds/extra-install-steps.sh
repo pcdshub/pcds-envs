@@ -1,1 +1,4 @@
-pip install --pre "databroker>=2.0.0a18"
+#!/bin/bash
+# Please add stdout to this file when you extend it to help debug
+echo "No extra install steps right now"
+
