@@ -23,8 +23,9 @@ jobs:
         hash -r
         cp condarc miniconda/.condarc
         conda config --set always_yes yes --set changeps1 no
-        conda install conda-build anaconda-client packaging conda-libmamba-solver
+        conda install conda-libmamba-solver
         conda config --set solver libmamba
+        conda install anaconda-client packaging
         conda deactivate
         conda activate
         conda info -a
