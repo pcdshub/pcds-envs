@@ -35,8 +35,10 @@ jobs:
         conda activate pcds-test
         conda list
     - name: setup tests
+      run: |
         cd scripts
         python test_setup.py pcds --tag
     - name: run tests
+      run: |
         ./run_all_tests.sh pcds
 
