@@ -26,22 +26,25 @@ jobs:
         conda install -q conda-libmamba-solver
         conda config --set solver libmamba
         conda install -q anaconda-client packaging
-        conda deactivate
-        conda activate
         conda info -a
         which python
     - name: create environment
       run: |
-        conda list
-        conda info -a
+        source miniconda/etc/profile.d/conda.sh
+        conda activate
         conda env create -q -n pcds-test -f envs/pcds/env.yaml
         conda activate pcds-test
         conda list
     - name: setup tests
       run: |
+        source miniconda/etc/profile.d/conda.sh
+        conda activate pcds-test
         cd scripts
         python test_setup.py pcds --tag
     - name: run tests
       run: |
+        source miniconda/etc/profile.d/conda.sh
+        conda activate pcds-test
+        cd scripts
         ./run_all_tests.sh pcds
 
