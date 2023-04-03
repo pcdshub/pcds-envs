@@ -23,6 +23,7 @@ jobs:
         hash -r
         cp condarc miniconda/.condarc
         conda config --set always_yes yes --set changeps1 no
+        conda update conda
         conda install conda-libmamba-solver
         conda config --set solver libmamba
         conda install anaconda-client packaging
