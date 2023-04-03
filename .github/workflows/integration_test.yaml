@@ -32,6 +32,8 @@ jobs:
         which python
     - name: create environment
       run: |
+        conda list
+        conda info -a
         conda env create -q -n pcds-test -f envs/pcds/env.yaml
         conda activate pcds-test
         conda list
