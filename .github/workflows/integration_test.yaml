@@ -14,28 +14,28 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - uses: .github/actions/conda_setup
+    - uses: ./.github/actions/conda_setup
     - name: create environment
       run: micromamba env create -q -n pcds-test -f envs/pcds/env.yaml
-    - uses: .github/actions/finalize_and_check_env
-    - uses: .github/actions/run_tests
+    - uses: ./.github/actions/finalize_and_check_env
+    - uses: ./.github/actions/run_tests
       with:
         use-tag: true
-    - uses: .github/actions/release_notes
+    - uses: ./.github/actions/release_notes
   next-env-tests:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - uses: .github/actions/conda_setup
+    - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
         cd scripts
         ./create_incremental_env.sh test pcds master
-    - uses: .github/actions/finalize_and_check_env
-    - uses: .github/actions/run_tests
+    - uses: ./.github/actions/finalize_and_check_env
+    - uses: ./.github/actions/run_tests
       with:
         use-tag: true
-    - uses: .github/actions/release_notes
+    - uses: ./.github/actions/release_notes
 
