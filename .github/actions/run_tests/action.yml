@@ -7,9 +7,10 @@ inputs:
     default: false
 runs:
   using: "composite"
-  defaults:
-    run:
-      shell: bash --login -eo pipefail {0}
+  # Maybe someday default shell will be supported for actions, not just workflows
+  # defaults:
+  #   run:
+  #     shell: bash --login -eo pipefail {0}
   steps:
     - run: |
         cd scripts
@@ -18,6 +19,8 @@ runs:
         else
           python test_setup.py pcds
         fi
+      shell: bash --login -eo pipefail {0}
     - run: |
         cd scripts
         ./run_all_tests.sh pcds
+      shell: bash --login -eo pipefail {0}

@@ -2,9 +2,12 @@ name: "finalize and check env"
 description: "make the conda env available to future steps and show it"
 runs:
   using: "composite"
-  defaults:
-    run:
-      shell: bash --login -eo pipefail {0}
+  # Maybe someday default shell will be supported for actions, not just workflows
+  # defaults:
+  #   run:
+  #     shell: bash --login -eo pipefail {0}
   steps:
     - run: echo "conda activate pcds-test" >> ~/.bash_profile
+      shell: bash
     - run: mamba list | tee "$GITHUB_TEST_SUMMARY"
+      shell: bash --login -eo pipefail {0}

@@ -2,10 +2,12 @@ name: "release notes"
 description: "generate the active environment's release notes"
 runs:
   using: "composite"
-  defaults:
-    run:
-      shell: bash --login -eo pipefail {0}
+  # Maybe someday default shell will be supported for actions, not just workflows
+  # defaults:
+  #   run:
+  #     shell: bash --login -eo pipefail {0}
   steps:
     - run: |
         cd scripts
         python release_notes_table.py | tee "$GITHUB_STEP_SUMMARY"
+      shell: bash --login -eo pipefail {0}
