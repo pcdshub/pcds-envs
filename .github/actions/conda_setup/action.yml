@@ -15,6 +15,7 @@ runs:
     - shell: bash
       run: |
         cp condarc ~/.condarc
-        micromamba config --set always_yes yes --set changeps1 no
+        micromamba activate
+        mamba config --set always_yes yes --set changeps1 no
         echo "Running using python: $(which python)" | tee "$GITHUB_STEP_SUMMARY"
         echo "Running using mamba: $(mamba info -a)" | tee "$GITHUB_STEP_SUMMARY"
