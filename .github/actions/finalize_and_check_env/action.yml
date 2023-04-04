@@ -5,8 +5,7 @@ runs:
   steps:
     - shell: bash
       run: |
-        source ~/.bash_profile
-        echo "micromamba activate pcds-test" >> ~/.bash_profile
+        echo "conda activate pcds-test" >> ~/.bash_profile
     - shell: bash
       run: | 
         source ~/.bash_profile

@@ -1,22 +1,22 @@
 name: "conda setup"
-description: "download a fresh micromamba and prepare it for use"
+description: "download a fresh conda/mamba and prepare it for use"
 runs:
   using: "composite"
   steps:
     - shell: bash
       run: | 
         cd "$HOME"
-        mkdir logs
-        curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj "bin/micromamba"
-        mkdir micromamba
-        echo "Micromamba version: $(bin/micromamba --version)" | tee "$GITHUB_STEP_SUMMARY"
-        bin/micromamba shell hook --shell=bash >> ~/.bash_profile
-        echo "micromamba activate" >> ~/.bash_profile
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+        bash miniconda.sh -b -p miniconda
+        echo "source miniconda/etc/profile.d/conda.sh" >> ~/.bash_profile
+        source ~/.bash_profile
+        echo "Conda version: $(conda --version)" | tee "$GITHUB_STEP_SUMMARY"
     - shell: bash
       run: |
         source ~/.bash_profile
         cp condarc ~/.condarc
-        micromamba config set always_yes yes
-        micromamba config set changeps1 no
+        conda config --set always_yes yes --set changeps1 no
+        conda install -q mamba
+        mamba install -q anaconda-client packaging
         echo "Running using python: $(which python)" | tee "$GITHUB_STEP_SUMMARY"
         echo "Running using mamba: $(mamba info -a)" | tee "$GITHUB_STEP_SUMMARY"

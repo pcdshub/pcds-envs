@@ -16,7 +16,7 @@ jobs:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
-      run: micromamba env create -q -n pcds-test -f envs/pcds/env.yaml
+      run: mamba env create -q -n pcds-test -f envs/pcds/env.yaml
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
       with:
