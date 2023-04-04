@@ -1,0 +1,9 @@
+name: "release notes"
+description: "generate the active environment's release notes"
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        cd scripts
+        python release_notes_table.py | tee "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,22 @@
+name: "run tests"
+description: "set up and run the full environment unit test suite"
+inputs:
+  use-tag:
+    description: "Whether or not to test against the tag"
+    required: true
+    default: false
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: | 
+        cd scripts
+        if ${{ inputs.use-tag }}; then
+          python test_setup.py pcds --tag
+        else
+          python test_setup.py pcds
+        fi
+    - shell: bash
+      run: |
+        cd scripts
+        ./run_all_tests.sh pcds

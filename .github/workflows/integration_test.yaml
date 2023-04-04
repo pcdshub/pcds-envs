@@ -14,37 +14,28 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - name: setup miniconda
-      run: |
-        wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-        bash miniconda.sh -b -p miniconda
-        source miniconda/etc/profile.d/conda.sh
-        conda activate
-        hash -r
-        cp condarc miniconda/.condarc
-        conda config --set always_yes yes --set changeps1 no
-        conda install -q conda-libmamba-solver
-        conda config --set solver libmamba
-        conda install -q anaconda-client packaging
-        conda info -a
-        which python
+    - uses: .github/actions/conda_setup
+    - name: create environment
+      run: micromamba env create -q -n pcds-test -f envs/pcds/env.yaml
+    - uses: .github/actions/finalize_and_check_env
+    - uses: .github/actions/run_tests
+      with:
+        use-tag: true
+    - uses: .github/actions/release_notes
+  next-env-tests:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: .github/actions/conda_setup
     - name: create environment
       run: |
-        source miniconda/etc/profile.d/conda.sh
-        conda activate
-        conda env create -q -n pcds-test -f envs/pcds/env.yaml
-        conda activate pcds-test
-        conda list
-    - name: setup tests
-      run: |
-        source miniconda/etc/profile.d/conda.sh
-        conda activate pcds-test
         cd scripts
-        python test_setup.py pcds --tag
-    - name: run tests
-      run: |
-        source miniconda/etc/profile.d/conda.sh
-        conda activate pcds-test
-        cd scripts
-        ./run_all_tests.sh pcds
+        ./create_incremental_env.sh test pcds master
+    - uses: .github/actions/finalize_and_check_env
+    - uses: .github/actions/run_tests
+      with:
+        use-tag: true
+    - uses: .github/actions/release_notes
 

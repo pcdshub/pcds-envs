@@ -1,0 +1,20 @@
+name: "conda setup"
+description: "download a fresh micromamba and prepare it for use"
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: | 
+        cd "$HOME"
+        mkdir logs
+        curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj "bin/micromamba"
+        mkdir micromamba
+        echo "Micromamba version: $(bin/micromamba --version)" | tee "$GITHUB_STEP_SUMMARY"
+        bin/micromamba shell hook --shell=bash >> ~/.bash_profile
+        echo "micromamba activate" >> ~/.bash_profile
+    - shell: bash
+      run: |
+        cp condarc ~/.condarc
+        micromamba config --set always_yes yes --set changeps1 no
+        echo "Running using python: $(which python)" | tee "$GITHUB_STEP_SUMMARY"
+        echo "Running using mamba: $(mamba info -a)" | tee "$GITHUB_STEP_SUMMARY"
