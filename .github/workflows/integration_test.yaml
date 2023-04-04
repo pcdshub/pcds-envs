@@ -9,6 +9,9 @@ on:
 
 jobs:
   current-env-tests:
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
@@ -23,6 +26,9 @@ jobs:
         use-tag: true
     - uses: ./.github/actions/release_notes
   next-env-tests:
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
@@ -38,4 +44,3 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-

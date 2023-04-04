@@ -7,18 +7,17 @@ inputs:
     default: false
 runs:
   using: "composite"
+  defaults:
+    run:
+      shell: bash --login -eo pipefail {0}
   steps:
-    - shell: bash
-      run: | 
-        source ~/.bash_profile
+    - run: |
         cd scripts
         if ${{ inputs.use-tag }}; then
           python test_setup.py pcds --tag
         else
           python test_setup.py pcds
         fi
-    - shell: bash
-      run: |
-        source ~/.bash_profile
+    - run: |
         cd scripts
         ./run_all_tests.sh pcds

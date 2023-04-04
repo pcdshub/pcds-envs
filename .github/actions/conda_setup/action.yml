@@ -2,21 +2,17 @@ name: "conda setup"
 description: "download a fresh conda/mamba and prepare it for use"
 runs:
   using: "composite"
+  defaults:
+    run:
+      shell: bash --login -eo pipefail {0}
   steps:
-    - shell: bash
-      run: | 
-        cd "$HOME"
-        wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-        bash miniconda.sh -b -p miniconda
-        echo "source ~/miniconda/etc/profile.d/conda.sh" >> ~/.bash_profile
-        source ~/.bash_profile
-        echo "Conda version: $(conda --version)" | tee "$GITHUB_STEP_SUMMARY"
-    - shell: bash
-      run: |
-        source ~/.bash_profile
-        cp condarc ~/.condarc
-        conda config --set always_yes yes --set changeps1 no
-        conda install -q mamba
-        mamba install -q anaconda-client packaging
-        echo "Running using python: $(which python)" | tee "$GITHUB_STEP_SUMMARY"
-        echo "Running using mamba: $(mamba info -a)" | tee "$GITHUB_STEP_SUMMARY"
+    - run: wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+    - run: bash ~/miniconda.sh -b -p ~/miniconda
+    - run: echo "source ~/miniconda/etc/profile.d/conda.sh" >> ~/.bash_profile
+    - run: echo "Conda version is $(conda --version)" | tee "$GITHUB_STEP_SUMMARY"
+    - run: cp condarc ~/.condarc
+    - run: conda config --set always_yes yes --set changeps1 no
+    - run: conda install -q mamba
+    - run: mamba install -q anaconda-client packaging
+    - run: echo "Running using python $(which python)" | tee "$GITHUB_STEP_SUMMARY"
+    - run: echo "Running using mamba $(mamba info -a)" | tee "$GITHUB_STEP_SUMMARY"

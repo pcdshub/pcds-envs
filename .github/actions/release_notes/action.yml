@@ -2,9 +2,10 @@ name: "release notes"
 description: "generate the active environment's release notes"
 runs:
   using: "composite"
+  defaults:
+    run:
+      shell: bash --login -eo pipefail {0}
   steps:
-    - shell: bash
-      run: |
-        source ~/.bash_profile
+    - run: |
         cd scripts
         python release_notes_table.py | tee "$GITHUB_STEP_SUMMARY"
