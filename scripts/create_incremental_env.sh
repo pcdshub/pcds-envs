@@ -31,10 +31,10 @@ TEMP_ENV=".temp_env.yaml"
 git show "${GIT_REF}:envs/pcds/env.yaml" > "${TEMP_ENV}"
 
 # Create a copy of the old environment under the new name
-mamba env create -n "${ENVNAME}" -f "${TEMP_ENV}"
+mamba env create -q -n "${ENVNAME}" -f "${TEMP_ENV}"
 
 # Update the copy minimally with our new specs
-mamba install -y -n "${ENVNAME}" --file "${ENV_DIR}/conda-packages.txt"
+mamba install -q -y -n "${ENVNAME}" --file "${ENV_DIR}/conda-packages.txt"
 conda activate "${ENVNAME}"
 pip install -r "${ENV_DIR}/pip-packages.txt"
 ${ENV_DIR}/extra-install-steps.sh
