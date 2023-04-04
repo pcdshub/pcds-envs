@@ -4,6 +4,10 @@ runs:
   using: "composite"
   steps:
     - shell: bash
-      run: echo "micromamba activate pcds-test" >> ~/.bash_profile
+      run: |
+        source ~/.bash_profile
+        echo "micromamba activate pcds-test" >> ~/.bash_profile
     - shell: bash
-      run: mamba list | tee "$GITHUB_TEST_SUMMARY"
+      run: | 
+        source ~/.bash_profile
+        mamba list | tee "$GITHUB_TEST_SUMMARY"

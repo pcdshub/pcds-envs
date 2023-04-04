@@ -10,6 +10,7 @@ runs:
   steps:
     - shell: bash
       run: | 
+        source ~/.bash_profile
         cd scripts
         if ${{ inputs.use-tag }}; then
           python test_setup.py pcds --tag
@@ -18,5 +19,6 @@ runs:
         fi
     - shell: bash
       run: |
+        source ~/.bash_profile
         cd scripts
         ./run_all_tests.sh pcds

@@ -14,8 +14,8 @@ runs:
         echo "micromamba activate" >> ~/.bash_profile
     - shell: bash
       run: |
+        source ~/.bash_profile
         cp condarc ~/.condarc
-        ~/bin/micromamba activate
         mamba config --set always_yes yes --set changeps1 no
         echo "Running using python: $(which python)" | tee "$GITHUB_STEP_SUMMARY"
         echo "Running using mamba: $(mamba info -a)" | tee "$GITHUB_STEP_SUMMARY"
