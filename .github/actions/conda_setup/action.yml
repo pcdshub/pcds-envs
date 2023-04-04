@@ -6,9 +6,9 @@ runs:
     - shell: bash
       run: | 
         cd "$HOME"
-        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+        wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
         bash miniconda.sh -b -p miniconda
-        echo "source miniconda/etc/profile.d/conda.sh" >> ~/.bash_profile
+        echo "source ~/miniconda/etc/profile.d/conda.sh" >> ~/.bash_profile
         source ~/.bash_profile
         echo "Conda version: $(conda --version)" | tee "$GITHUB_STEP_SUMMARY"
     - shell: bash
