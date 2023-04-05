@@ -1,7 +1,6 @@
 name: pcds-envs Integration Testing
 
 on:
-  push:
   pull_request:
   release:
     types:
