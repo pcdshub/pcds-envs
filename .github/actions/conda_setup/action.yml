@@ -13,6 +13,8 @@ runs:
       shell: bash
     - run: echo "source ~/miniconda/etc/profile.d/conda.sh" >> ~/.bash_profile
       shell: bash
+    - run: echo "conda activate base" >> ~/.bash_profile
+      shell: bash
     - run: echo "Conda version is $(conda --version)" | tee "$GITHUB_STEP_SUMMARY"
       shell: bash --login -eo pipefail {0}
     - run: cp condarc ~/.condarc

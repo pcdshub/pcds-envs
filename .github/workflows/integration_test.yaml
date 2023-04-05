@@ -44,10 +44,11 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-  # Start from scratch to get some py39 testing done when current env fails
-  # There is no need to do this when current env passes
+  # Start from scratch to get some py39 testing done
+  # This is a fallback alternative to py39-next-incr, which is preferred
+  # as py39-next-incr should be most similar to what a hypothetical next env would be
   py39-next-full:
-    if: ${{ failure() }}
+    if: ${{ always() }}
     needs: current-env-tests
     defaults:
       run:
