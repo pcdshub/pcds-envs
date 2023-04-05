@@ -24,9 +24,7 @@ jobs:
         use-tag: true
     - uses: ./.github/actions/release_notes
   # The env from current-env-tests + the latest tags slapped onto it
-  # There is no point in running this if current env cannot be built
   py39-next-incr:
-    needs: current-env-tests
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -45,10 +43,7 @@ jobs:
     - uses: ./.github/actions/release_notes
   # Start from scratch to get some py39 testing done
   # This is a fallback alternative to py39-next-incr, which is preferred
-  # as py39-next-incr should be most similar to what a hypothetical next env would be
   py39-next-full:
-    if: ${{ always() }}
-    needs: current-env-tests
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -67,7 +62,6 @@ jobs:
     - uses: ./.github/actions/release_notes
   # Try to build a python 3.10 env
   py310-next-full:
-    needs: py310-readiness
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -86,7 +80,6 @@ jobs:
     - uses: ./.github/actions/release_notes
   # Try to build a python 3.11 env
   py311-next-full:
-    needs: py311-readiness
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -105,6 +98,8 @@ jobs:
     - uses: ./.github/actions/release_notes
   # Checks which packages are not ready yet for py310
   py310-readiness:
+    needs: py310-next-full
+    if: ${{ failure() }}
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -121,6 +116,8 @@ jobs:
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
   # Checks which packages are not ready yet for py311
   py311-readiness:
+    needs: py311-next-full
+    if: ${{ failure() }}
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
