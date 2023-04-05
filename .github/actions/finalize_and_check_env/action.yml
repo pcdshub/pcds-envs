@@ -9,5 +9,5 @@ runs:
   steps:
     - run: echo "conda activate pcds-test" >> ~/.bash_profile
       shell: bash
-    - run: mamba list | tee "$GITHUB_TEST_SUMMARY"
+    - run: mamba list
       shell: bash --login -eo pipefail {0}

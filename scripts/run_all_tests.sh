@@ -45,6 +45,8 @@ do
   popd
 done
 
+echo "summary_start"
+
 # If ERROR is nonzero, at least one of the run_test.py calls failed
 if [ -n "${ERR_PKGS}" ]; then
   echo -e "\033[0;31mThe following packages failed all retries:${ERR_PKGS}\033[0m"
@@ -56,6 +58,8 @@ if [ -n "${WARN_PKGS}" ]; then
 else
   echo -e "\033[0;32mNo packages had race conditions!\033[0m"
 fi
+
+echo "summary_end"
 
 # Do the environment's extra tests if they exist
 if [ -n "${1}" ]; then
