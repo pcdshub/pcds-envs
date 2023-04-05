@@ -8,6 +8,7 @@ on:
       - published
 
 jobs:
+  # The latest deployed env OR the proposed env in a PR
   current-env-tests:
     defaults:
       run:
@@ -15,8 +16,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: mamba env create -q -n pcds-test -f envs/pcds/env.yaml
@@ -25,15 +24,16 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-  next-env-tests:
+  # The env from current-env-tests + the latest tags slapped onto it
+  # There is no point in running this if current env cannot be built
+  py39-next-incr:
+    needs: current-env-tests
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
@@ -44,3 +44,88 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+  # Start from scratch to get some py39 testing done when current env fails
+  # There is no need to do this when current env passes
+  py39-next-full:
+    if: ${{ failure() }}
+    needs: current-env-tests
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/actions/conda_setup
+    - name: create environment
+      run: |
+        cd scripts
+        ./create_base_env.sh test pcds 3.9
+    - uses: ./.github/actions/finalize_and_check_env
+    - uses: ./.github/actions/run_tests
+      with:
+        use-tag: true
+    - uses: ./.github/actions/release_notes
+  # Try to build a python 3.10 env
+  py310-next-full:
+    needs: py310-readiness
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/actions/conda_setup
+    - name: create environment
+      run: |
+        cd scripts
+        ./create_base_env.sh test pcds 3.10
+    - uses: ./.github/actions/finalize_and_check_env
+    - uses: ./.github/actions/run_tests
+      with:
+        use-tag: true
+    - uses: ./.github/actions/release_notes
+  # Try to build a python 3.11 env
+  py311-next-full:
+    needs: py311-readiness
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/actions/conda_setup
+    - name: create environment
+      run: |
+        cd scripts
+        ./create_base_env.sh test pcds 3.11
+    - uses: ./.github/actions/finalize_and_check_env
+    - uses: ./.github/actions/run_tests
+      with:
+        use-tag: true
+    - uses: ./.github/actions/release_notes
+  # Checks which packages are not ready yet for py310
+  py310-readiness:
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/actions/conda_setup
+    - name: check packages
+      run: |
+        cd scripts
+        ./check_py_compat.sh pcds 3.10
+  # Checks which packages are not ready yet for py311
+  py311-readiness:
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/actions/conda_setup
+    - name: check packages
+      run: |
+        cd scripts
+        ./check_py_compat.sh pcds 3.11
