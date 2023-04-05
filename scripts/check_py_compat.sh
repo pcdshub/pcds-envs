@@ -18,7 +18,7 @@ do
   if mamba create --dry-run --name debug_test python="${PY_VER}" "${line}" > /dev/null 2>&1; then
     echo "Found working package ${line}"
   else
-    echo "Found broken package ${line}"
+    echo "Found uninstallable package ${line}"
     EXIT_CODE=1
   fi
 done < "../envs/${BASE}/conda-packages.txt"
