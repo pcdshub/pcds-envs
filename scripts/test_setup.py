@@ -1,9 +1,7 @@
 import argparse
-import configparser
 import contextlib
 import json
 import os
-import requests
 import subprocess
 from pathlib import Path
 
@@ -26,7 +24,6 @@ def version_info():
 
 
 def setup_all_tests(repo_file, tags=None):
-    url_base = 'https://github.com/{}.git'
     repo_file = Path(repo_file)
 
     with repo_file.open('r') as fd:
@@ -42,7 +39,7 @@ def setup_all_tests(repo_file, tags=None):
             except KeyError as err:
                 msg = f'Did not find package {pkg} in environment'
                 raise RuntimeError(msg) from err
-            setup_one_test(repo, pkg, tag=tags[pkg])
+            setup_one_test(repo, pkg, tag=tag)
 
 
 def setup_one_test(repo, pkg, tag=None):
@@ -56,20 +53,23 @@ def setup_one_test(repo, pkg, tag=None):
     if tag is not None:
         print('Checking out package tag')
         with pushd(pkg):
-            config = configparser.ConfigParser()
-            config.read('setup.cfg')
             try:
-                tag_prefix = config['versioneer']['tag_prefix']
-            except KeyError:
-                tag_prefix = ''
-            try:
-                subprocess.run(['git', 'fetch', '--tags'], check=True)
-                subprocess.run(['git', 'checkout', tag_prefix + tag],
-                               check=True)
-            except KeyError as err:
-                raise ValueError(f'Did not have tag for {pkg}') from err
+                subprocess.run(
+                    ['git', 'fetch', '--tags'],
+                    check=True,
+                )
+                tag_prefix = subprocess.check_output(
+                    ['git', 'tag', '-l'],
+                    universal_newlines=True,
+                ).strip().split('\n')[-1][0]
+                if tag_prefix.isdigit():
+                    tag_prefix = ''
+                subprocess.run(
+                    ['git', 'checkout', tag_prefix + tag],
+                    check=True,
+                )
             except subprocess.CalledProcessError as err:
-                raise RuntimeError(f'Error checking out tag') from err
+                raise RuntimeError('Error checking out tag') from err
 
 
 @contextlib.contextmanager
