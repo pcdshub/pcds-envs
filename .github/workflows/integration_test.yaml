@@ -117,7 +117,9 @@ jobs:
       run: |
         cd scripts
         ./check_py_compat.sh pcds 3.10 | tee ~/compat.log
-        grep "broken package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
+    - name: summarize failure
+      if: ${{ failure() }}
+      run:  grep "broken package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
   # Checks which packages are not ready yet for py311
   py311-readiness:
     defaults:
@@ -131,4 +133,6 @@ jobs:
       run: |
         cd scripts
         ./check_py_compat.sh pcds 3.11 | tee ~/compat.log
-        grep "broken package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
+    - name: summarize failure
+      if: ${{ failure() }}
+      run:  grep "broken package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
