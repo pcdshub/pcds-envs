@@ -6,6 +6,10 @@ on:
     types:
       - published
 
+env:
+  MPLBACKEND: "agg"
+  QT_QPA_PLATFORM: "offscreen"
+
 jobs:
   # The latest deployed env OR the proposed env in a PR
   current-env-tests:
