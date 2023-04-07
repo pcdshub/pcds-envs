@@ -1,20 +1,20 @@
 import argparse
 import json
 import re
-import requests
 import subprocess
 from pathlib import Path
 
+import requests
 from packaging import version
 
-
 CHANNELS = ['conda-forge', 'pcds-tag', 'lcls-ii']
+
 
 def latest_version(package):
     try:
         info = subprocess.check_output(['conda', 'search', '--json', package],
                                        universal_newlines=True)
-    except Exception as exc:
+    except Exception:
         raise
     info_list = json.loads(info)[package]
     channel_versions = {}
@@ -26,11 +26,16 @@ def latest_version(package):
             if ch in item_channel:
                 item_channel = ch
                 break
-        if version.parse(item_version) > version.parse(latest_version):
-            latest_version = item_version
-        latest_ch_ver = channel_versions.setdefault(item_channel, "0.0.0")
-        if version.parse(item_version) > version.parse(latest_ch_ver):
-            channel_versions[item_channel] = item_version
+        try:
+            if version.parse(item_version) > version.parse(latest_version):
+                latest_version = item_version
+            latest_ch_ver = channel_versions.setdefault(item_channel, "0.0.0")
+            if version.parse(item_version) > version.parse(latest_ch_ver):
+                channel_versions[item_channel] = item_version
+        except version.InvalidVersion:
+            # Some packages can have malformed version numbers
+            # Just ignore these and move on
+            pass
     if channel_versions.get('conda-forge', latest_version) != latest_version:
         print(
             f'Warning! {package}={latest_version} '
@@ -40,7 +45,8 @@ def latest_version(package):
     return latest_version
 
 
-pypi_version_re = re.compile(f'-(\d\.\d\.\d).tar.gz')
+pypi_version_re = re.compile(r'-(\d\.\d\.\d).tar.gz')
+
 
 def pypi_latest_version_no_search(package):
     req = requests.get(f'https://pypi.org/project/{package}')
@@ -49,8 +55,13 @@ def pypi_latest_version_no_search(package):
         raise RuntimeError(f'{package} not found on pypi.')
     latest_version = '0.0.0'
     for ver in matches:
-        if version.parse(ver) > version.parse(latest_version):
-            latest_version = ver
+        try:
+            if version.parse(ver) > version.parse(latest_version):
+                latest_version = ver
+        except version.InvalidVersion:
+            # Some packages can have malformed version numbers
+            # Just ignore these and move on
+            pass
     return ver
 
 
@@ -65,7 +76,7 @@ def update_specs(path, versions_dict, dry_run=False):
 
     changed_spec = False
     for i, spec in enumerate(specs):
-        package = re.split('\=|>|<| |\n', spec)[0]
+        package = re.split(r'\=|>|<| |\n', spec)[0]
         try:
             latest = versions_dict[package]
             spec = spec.strip('\n')
@@ -80,7 +91,7 @@ def update_specs(path, versions_dict, dry_run=False):
             pass
 
     if changed_spec:
-        print(f'Writing changes for package specs')
+        print('Writing changes for package specs')
         if dry_run:
             print('Skip write because this is a dry run')
         else:
