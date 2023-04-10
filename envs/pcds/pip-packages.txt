@@ -4,5 +4,5 @@ p4p
 pip-audit
 python-vxi11
 tiled[all]
-whatrecord>=0.4.2
+whatrecord>=0.4.4
 git+https://github.com/pcdshub/pmpsdb_client.git@v1.1.1
