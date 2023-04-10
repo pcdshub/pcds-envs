@@ -1,3 +1,4 @@
+# pypi as new as possible
 epicsmacrolib>=0.6.0
 laserbeamsize
 p4p
@@ -5,4 +6,13 @@ pip-audit
 python-vxi11
 tiled[all]
 whatrecord>=0.4.4
+# github source
 git+https://github.com/pcdshub/pmpsdb_client.git@v1.1.1
+# conda+pip regressive pins
+databroker<2.0.0
+gpytorch<1.5.0
+ipython==8.4.0
+jupyter_client==7.3.1
+qtpy==2.1.0
+sqlalchemy<2.0.0
+xraydb<4.5.0

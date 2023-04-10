@@ -1,3 +1,4 @@
+# conda as new as possible
 ads-async>=0.3.1
 anaconda-client>=1.11.1
 apischema>=0.18.0
@@ -18,7 +19,6 @@ conda-smithy>=3.23.1
 cookiecutter>=2.1.1
 coverage>=7.2.3
 cython>=0.29.34
-databroker<2.0.0
 datashader
 elog>=1.2.2
 epicscorelibs=7.0.7.99.0.0
@@ -28,7 +28,6 @@ fzf>=0.39.0
 gammaray>=2.11.2
 gdb>=12.1
 gh>=2.25.1
-gpytorch<1.5.0
 grpcio-tools
 h5py
 happi>=2.1.1
@@ -36,11 +35,9 @@ hklpy>=1.0.3
 holoviews>=1.10.9
 hutch-python>=1.18.0
 hxrsnd>=0.2.11
-ipython=8.4.0
 isort>=5.12.0
 jinja2=3.0.3
 jupyter
-jupyter_client=7.3.1
 krtc>=0.2.1
 lightpath>=1.0.2
 line_profiler
@@ -76,7 +73,6 @@ pydm>=1.19.0
 pyepics>=3.5.0
 pyfiglet
 pymongo
-pyqt=5.12.3
 py-spy>=0.3.14
 pytables
 pytest>=7.3.0
@@ -86,7 +82,6 @@ pytest-qt>=4.2.0
 pytest-repeat>=0.9.1
 pytest-timeout>=2.1.0
 pytest-xdist>=3.2.1
-python-graphviz<0.18
 python-ldap
 pytmc>=2.15.0
 pytorch
@@ -94,7 +89,6 @@ pyupgrade>=3.3.1
 pyyaml>=6.0
 qdarkstyle
 qrcode
-qtpy=2.1.0
 regex
 rich
 scikit-image
@@ -105,7 +99,6 @@ shellcheck>=0.9.0
 simplejson
 sphinx>=6.1.3
 sphinx_rtd_theme>=1.2.0
-sqlalchemy <2.0.0
 suitcase-csv
 suitcase-json-metadata
 suitcase-jsonl
@@ -119,6 +112,16 @@ toml>=0.10.2
 transfocate>=0.5.7
 typhos>=2.4.1
 xarray
-xraydb <4.5.0
 xraylib
 yarn
+# conda only regressive pins
+pyqt=5.12.3
+python-graphviz<0.18
+# conda+pip regressive pins
+databroker<2.0.0
+gpytorch<1.5.0
+ipython=8.4.0
+jupyter_client=7.3.1
+qtpy=2.1.0
+sqlalchemy<2.0.0
+xraydb<4.5.0
