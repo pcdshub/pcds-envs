@@ -15,6 +15,9 @@ fi
 EXIT_CODE=0
 while read line;
 do
+  if [[ "${line}" == "#"* ]]; then
+    continue
+  fi
   if mamba create --dry-run --name debug_test python="${PY_VER}" "${line}" > /dev/null 2>&1; then
     echo "Found working package ${line}"
   else
