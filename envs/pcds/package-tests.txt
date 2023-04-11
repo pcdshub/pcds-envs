@@ -1,7 +1,7 @@
 klauer/blark
 pcdshub/elog
 pcdshub/happi
-pcdshub/hutch_python
+pcdshub/hutch-python
 pcdshub/hxrsnd
 pcdshub/krtc
 pcdshub/lightpath

@@ -22,7 +22,7 @@ gdb
 gh
 happi
 hklpy
-hutch_python
+hutch-python
 hxrsnd
 isort
 krtc

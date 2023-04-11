@@ -33,7 +33,7 @@ h5py
 happi>=2.1.1
 hklpy>=1.0.3
 holoviews>=1.10.9
-hutch_python>=1.18.2
+hutch-python>=1.18.3
 hxrsnd>=0.2.11
 isort>=5.12.0
 jinja2=3.0.3
