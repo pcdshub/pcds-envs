@@ -24,9 +24,10 @@ runs:
         cd scripts
         ./run_all_tests.sh pcds | tee ~/test_output.log
       shell: bash --login -eo pipefail {0}
+    # This extracts the test results by picking all the text between summary_start and summary_end and stripping the color command characters
     - run: sed -n '/summary_start/{:a;n;/summary_end/b;p;ba}' ~/test_output.log | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' >> "$GITHUB_STEP_SUMMARY"
       if: ${{ always() }}
-      shell: bash
+      shell: bash -eo pipefail {0}
     - run: grep "Extra tests" ~/test_output.log | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' >> "$GITHUB_STEP_SUMMARY"
       if: ${{ always() }}
-      shell: bash
+      shell: bash -eo pipefail {0}
