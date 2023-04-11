@@ -40,7 +40,6 @@ jinja2=3.0.3
 jupyter
 krtc>=0.2.1
 lightpath>=1.0.2
-line_profiler
 lucid>=0.10.0
 lxml
 memray>=1.7.0
@@ -115,6 +114,7 @@ xarray
 xraylib
 yarn
 # conda only regressive pins
+line_profiler<4
 pyqt=5.12.3
 python-graphviz<0.18
 # conda+pip regressive pins
