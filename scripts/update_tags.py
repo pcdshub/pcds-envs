@@ -11,11 +11,8 @@ CHANNELS = ['conda-forge', 'pcds-tag', 'lcls-ii']
 
 
 def latest_version(package):
-    try:
-        info = subprocess.check_output(['conda', 'search', '--json', package],
-                                       universal_newlines=True)
-    except Exception:
-        raise
+    info = subprocess.check_output(['conda', 'search', '--json', package],
+                                   universal_newlines=True)
     info_list = json.loads(info)[package]
     channel_versions = {}
     latest_version = "0.0.0"
