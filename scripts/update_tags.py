@@ -62,7 +62,7 @@ def pypi_latest_version_no_search(package):
             # Some packages can have malformed version numbers
             # Just ignore these and move on
             pass
-    return ver
+    return latest_version
 
 
 def update_specs(path, versions_dict, dry_run=False):
