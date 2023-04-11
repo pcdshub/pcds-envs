@@ -28,6 +28,11 @@ runs:
     - run: sed -n '/summary_start/{:a;n;/summary_end/b;p;ba}' ~/test_output.log | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' >> "$GITHUB_STEP_SUMMARY"
       if: ${{ always() }}
       shell: bash -eo pipefail {0}
+    # This extracts just the line that says "Extra tests passed/failed"
     - run: grep "Extra tests" ~/test_output.log | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' >> "$GITHUB_STEP_SUMMARY"
+      if: ${{ always() }}
+      shell: bash -eo pipefail {0}
+    # This extracts the results of the pip check step
+    - run: sed -n '/pip_check_start/{:a;n;/pip_check_end/b;p;ba}' ~/test_output.log >> "$GITHUB_STEP_SUMMARY"
       if: ${{ always() }}
       shell: bash -eo pipefail {0}

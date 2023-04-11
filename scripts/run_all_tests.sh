@@ -83,9 +83,11 @@ else
 fi
 
 # Do a pip dependencies check
+echo "pip_check_start"
 if [ -x "$(command -v pip)" ]; then
   pip check
   (( ERROR += $? ))
 fi
+echo "pip_check_end"
 
 exit $ERROR
