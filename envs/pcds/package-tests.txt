@@ -1,7 +1,7 @@
 klauer/blark
 pcdshub/elog
 pcdshub/happi
-pcdshub/hutch-python
+pcdshub/hutch_python
 pcdshub/hxrsnd
 pcdshub/krtc
 pcdshub/lightpath
@@ -12,7 +12,7 @@ pcdshub/pcdsdaq
 pcdshub/pcdsdevices
 pcdshub/pcdsutils
 pcdshub/pcdswidgets
-slaclab/psdm_qs_cli
+pcdshub/psdm_qs_cli
 pcdshub/pswalker
 slaclab/pyca
 slaclab/pydm
