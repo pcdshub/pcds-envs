@@ -1,6 +1,6 @@
 # conda as new as possible
 ads-async>=0.3.1
-anaconda-client>=1.11.1
+anaconda-client>=1.11.2
 apischema>=0.18.0
 archapp>=1.1.0
 atlassian-python-api>=3.36.0
