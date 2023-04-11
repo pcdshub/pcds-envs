@@ -1,0 +1,38 @@
+name: "run tests"
+description: "set up and run the full environment unit test suite"
+inputs:
+  use-tag:
+    description: "Whether or not to test against the tag"
+    required: true
+    default: false
+runs:
+  using: "composite"
+  # Maybe someday default shell will be supported for actions, not just workflows
+  # defaults:
+  #   run:
+  #     shell: bash --login -eo pipefail {0}
+  steps:
+    - run: |
+        cd scripts
+        if ${{ inputs.use-tag }}; then
+          python test_setup.py pcds --tag
+        else
+          python test_setup.py pcds
+        fi
+      shell: bash --login -eo pipefail {0}
+    - run: |
+        cd scripts
+        ./run_all_tests.sh pcds | tee ~/test_output.log
+      shell: bash --login -eo pipefail {0}
+    # This extracts the test results by picking all the text between summary_start and summary_end and stripping the color command characters
+    - run: sed -n '/summary_start/{:a;n;/summary_end/b;p;ba}' ~/test_output.log | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' >> "$GITHUB_STEP_SUMMARY"
+      if: ${{ always() }}
+      shell: bash -eo pipefail {0}
+    # This extracts just the line that says "Extra tests passed/failed"
+    - run: grep "Extra tests" ~/test_output.log | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' >> "$GITHUB_STEP_SUMMARY"
+      if: ${{ always() }}
+      shell: bash -eo pipefail {0}
+    # This extracts the results of the pip check step
+    - run: sed -n '/pip_check_start/{:a;n;/pip_check_end/b;p;ba}' ~/test_output.log >> "$GITHUB_STEP_SUMMARY"
+      if: ${{ always() }}
+      shell: bash -eo pipefail {0}

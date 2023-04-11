@@ -1,0 +1,31 @@
+name: "conda setup"
+description: "download a fresh conda/mamba and prepare it for use"
+runs:
+  using: "composite"
+  # Maybe someday default shell will be supported for actions, not just workflows
+  # defaults:
+  #   run:
+  #     shell: bash --login -eo pipefail {0}
+  steps:
+    - run: wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+      shell: bash
+    - run: bash ~/miniconda.sh -b -p ~/miniconda
+      shell: bash
+    - run: echo "source ~/miniconda/etc/profile.d/conda.sh" >> ~/.bash_profile
+      shell: bash
+    - run: echo "conda activate base" >> ~/.bash_profile
+      shell: bash
+    - run: echo "Conda version is $(conda --version)"
+      shell: bash --login -eo pipefail {0}
+    - run: cp condarc ~/.condarc
+      shell: bash
+    - run: conda config --set always_yes yes --set changeps1 no
+      shell: bash --login -eo pipefail {0}
+    - run: conda install -q mamba
+      shell: bash --login -eo pipefail {0}
+    - run: mamba install -q anaconda-client packaging
+      shell: bash --login -eo pipefail {0}
+    - run: echo "Running using python $(which python)"
+      shell: bash --login -eo pipefail {0}
+    - run: echo "Running using mamba $(mamba info -a)"
+      shell: bash --login -eo pipefail {0}
