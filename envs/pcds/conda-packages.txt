@@ -114,14 +114,24 @@ xarray
 xraylib
 yarn
 # conda only regressive pins
+# line_profiler is brokenly slow starting at 4
 line_profiler<4
+# pyqt 5.15 builds have no designer
 pyqt=5.12.3
+# workaround for conda/pip interaction bug with whatrecord
 python-graphviz<0.18
 # conda+pip regressive pins
+# avoids pre-releases of v2
 databroker<2.0.0
+# no matching build on conda-forge
 gpytorch<1.5.0
+# ipython changes make scientists upset and can break experiments
 ipython=8.4.0
+# later versions are incompatible with typhos console tool
 jupyter_client=7.3.1
+# pin for gui interface stability
 qtpy=2.1.0
+# new sqlalchemy incompatible with old xraydb
 sqlalchemy<2.0.0
+# new xraydb not on conda yet, but requires new sqlalchemy
 xraydb<4.5.0
