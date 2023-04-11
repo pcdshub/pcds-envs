@@ -33,7 +33,7 @@ h5py
 happi>=2.1.1
 hklpy>=1.0.3
 holoviews>=1.10.9
-hutch-python>=1.18.0
+hutch-python>=1.18.2
 hxrsnd>=0.2.11
 isort>=5.12.0
 jinja2=3.0.3
@@ -54,7 +54,7 @@ papermill
 paramiko
 pcaspy
 pcdscalc>=0.4.1
-pcdsdaq>=2.4.0
+pcdsdaq>=2.4.1
 pcdsdevices>=7.2.0
 pcdsutils>=0.12.1
 pcdswidgets>=0.8.0
