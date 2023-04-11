@@ -5,6 +5,7 @@ set -e
 hutch-python --help
 lightpath --help
 pmgrLauncher.sh --help
+pmpsdb --help
 pydm --help
 pytmc --help
 typhos --help
