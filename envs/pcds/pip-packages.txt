@@ -3,7 +3,7 @@ epicsmacrolib>=0.6.0
 laserbeamsize
 p4p
 pip-audit
-pmpsdb_client>=1.1.2
+pmpsdb-client>=1.1.2
 python-vxi11
 tiled[all]
 whatrecord>=0.4.4
