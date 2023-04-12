@@ -84,7 +84,6 @@ LAB_PACKAGES = [
 ]
 # List of packages to include in (notable) COMMUNITY table
 COMMUNITY_PACKAGES = [
-    'doctr',
     'flake8',
     'ipython',
     'jupyter',
@@ -113,7 +112,10 @@ PACKAGES = {
 # First capture group is + or - (new version or old version)
 # Second capture group is package name
 # Third capture group is version string
-ver_change_regex = re.compile(r'^(\+|\-)\s+\- ([^=\n]*)=+([^=\n]*)=?.*$', flags=re.M)
+ver_change_regex = re.compile(
+    r'^(\+|\-)\s+\- ([^=\n]*)=+([^=\n]*)=?.*$',
+    flags=re.M,
+)
 
 # For looking through the normal file
 # Capture group is the package name
@@ -176,8 +178,15 @@ class Update:
 
     @property
     def degraded(self) -> bool:
-        new = pkg_resources.parse_version(self.new_version)
-        old = pkg_resources.parse_version(self.old_version)
+        if self.new_version == self.old_version:
+            return False
+        try:
+            new = pkg_resources.parse_version(self.new_version)
+            old = pkg_resources.parse_version(self.old_version)
+        except ValueError:
+            # Invalid version, we can't tell!
+            # Err on the side of false positives.
+            return True
         return new < old
 
 
@@ -386,7 +395,9 @@ def main(env_name='pcds', reference='master'):
 
     # Then, show added/removed packages
     # Split based on what pkg_resources knows about dependencies
-    added_reqs = {pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 0}
+    added_reqs = {
+        pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 0
+    }
     added_specs = added_pkgs.difference(added_reqs)
     # Further refine the split based on mamba's knowledge
     if added_specs:
@@ -453,6 +464,7 @@ def main(env_name='pcds', reference='master'):
         for pkg in sorted(removed_pkgs):
             print(f'- {pkg}')
         print()
+
 
 if __name__ == '__main__':
     main(*sys.argv[1:])

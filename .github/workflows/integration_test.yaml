@@ -43,7 +43,7 @@ jobs:
     - name: create environment
       run: |
         cd scripts
-        ./create_incremental_env.sh test pcds master
+        ./create_incremental_env.sh test pcds origin/master
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
       with:
