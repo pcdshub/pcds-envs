@@ -5,6 +5,9 @@ on:
   release:
     types:
       - published
+  schedule:
+    # Every monday morning >3 hours before start
+    - cron: '45 3 * * 1'
 
 env:
   MPLBACKEND: "agg"
@@ -19,6 +22,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: mamba env create -q -n pcds-test -f envs/pcds/env.yaml
@@ -35,11 +40,13 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
         cd scripts
-        ./create_incremental_env.sh test pcds master
+        ./create_incremental_env.sh test pcds origin/master
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
       with:
@@ -54,6 +61,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
@@ -64,25 +73,6 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-  # Use pcds-dev channel and checkout the master branch version of the tests
-  py39-dev-full:
-    defaults:
-      run:
-        shell: bash --login -eo pipefail {0}
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/actions/conda_setup
-    - name: create environment
-      run: |
-        cd scripts
-        conda config --prepend channels pcds-dev
-        ./create_base_env.sh test pcds 3.9
-    - uses: ./.github/actions/finalize_and_check_env
-    - uses: ./.github/actions/run_tests
-      with:
-        use-tag: false
-
   # Try to build a python 3.10 env
   py310-next-full:
     defaults:
@@ -91,6 +81,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
@@ -109,6 +101,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |

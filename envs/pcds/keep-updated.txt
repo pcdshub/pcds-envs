@@ -38,6 +38,7 @@ pcdsdevices
 pcdsutils
 pcdswidgets
 pmgr
+pmpsdb-client
 pre-commit
 psdaq-control-minimal
 psdm_qs_cli

@@ -17,8 +17,8 @@ fi
 BRANCH="rel-${REL}"
 NAME="${BASE}-${REL}"
 echo "Staging environment ${NAME} for release"
-HASBRANCH=`git branch | grep "${BRANCH}"`
-HASREL=`mamba env list | grep "${NAME}"`
+HASBRANCH=$(git branch | grep "${BRANCH}"$)
+HASREL=$(mamba env list | grep "${NAME}"$)
 set -e
 if [ -z "${HASBRANCH}" ]; then
   echo "Creating branch ${BRANCH}"

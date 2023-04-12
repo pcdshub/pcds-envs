@@ -9,5 +9,6 @@ runs:
   steps:
     - run: |
         cd scripts
-        python release_notes_table.py | tee "$GITHUB_STEP_SUMMARY"
+        python release_notes_table.py pcds origin/master | tee release_notes_table.txt
+        grep -v "^checking " release_notes_table.txt >> "$GITHUB_STEP_SUMMARY"
       shell: bash --login -eo pipefail {0}

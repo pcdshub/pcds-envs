@@ -3,11 +3,10 @@ epicsmacrolib>=0.6.0
 laserbeamsize
 p4p
 pip-audit
+pmpsdb-client>=1.1.2
 python-vxi11
 tiled[all]
 whatrecord>=0.4.4
-# github source
-git+https://github.com/pcdshub/pmpsdb_client.git@v1.1.1
 # conda+pip regressive pins
 # avoids pre-releases of v2
 databroker<2.0.0
