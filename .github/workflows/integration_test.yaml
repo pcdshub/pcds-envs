@@ -5,6 +5,9 @@ on:
   release:
     types:
       - published
+  schedule:
+    # Every monday morning >3 hours before start
+    - cron: '45 3 * * 1'
 
 env:
   MPLBACKEND: "agg"
