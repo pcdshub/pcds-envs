@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: mamba env create -q -n pcds-test -f envs/pcds/env.yaml
@@ -35,6 +37,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
@@ -54,6 +58,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
@@ -72,6 +78,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
@@ -91,6 +99,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
@@ -109,6 +119,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
       run: |
