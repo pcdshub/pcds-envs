@@ -20,6 +20,7 @@ cookiecutter>=2.1.1
 coverage>=7.2.3
 cython>=0.29.34
 datashader
+docs-versions-menu>=0.0.0
 elog>=1.2.2
 epicscorelibs=7.0.7.99.0.0
 flake8>=6.0.0
@@ -76,6 +77,7 @@ py-spy>=0.3.14
 pytables
 pytest>=7.3.0
 pytest-aiohttp>=0.3.0
+pytest-asyncio>=0.0.0
 pytest-benchmark>=4.0.0
 pytest-qt>=4.2.0
 pytest-repeat>=0.9.1
