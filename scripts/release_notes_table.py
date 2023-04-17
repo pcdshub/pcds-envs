@@ -381,10 +381,12 @@ def main(env_name='pcds', reference='master'):
             removed_pkgs.append(update.package_name)
     reverse_deps_cache = build_reverse_deps_cache(added_pkgs)
 
+    showed_update = False
     # First, show updates by category
     tables = build_tables(updates)
     for name, table in tables.items():
         if len(list(table)) > 0:
+            showed_update = True
             print(HEADERS[name])
             divider = '-' * len(HEADERS[name])
             print(divider)
@@ -401,6 +403,7 @@ def main(env_name='pcds', reference='master'):
     added_specs = added_pkgs.difference(added_reqs)
     # Further refine the split based on mamba's knowledge
     if added_specs:
+        showed_update = True
         header = 'Added the Following Packages'
         print(header)
         print('-' * len(header))
@@ -409,6 +412,7 @@ def main(env_name='pcds', reference='master'):
             print(f'- {pkg}')
         print()
     if added_reqs:
+        showed_update = True
         header = 'Added the Following Dependencies'
         print(header)
         print('-' * len(header))
@@ -457,6 +461,7 @@ def main(env_name='pcds', reference='master'):
                     print(f'- {pkg} (required by {first_required_text})')
         print()
     if removed_pkgs:
+        showed_update = True
         header = 'Removed the Following Packages'
         print(header)
         print('-' * len(header))
@@ -464,6 +469,8 @@ def main(env_name='pcds', reference='master'):
         for pkg in sorted(removed_pkgs):
             print(f'- {pkg}')
         print()
+    if not showed_update:
+        print('No package updates.')
 
 
 if __name__ == '__main__':
