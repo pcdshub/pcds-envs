@@ -20,7 +20,7 @@ cookiecutter>=2.1.1
 coverage>=7.2.3
 cython>=0.29.34
 datashader
-docs-versions-menu>=0.0.0
+docs-versions-menu>=0.5.1
 elog>=1.2.2
 epicscorelibs=7.0.7.99.0.0
 flake8>=6.0.0
@@ -55,8 +55,8 @@ papermill
 paramiko
 pcaspy
 pcdscalc>=0.4.1
-pcdsdaq>=2.4.1
-pcdsdevices>=7.2.0
+pcdsdaq>=2.4.2
+pcdsdevices>=7.3.0
 pcdsutils>=0.12.1
 pcdswidgets>=0.8.0
 periodictable
@@ -75,9 +75,9 @@ pyfiglet
 pymongo
 py-spy>=0.3.14
 pytables
-pytest>=7.3.0
+pytest>=7.3.1
 pytest-aiohttp>=0.3.0
-pytest-asyncio>=0.0.0
+pytest-asyncio>=0.21.0
 pytest-benchmark>=4.0.0
 pytest-qt>=4.2.0
 pytest-repeat>=0.9.1
