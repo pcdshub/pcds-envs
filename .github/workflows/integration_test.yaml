@@ -46,6 +46,7 @@ jobs:
     - name: create environment
       run: |
         cd scripts
+        python update_tags.py pcds
         ./create_incremental_env.sh test pcds origin/master
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
@@ -67,6 +68,7 @@ jobs:
     - name: create environment
       run: |
         cd scripts
+        python update_tags.py pcds
         ./create_base_env.sh test pcds 3.9
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
@@ -87,6 +89,7 @@ jobs:
     - name: create environment
       run: |
         cd scripts
+        python update_tags.py pcds
         ./create_base_env.sh test pcds 3.10
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
@@ -107,6 +110,7 @@ jobs:
     - name: create environment
       run: |
         cd scripts
+        python update_tags.py pcds
         ./create_base_env.sh test pcds 3.11
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
