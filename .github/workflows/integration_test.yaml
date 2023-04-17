@@ -53,6 +53,12 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+    - name: Environment Export
+      run: conda env export --file export.yaml
+    - uses: actions/upload-artifact@v3
+      with:
+        name: incr_env.yaml
+        path: "export.yaml"
   # Start from scratch to get some py39 testing done
   # This is a fallback alternative to py39-next-incr, which is preferred
   py39-next-full:
@@ -75,6 +81,12 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+    - name: Environment Export
+      run: conda env export --file export.yaml
+    - uses: actions/upload-artifact@v3
+      with:
+        name: next_env.yaml
+        path: "export.yaml"
   # Try to build a python 3.10 env
   py310-next-full:
     defaults:
