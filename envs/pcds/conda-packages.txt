@@ -4,7 +4,7 @@ anaconda-client>=1.11.2
 apischema>=0.18.0
 archapp>=1.1.0
 atlassian-python-api>=3.36.0
-black>=23.3.0
+black>=22.12.0
 blark>=0.5.0
 bluesky>=1.10.0
 bluesky-live
