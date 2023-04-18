@@ -4,3 +4,4 @@ __pycache__
 *.swp
 *~
 .temp_env.yaml
+.conda_up.txt

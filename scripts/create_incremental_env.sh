@@ -24,20 +24,26 @@ set -e
 
 ENVNAME="${BASE}-${REL}"
 ENV_DIR="../envs/${BASE}"
-source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
+# shellcheck disable=SC1091
+source "$(dirname "$(which conda)")/../etc/profile.d/conda.sh"
 
 # Make a temp environment descriptor
 TEMP_ENV=".temp_env.yaml"
-git show "${GIT_REF}:envs/pcds/env.yaml" > "${TEMP_ENV}"
+git show "${GIT_REF}:${ENV_DIR}/env.yaml" > "${TEMP_ENV}"
 
 # Create a copy of the old environment under the new name
 mamba env create -q -n "${ENVNAME}" -f "${TEMP_ENV}"
 
+# Make a temp minimal update list
+TEMP_CONDA_UP=".conda_up.txt"
+git diff "${GIT_REF}" "${ENV_DIR}/conda-packages.txt" | grep "^+\w" | cut -c 2- > "${TEMP_CONDA_UP}"
+
 # Update the copy minimally with our new specs
-mamba install -q -y -n "${ENVNAME}" --file "${ENV_DIR}/conda-packages.txt"
+mamba install -q -y -n "${ENVNAME}" --file "${TEMP_CONDA_UP}"
 conda activate "${ENVNAME}"
+
+# Install from the pinned latest versions in case something wants an update
 pip install -r "${ENV_DIR}/pip-packages.txt"
-${ENV_DIR}/extra-install-steps.sh
+"${ENV_DIR}"/extra-install-steps.sh
 ./install_activate.sh "${BASE}" "${ENVNAME}"
 conda deactivate
-

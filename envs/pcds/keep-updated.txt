@@ -3,7 +3,8 @@ anaconda-client
 apischema
 atlassian-python-api
 archapp
-black
+# latest black conflicts regressive packaging pin
+# black
 blark
 bluesky
 caproto
@@ -12,6 +13,7 @@ conda-smithy
 cookiecutter
 coverage
 cython
+docs-versions-menu
 elog
 epicsmacrolib
 flake8
@@ -50,6 +52,7 @@ pyepics
 py-spy
 pytest
 pytest-aiohttp
+pytest-asyncio
 pytest-benchmark
 pytest-qt
 pytest-repeat

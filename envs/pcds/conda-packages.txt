@@ -4,7 +4,7 @@ anaconda-client>=1.11.2
 apischema>=0.18.0
 archapp>=1.1.0
 atlassian-python-api>=3.36.0
-black>=23.3.0
+black>=22.12.0
 blark>=0.5.0
 bluesky>=1.10.0
 bluesky-live
@@ -20,6 +20,7 @@ cookiecutter>=2.1.1
 coverage>=7.2.3
 cython>=0.29.34
 datashader
+docs-versions-menu>=0.5.1
 elog>=1.2.2
 epicscorelibs=7.0.7.99.0.0
 flake8>=6.0.0
@@ -54,8 +55,8 @@ papermill
 paramiko
 pcaspy
 pcdscalc>=0.4.1
-pcdsdaq>=2.4.1
-pcdsdevices>=7.2.0
+pcdsdaq>=2.4.2
+pcdsdevices>=7.3.0
 pcdsutils>=0.12.1
 pcdswidgets>=0.8.0
 periodictable
@@ -74,8 +75,9 @@ pyfiglet
 pymongo
 py-spy>=0.3.14
 pytables
-pytest>=7.3.0
+pytest>=7.3.1
 pytest-aiohttp>=0.3.0
+pytest-asyncio>=0.21.0
 pytest-benchmark>=4.0.0
 pytest-qt>=4.2.0
 pytest-repeat>=0.9.1
@@ -129,6 +131,8 @@ gpytorch<1.5.0
 ipython=8.4.0
 # later versions are incompatible with typhos console tool
 jupyter_client=7.3.1
+# packaging removes LegacyVersion at version 22, breaking lots of things including docs-versions-menu
+packaging<22
 # pin for gui interface stability
 qtpy=2.1.0
 # new sqlalchemy incompatible with old xraydb

@@ -111,7 +111,10 @@ def main(args):
     packages = []
     if keep_updated.exists():
         with keep_updated.open('r') as fd:
-            packages = fd.readlines()
+            packages = [
+                line for line in fd.readlines()
+                if line and not line.startswith('#')
+            ]
     else:
         print(f'{keep_updated} does not exist')
     if not packages:

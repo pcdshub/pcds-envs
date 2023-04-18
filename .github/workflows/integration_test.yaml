@@ -46,12 +46,19 @@ jobs:
     - name: create environment
       run: |
         cd scripts
+        python update_tags.py pcds
         ./create_incremental_env.sh test pcds origin/master
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+    - name: Environment Export
+      run: conda env export --file export.yaml
+    - uses: actions/upload-artifact@v3
+      with:
+        name: incr_env.yaml
+        path: "export.yaml"
   # Start from scratch to get some py39 testing done
   # This is a fallback alternative to py39-next-incr, which is preferred
   py39-next-full:
@@ -67,12 +74,19 @@ jobs:
     - name: create environment
       run: |
         cd scripts
+        python update_tags.py pcds
         ./create_base_env.sh test pcds 3.9
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+    - name: Environment Export
+      run: conda env export --file export.yaml
+    - uses: actions/upload-artifact@v3
+      with:
+        name: next_env.yaml
+        path: "export.yaml"
   # Try to build a python 3.10 env
   py310-next-full:
     defaults:
@@ -87,6 +101,7 @@ jobs:
     - name: create environment
       run: |
         cd scripts
+        python update_tags.py pcds
         ./create_base_env.sh test pcds 3.10
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
@@ -107,6 +122,7 @@ jobs:
     - name: create environment
       run: |
         cd scripts
+        python update_tags.py pcds
         ./create_base_env.sh test pcds 3.11
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
