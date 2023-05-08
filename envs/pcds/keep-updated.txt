@@ -62,8 +62,6 @@ pytmc
 pyupgrade
 pyyaml
 shellcheck
-sphinx
-sphinx_rtd_theme
 tc_release
 timechart
 toml
