@@ -131,8 +131,6 @@ gpytorch<1.5.0
 ipython=8.4.0
 # later versions are incompatible with typhos console tool
 jupyter_client=7.3.1
-# packaging removes LegacyVersion at version 22, breaking lots of things including docs-versions-menu
-packaging<22
 # pin for gui interface stability
 qtpy=2.1.0
 # new sqlalchemy incompatible with old xraydb
