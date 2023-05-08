@@ -10,8 +10,6 @@ whatrecord>=0.4.4
 # conda+pip regressive pins
 # avoids pre-releases of v2
 databroker<2.0.0
-# no matching build on conda-forge
-gpytorch<1.5.0
 # ipython changes make scientists upset and can break experiments
 ipython==8.4.0
 # later versions are incompatible with typhos console tool

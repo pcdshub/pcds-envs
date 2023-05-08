@@ -29,6 +29,7 @@ fzf>=0.39.0
 gammaray>=2.11.2
 gdb>=12.1
 gh>=2.25.1
+gpytorch
 grpcio-tools
 h5py
 happi>=2.1.1
@@ -127,8 +128,6 @@ python-graphviz<0.18
 # conda+pip regressive pins
 # avoids pre-releases of v2
 databroker<2.0.0
-# no matching build on conda-forge
-gpytorch<1.5.0
 # ipython changes make scientists upset and can break experiments
 ipython=8.4.0
 # later versions are incompatible with typhos console tool
