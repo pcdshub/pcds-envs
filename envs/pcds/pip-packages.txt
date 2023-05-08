@@ -18,7 +18,3 @@ ipython==8.4.0
 jupyter_client==7.3.1
 # pin for gui interface stability
 qtpy==2.1.0
-# new sqlalchemy incompatible with old xraydb
-sqlalchemy<2.0.0
-# new xraydb not on conda yet, but requires new sqlalchemy
-xraydb<4.5.0

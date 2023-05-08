@@ -100,6 +100,7 @@ shellcheck>=0.9.0
 simplejson
 sphinx>=6.1.3
 sphinx_rtd_theme>=1.2.0
+sqlalchemy>=2.0.0
 suitcase-csv
 suitcase-json-metadata
 suitcase-jsonl
@@ -113,6 +114,7 @@ toml>=0.10.2
 transfocate>=0.5.7
 typhos>=2.4.1
 xarray
+xraydb>=4.5.0
 xraylib
 yarn
 # conda only regressive pins
@@ -133,7 +135,3 @@ ipython=8.4.0
 jupyter_client=7.3.1
 # pin for gui interface stability
 qtpy=2.1.0
-# new sqlalchemy incompatible with old xraydb
-sqlalchemy<2.0.0
-# new xraydb not on conda yet, but requires new sqlalchemy
-xraydb<4.5.0
