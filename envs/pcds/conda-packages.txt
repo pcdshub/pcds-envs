@@ -38,7 +38,6 @@ holoviews>=1.10.9
 hutch-python>=1.18.3
 hxrsnd>=0.2.11
 isort>=5.12.0
-jinja2=3.0.3
 jupyter
 krtc>=0.2.1
 lightpath>=1.0.2
