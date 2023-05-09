@@ -1,4 +1,6 @@
 # In-house packages
+# - Packages developed by us
+# - Always relevant features/fixes
 ads-async
 archapp
 blark
@@ -31,12 +33,18 @@ typhos
 whatrecord
 
 # Collaboration packages
+# - Packages developed by e.g. NSLS-II, APS
+# - Frequently relevant features/fixes
 bluesky
 caproto
 hklpy
 ophyd
 
 # Developer tools
+# - General tools for Python developers
+# - Frequently relevant features/fixes
+# - Keep env behavior similar to repo CI behavior
+# - Limit to web API and tools with entrypoints
 anaconda-client
 apischema
 atlassian-python-api
