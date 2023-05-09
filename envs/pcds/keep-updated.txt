@@ -3,8 +3,7 @@ anaconda-client
 apischema
 atlassian-python-api
 archapp
-# latest black conflicts regressive packaging pin
-# black
+black
 blark
 bluesky
 caproto
