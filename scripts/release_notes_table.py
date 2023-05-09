@@ -72,6 +72,7 @@ LAB_PACKAGES = [
     'caproto',
     'databroker',
     'epicscorelibs',
+    'hklpy',
     'ophyd',
     'pcaspy',
     'pyepics',
