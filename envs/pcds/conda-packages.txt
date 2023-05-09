@@ -98,7 +98,6 @@ scipy
 seaborn
 shellcheck>=0.9.0
 simplejson
-sqlalchemy>=2.0.0
 suitcase-csv
 suitcase-json-metadata
 suitcase-jsonl
@@ -112,7 +111,6 @@ toml>=0.10.2
 transfocate>=0.5.7
 typhos>=2.4.1
 xarray
-xraydb>=4.5.0
 xraylib
 yarn
 # conda only regressive pins
