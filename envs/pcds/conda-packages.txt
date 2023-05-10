@@ -98,6 +98,7 @@ scipy
 seaborn
 shellcheck>=0.9.0
 simplejson
+spyder-kernels
 suitcase-csv
 suitcase-json-metadata
 suitcase-jsonl
