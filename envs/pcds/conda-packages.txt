@@ -125,8 +125,6 @@ python-graphviz<0.18
 databroker<2.0.0
 # ipython changes make scientists upset and can break experiments
 ipython=8.4.0
-# later versions are incompatible with typhos console tool
-jupyter_client=7.3.1
 # pin for gui interface stability
 qtpy=2.1.0
 # sphinx 7.0.0 incompatible with rtd theme at 1.2.0, temporarily pin both
