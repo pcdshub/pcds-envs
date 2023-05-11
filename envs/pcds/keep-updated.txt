@@ -1,39 +1,18 @@
+# In-house packages
+# - Packages developed by us
+# - Always relevant features/fixes
 ads-async
-anaconda-client
-apischema
-atlassian-python-api
 archapp
-# latest black conflicts regressive packaging pin
-# black
 blark
-bluesky
-caproto
-conda-pack
-conda-smithy
-cookiecutter
-coverage
-cython
-docs-versions-menu
 elog
 epicsmacrolib
-flake8
-flask
-fzf
-gammaray
-gdb
-gh
 happi
-hklpy
 hutch-python
 hxrsnd
-isort
 krtc
 lightpath
 lucid
-memray
 nabs
-ophyd
-pipdeptree
 pcdscalc
 pcdsdaq
 pcdsdevices
@@ -41,14 +20,50 @@ pcdsutils
 pcdswidgets
 pmgr
 pmpsdb-client
-pre-commit
 psdaq-control-minimal
 psdm_qs_cli
 pswalker
 pyca
-pycln
 pydm
+pytmc
+tc_release
+timechart
+transfocate
+typhos
+whatrecord
+
+# Collaboration packages
+# - Packages developed by e.g. NSLS-II, APS
+# - Frequently relevant features/fixes
+bluesky
+caproto
+hklpy
+ophyd
 pyepics
+
+# Developer tools
+# - General tools for Python developers
+# - Frequently relevant features/fixes
+# - Keep env behavior similar to repo CI behavior
+# - Limit to web API and tools with entrypoints, not internal deps
+anaconda-client
+atlassian-python-api
+black
+conda-pack
+conda-smithy
+coverage
+docs-versions-menu
+flake8
+flask
+fzf
+gammaray
+gdb
+gh
+isort
+memray
+pipdeptree
+pre-commit
+pycln
 py-spy
 pytest
 pytest-aiohttp
@@ -58,15 +73,8 @@ pytest-qt
 pytest-repeat
 pytest-timeout
 pytest-xdist
-pytmc
 pyupgrade
-pyyaml
 shellcheck
-sphinx
-sphinx_rtd_theme
-tc_release
-timechart
-toml
-transfocate
-typhos
-whatrecord
+# sphinx and friends temporarily disabled due to incompatibilities at v7.0.0
+# sphinx
+# sphinx_rtd_theme

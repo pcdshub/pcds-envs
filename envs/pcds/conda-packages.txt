@@ -4,8 +4,8 @@ anaconda-client>=1.11.2
 apischema>=0.18.0
 archapp>=1.1.0
 atlassian-python-api>=3.36.0
-black>=22.12.0
-blark>=0.5.0
+black>=23.3.0
+blark>=0.6.0
 bluesky>=1.10.0
 bluesky-live
 bluesky-queueserver
@@ -17,27 +17,27 @@ coloredlogs
 conda-pack>=0.7.0
 conda-smithy>=3.23.1
 cookiecutter>=2.1.1
-coverage>=7.2.3
+coverage>=7.2.5
 cython>=0.29.34
 datashader
-docs-versions-menu>=0.5.1
+docs-versions-menu>=0.5.2
 elog>=1.2.2
 epicscorelibs=7.0.7.99.0.0
 flake8>=6.0.0
-flask>=2.2.3
-fzf>=0.39.0
+flask>=2.3.2
+fzf>=0.40.0
 gammaray>=2.11.2
 gdb>=12.1
 gh>=2.25.1
+gpytorch
 grpcio-tools
 h5py
-happi>=2.1.1
+happi>=2.2.0
 hklpy>=1.0.3
 holoviews>=1.10.9
 hutch-python>=1.18.3
 hxrsnd>=0.2.11
 isort>=5.12.0
-jinja2=3.0.3
 jupyter
 krtc>=0.2.1
 lightpath>=1.0.2
@@ -56,14 +56,14 @@ paramiko
 pcaspy
 pcdscalc>=0.4.1
 pcdsdaq>=2.4.2
-pcdsdevices>=7.3.0
+pcdsdevices>=7.4.0
 pcdsutils>=0.12.1
 pcdswidgets>=0.8.0
 periodictable
 pipdeptree>=2.7.0
 pmgr>=2.1.2
-pre-commit>=3.2.2
-psdaq-control-minimal>=3.3.19
+pre-commit>=3.3.1
+psdaq-control-minimal>=3.3.38
 psdm_qs_cli>=0.3.6
 pswalker>=1.0.8
 pyaudio
@@ -86,7 +86,7 @@ pytest-xdist>=3.2.1
 python-ldap
 pytmc>=2.15.0
 pytorch
-pyupgrade>=3.3.1
+pyupgrade>=3.4.0
 pyyaml>=6.0
 qdarkstyle
 qrcode
@@ -98,8 +98,7 @@ scipy
 seaborn
 shellcheck>=0.9.0
 simplejson
-sphinx>=6.1.3
-sphinx_rtd_theme>=1.2.0
+spyder-kernels
 suitcase-csv
 suitcase-json-metadata
 suitcase-jsonl
@@ -125,17 +124,10 @@ python-graphviz<0.18
 # conda+pip regressive pins
 # avoids pre-releases of v2
 databroker<2.0.0
-# no matching build on conda-forge
-gpytorch<1.5.0
 # ipython changes make scientists upset and can break experiments
 ipython=8.4.0
-# later versions are incompatible with typhos console tool
-jupyter_client=7.3.1
-# packaging removes LegacyVersion at version 22, breaking lots of things including docs-versions-menu
-packaging<22
 # pin for gui interface stability
 qtpy=2.1.0
-# new sqlalchemy incompatible with old xraydb
-sqlalchemy<2.0.0
-# new xraydb not on conda yet, but requires new sqlalchemy
-xraydb<4.5.0
+# sphinx 7.0.0 incompatible with rtd theme at 1.2.0, temporarily pin both
+sphinx<7
+sphinx_rtd_theme=1.2.0

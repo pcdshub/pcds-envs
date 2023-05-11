@@ -50,6 +50,7 @@ PCDS_PACKAGES = [
     'pcdsutils',
     'pcdswidgets',
     'pmgr',
+    'psdaq-control-minimal',
     'pswalker',
     'pyca',
     'pytmc',
@@ -60,7 +61,6 @@ PCDS_PACKAGES = [
 ]
 # List of packages to include in SLAC table
 SLAC_PACKAGES = [
-    'psdaq-control-minimal',
     'psdm_qs_cli',
     'pydm',
     'timechart',
@@ -72,6 +72,7 @@ LAB_PACKAGES = [
     'caproto',
     'databroker',
     'epicscorelibs',
+    'hklpy',
     'ophyd',
     'pcaspy',
     'pyepics',

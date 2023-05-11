@@ -1,3 +1,4 @@
+pcdshub/atef
 klauer/blark
 pcdshub/elog
 pcdshub/happi

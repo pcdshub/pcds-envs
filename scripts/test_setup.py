@@ -1,9 +1,12 @@
 import argparse
 import contextlib
 import json
+import logging
 import os
 import subprocess
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 URL_BASE = 'https://github.com/{}.git'
 parser = argparse.ArgumentParser()
@@ -36,10 +39,14 @@ def setup_all_tests(repo_file, tags=None):
         else:
             try:
                 tag = tags[pkg]
-            except KeyError as err:
-                msg = f'Did not find package {pkg} in environment'
-                raise RuntimeError(msg) from err
-            setup_one_test(repo, pkg, tag=tag)
+            except KeyError:
+                logger.warning(
+                    'Did not find package %s in environment, cannot use tag',
+                    pkg,
+                )
+                setup_one_test(repo, pkg)
+            else:
+                setup_one_test(repo, pkg, tag=tag)
 
 
 def setup_one_test(repo, pkg, tag=None):

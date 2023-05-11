@@ -112,8 +112,8 @@ def main(args):
     if keep_updated.exists():
         with keep_updated.open('r') as fd:
             packages = [
-                line for line in fd.readlines()
-                if line and not line.startswith('#')
+                line.strip() for line in fd.readlines()
+                if line.strip() and not line.startswith('#')
             ]
     else:
         print(f'{keep_updated} does not exist')
@@ -128,7 +128,6 @@ def main(args):
 
     versions_dict = {}
     for package in packages:
-        package = package.strip('\n')
         try:
             latest = latest_version(package)
         except Exception:
