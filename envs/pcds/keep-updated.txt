@@ -3,6 +3,7 @@
 # - Always relevant features/fixes
 ads-async
 archapp
+atef
 blark
 elog
 epicsmacrolib
