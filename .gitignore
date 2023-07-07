@@ -5,3 +5,5 @@ __pycache__
 *~
 .temp_env.yaml
 .conda_up.txt
+extras_conda.txt
+extras_pip.txt
