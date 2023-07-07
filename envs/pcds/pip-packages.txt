@@ -5,6 +5,7 @@ p4p
 pip-audit
 pmpsdb-client>=1.1.2
 python-vxi11
+slac-alarm-manager>=1.2.1
 tiled[all]
 whatrecord>=0.4.4
 # conda+pip regressive pins

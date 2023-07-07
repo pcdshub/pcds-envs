@@ -26,6 +26,7 @@ pswalker
 pyca
 pydm
 pytmc
+slac-alarm-manager
 tc_release
 timechart
 transfocate
