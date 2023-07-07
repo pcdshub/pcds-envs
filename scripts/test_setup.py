@@ -78,7 +78,8 @@ def setup_one_test(repo, pkg, tag=None):
             except subprocess.CalledProcessError as err:
                 raise RuntimeError('Error checking out tag') from err
     # Set up submodules after tag to keep it synced to the tag
-    subprocess.run(['git', 'submodule', 'update', '--init'])
+    with pushd(pkg):
+        subprocess.run(['git', 'submodule', 'update', '--init', '--recursive'])
 
 
 @contextlib.contextmanager
