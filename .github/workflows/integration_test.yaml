@@ -54,8 +54,10 @@ jobs:
         use-tag: true
     - uses: ./.github/actions/release_notes
     - name: Environment Export
+      if: always()
       run: conda env export --file export.yaml
     - uses: actions/upload-artifact@v3
+      if: always()
       with:
         name: incr_env.yaml
         path: "export.yaml"
@@ -82,8 +84,10 @@ jobs:
         use-tag: true
     - uses: ./.github/actions/release_notes
     - name: Environment Export
+      if: always()
       run: conda env export --file export.yaml
     - uses: actions/upload-artifact@v3
+      if: always()
       with:
         name: next_env.yaml
         path: "export.yaml"
@@ -132,7 +136,7 @@ jobs:
   # Checks which packages are not ready yet for py310
   py310-readiness:
     needs: py310-next-full
-    if: ${{ failure() }}
+    if: failure()
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -145,12 +149,12 @@ jobs:
         cd scripts
         ./check_py_compat.sh pcds 3.10 | tee ~/compat.log
     - name: summarize failure
-      if: ${{ failure() }}
+      if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
   # Checks which packages are not ready yet for py311
   py311-readiness:
     needs: py311-next-full
-    if: ${{ failure() }}
+    if: failure()
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -163,5 +167,5 @@ jobs:
         cd scripts
         ./check_py_compat.sh pcds 3.11 | tee ~/compat.log
     - name: summarize failure
-      if: ${{ failure() }}
+      if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
