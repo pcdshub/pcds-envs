@@ -15,7 +15,7 @@ import logging
 from argparse import ArgumentParser
 from pathlib import Path
 
-from pkg_resources import DistributionNotFound, get_distribution
+from pkg_resources import DistributionNotFound, get_distribution, require
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +45,7 @@ def get_packages(base: str) -> list[str]:
         return [line for line in fd.read().splitlines() if line]
 
 
-def get_all_extra_deps(package: str) -> set[str]:
+def get_package_extra_deps(package: str) -> set[str]:
     """
     Given a package name, get all of the dependencies of just the extras.
 
@@ -68,12 +68,12 @@ def get_all_extra_deps(package: str) -> set[str]:
     except DistributionNotFound:
         logger.warning("%s is not installed and cannot be checked.", package)
         return set()
-    core_reqs = set(req.name for req in dist.requires())
-    all_reqs = set(req.name for req in dist.requires(extras=dist.extras))
+    core_reqs = set(req.name.lower() for req in dist.requires())
+    all_reqs = set(req.name.lower() for req in dist.requires(extras=dist.extras))
     return all_reqs - core_reqs
 
 
-def get_env_extras(base: str) -> set[str]:
+def get_env_extra_deps(base: str) -> set[str]:
     """
     Given a base environment, get all of the extras to include.
 
@@ -89,21 +89,50 @@ def get_env_extras(base: str) -> set[str]:
     """
     deps = set()
     for package_name in get_packages(base=base):
-        deps.update(get_all_extra_deps(package=package_name))
+        deps.update(get_package_extra_deps(package=package_name))
     return deps
+
+
+def dep_installed(dep: str) -> bool:
+    """
+    Return True if dep is installed and False otherwise.
+    """
+    try:
+        require(dep)
+        return True
+    except DistributionNotFound:
+        return False
+
+
+def get_missing_dependencies(all_deps: set[str]) -> set[str]:
+    """
+    Return a reduced set of dependencies: only the ones that are not installed
+
+    Parameters
+    ----------
+    all_deps : set of str
+        All dependencies to consider.
+
+    Returns
+    -------
+    missing_deps : set of str
+        A new set that only includes the dependencies that are not installed.
+    """
+    return set(dep for dep in all_deps if not dep_installed(dep))
 
 
 def main(base: str) -> None:
     """
-    Get all extras dependencies in the current env and send them to stdout.
+    Get all missing extras dependencies in the current env and send them to stdout.
 
     Parameters
     ----------
     base : str
         The environment name, e.g. pcds.
     """
-    deps = sorted(list(get_env_extras(base=base)))
-    print("\n".join(deps))
+    all_deps = get_env_extra_deps(base=base)
+    missing_deps = get_missing_dependencies(all_deps=all_deps)
+    print("\n".join(sorted(list(missing_deps))))
     return 0
 
 
