@@ -35,10 +35,10 @@ whatrecord
 # Collaboration packages
 # - Packages developed by e.g. NSLS-II, APS
 # - Frequently relevant features/fixes
-bluesky
+# bluesky (need to fix nabs and test v1.11.0)
 caproto
 hklpy
-ophyd
+# ophyd (need to test v1.8.0)
 pyepics
 
 # Developer tools
@@ -52,7 +52,6 @@ black
 conda-pack
 conda-smithy
 coverage
-docs-versions-menu
 flake8
 flask
 fzf
@@ -66,12 +65,7 @@ pre-commit
 pycln
 py-spy
 pytest
-pytest-aiohttp
-pytest-asyncio
-pytest-benchmark
-pytest-qt
 pytest-repeat
-pytest-timeout
 pytest-xdist
 pyupgrade
 shellcheck
