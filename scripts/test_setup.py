@@ -52,7 +52,7 @@ def setup_all_tests(repo_file, tags=None):
 def setup_one_test(repo, pkg, tag=None):
     url = URL_BASE.format(repo)
     try:
-        subprocess.run(['git', 'clone', '--recursive', url, '--depth', '1'],
+        subprocess.run(['git', 'clone', url, '--depth', '1'],
                        check=True)
     except subprocess.CalledProcessError as err:
         raise RuntimeError(f'Error cloning from {url}') from err
@@ -77,6 +77,8 @@ def setup_one_test(repo, pkg, tag=None):
                 )
             except subprocess.CalledProcessError as err:
                 raise RuntimeError('Error checking out tag') from err
+    # Set up submodules after tag to keep it synced to the tag
+    subprocess.run(['git', 'submodule', 'update', '--init'])
 
 
 @contextlib.contextmanager
