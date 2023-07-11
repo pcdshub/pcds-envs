@@ -26,14 +26,14 @@ mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-
 conda activate "${ENVNAME}"
 
 # First extras round to pick up conda stuff
-python get_extras.py "${BASE}" > "${ENV_DIR}"/extras_conda.txt
+python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_conda.txt
 mamba install --file "${ENV_DIR}"/extras_conda.txt
 
 # Main pip install step
 pip install -r "${ENV_DIR}"/pip-packages.txt
 
 # Second extras round to pick up pypi stuff
-python get_extras.py "${BASE}" > "${ENV_DIR}"/extras_pip.txt
+python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_pip.txt
 # Looks redundant to force pypi to not "forget" about previous pins
 pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/extras_pip.txt
 

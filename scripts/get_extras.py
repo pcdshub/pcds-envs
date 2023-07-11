@@ -13,9 +13,8 @@ with the pkg_resources module.
 """
 import logging
 from argparse import ArgumentParser
+from importlib.metadata import PackageNotFoundError, distribution
 from pathlib import Path
-
-from pkg_resources import DistributionNotFound, get_distribution, require
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +48,8 @@ def get_package_extra_deps(package: str) -> set[str]:
     """
     Given a package name, get all of the dependencies of just the extras.
 
-    This does not include the core dependencies of the package.
+    This does not include the core dependencies of the package and does not
+    include any pinning information.
     Note that these dependencies use the pypi names, not the conda names, in case
     of a conflict.
 
@@ -64,13 +64,11 @@ def get_package_extra_deps(package: str) -> set[str]:
         All pypi dependencies of the package extras.
     """
     try:
-        dist = get_distribution(package)
-    except DistributionNotFound:
+        full_reqs = distribution(package).requires
+    except PackageNotFoundError:
         logger.warning("%s is not installed and cannot be checked.", package)
         return set()
-    core_reqs = set(req.name.lower() for req in dist.requires())
-    all_reqs = set(req.name.lower() for req in dist.requires(extras=dist.extras))
-    return all_reqs - core_reqs
+    return set(req.split(' ')[0].lower() for req in full_reqs if '; extra' in req)
 
 
 def get_env_extra_deps(base: str) -> set[str]:
@@ -98,9 +96,9 @@ def dep_installed(dep: str) -> bool:
     Return True if dep is installed and False otherwise.
     """
     try:
-        require(dep)
+        distribution(dep)
         return True
-    except DistributionNotFound:
+    except PackageNotFoundError:
         return False
 
 
@@ -146,7 +144,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--verbose", "-v",
         action="store_true",
-        help="Enable erbose error messages",
+        help="Enable verbose error messages",
     )
     args = parser.parse_args()
     try:
