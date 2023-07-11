@@ -15,64 +15,12 @@ from __future__ import annotations
 
 import logging
 from argparse import ArgumentParser
+from collections.abc import Iterator
 from dataclasses import dataclass
 from importlib.metadata import PackageNotFoundError, distribution
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
-
-
-def get_packages(base: str) -> list[str]:
-    """
-    Given a base environment, get the packages to use here.
-
-    We can't use every installed package and we don't want to write out the
-    specifics here.
-
-    Instead, we create a special file that defines which packages we want
-    to install the extras for.
-
-    Parameters
-    ----------
-    base : str
-        The environment name, e.g. pcds.
-
-    Returns
-    -------
-    packages : list of str
-        The package names that we want to use here.
-    """
-    extras_path = Path(__file__).parent.parent / "envs" / base / "install-extras.txt"
-    with extras_path.open("r") as fd:
-        return [line for line in fd.read().splitlines() if line]
-
-
-def get_package_extra_deps(package: str) -> set[PackageSpec]:
-    """
-    Given a package name, get all of the dependencies of just the extras.
-
-    This does not include the core dependencies of the package and does not
-    include any pinning information.
-    Note that these dependencies use the pypi names, not the conda names, in case
-    of a conflict.
-
-    Parameters
-    ----------
-    package : str
-        The name of the package to check
-
-    Returns
-    -------
-    dependencies : set of str
-        All pypi dependencies of the package extras.
-    """
-    try:
-        full_reqs = distribution(package).requires
-    except PackageNotFoundError:
-        logger.warning("%s is not installed and cannot be checked.", package)
-        return set()
-    specs = [PackageSpec.from_importlib_metadata(req) for req in full_reqs]
-    return set(pkg for pkg in specs if pkg.source_extra)
 
 
 @dataclass(frozen=True)
@@ -141,9 +89,64 @@ class PackageSpec:
             return False
 
 
+def get_packages(base: str) -> Iterator[str]:
+    """
+    Given a base environment, get the packages to use here.
+
+    We can't use every installed package and we don't want to write out the
+    specifics here.
+
+    Instead, we create a special file that defines which packages we want
+    to install the extras for.
+
+    Parameters
+    ----------
+    base : str
+        The environment name, e.g. pcds.
+
+    Returns
+    -------
+    packages : iterator of str
+        The package names that we want to use here.
+    """
+    extras_path = Path(__file__).parent.parent / "envs" / base / "install-extras.txt"
+    with extras_path.open("r") as fd:
+        return (yield from (line for line in fd.read().splitlines() if line))
+
+
+def get_package_extra_deps(package: str) -> Iterator[PackageSpec]:
+    """
+    Given a package name, get all of the dependencies of just the extras.
+
+    This does not include the core dependencies of the package and does not
+    include any pinning information.
+    Note that these dependencies use the pypi names, not the conda names, in case
+    of a conflict.
+
+    Parameters
+    ----------
+    package : str
+        The name of the package to check
+
+    Returns
+    -------
+    dependencies : iterator of PackageSpec
+        All dependencies of the package extras. Uses the pypi names.
+    """
+    try:
+        full_reqs = distribution(package).requires
+    except PackageNotFoundError:
+        logger.warning("%s is not installed and cannot be checked.", package)
+        return set()
+    specs = (PackageSpec.from_importlib_metadata(req) for req in full_reqs)
+    return (yield from (pkg for pkg in specs if pkg.source_extra))
+
+
 def get_env_extra_deps(base: str) -> set[PackageSpec]:
     """
     Given a base environment, get all of the extras to include.
+
+    Converts to a set to remove duplicates.
 
     Parameters
     ----------
@@ -161,7 +164,7 @@ def get_env_extra_deps(base: str) -> set[PackageSpec]:
     return deps
 
 
-def get_missing_dependencies(all_deps: set[PackageSpec]) -> set[PackageSpec]:
+def get_missing_dependencies(all_deps: Iterator[PackageSpec]) -> Iterator[PackageSpec]:
     """
     Return a reduced set of dependencies: only the ones that are not installed
 
@@ -175,10 +178,10 @@ def get_missing_dependencies(all_deps: set[PackageSpec]) -> set[PackageSpec]:
     missing_deps : set of PackageSpec
         A new set that only includes the dependencies that are not installed.
     """
-    return set(dep for dep in all_deps if not dep.is_installed())
+    return (yield from (dep for dep in all_deps if not dep.is_installed()))
 
 
-def main(base: str, include_extras: bool) -> None:
+def main(base: str, include_extras: bool) -> int:
     """
     Get all missing extras dependencies in the current env and send them to stdout.
 
@@ -187,7 +190,7 @@ def main(base: str, include_extras: bool) -> None:
     base : str
         The environment name, e.g. pcds.
 
-    pypi : bool
+    include_extras : bool
         Whether or not to include the pypi extras string
     """
     all_deps = get_env_extra_deps(base=base)
