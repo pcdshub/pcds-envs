@@ -23,6 +23,12 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
+CONDA_ONLY = []
+PYPI_ONLY = [
+    "whatrecord",
+]
+
+
 @dataclass(frozen=True)
 class PackageSpec:
     # Just the install name e.g. pcdsdevices
@@ -181,7 +187,7 @@ def get_missing_dependencies(all_deps: Iterator[PackageSpec]) -> Iterator[Packag
     return (yield from (dep for dep in all_deps if not dep.is_installed()))
 
 
-def main(base: str, include_extras: bool) -> int:
+def main(base: str, for_pypi: bool) -> int:
     """
     Get all missing extras dependencies in the current env and send them to stdout.
 
@@ -195,10 +201,10 @@ def main(base: str, include_extras: bool) -> int:
     """
     all_deps = get_env_extra_deps(base=base)
     missing_deps = get_missing_dependencies(all_deps=all_deps)
-    if include_extras:
-        pkg_to_print = set(dep.name_with_extra for dep in missing_deps)
+    if for_pypi:
+        pkg_to_print = set(dep.name_with_extra for dep in missing_deps if dep.name not in CONDA_ONLY)
     else:
-        pkg_to_print = set(dep.name for dep in missing_deps)
+        pkg_to_print = set(dep.name for dep in missing_deps if dep.name not in PYPI_ONLY)
     print("\n".join(sorted(list(pkg_to_print))))
     return 0
 
@@ -216,17 +222,20 @@ if __name__ == "__main__":
         help="Enable verbose error messages",
     )
     parser.add_argument(
-        "--include-extras",
+        "--for-pypi",
         action="store_true",
         help=(
-            "Include the extras spec e.g. pcdsdevices[doc] instead of just "
-            "pcdsdevices. You likely want the extras spec when installing "
+            "Produce the file specs you should use for pypi instead of "
+            "those to be used for conda. Different packages may be included "
+            "depending on if this flag is included or not. This flag also "
+            "includes the extras spec e.g. pcdsdevices[doc] instead of just "
+            "pcdsdevices. You likely want this when installing "
             "from pypi but not when installing from conda."
         )
     )
     args = parser.parse_args()
     try:
-        exit(main(base=args.base, include_extras=args.include_extras))
+        exit(main(base=args.base, for_pypi=args.for_pypi))
     except Exception as exc:
         if args.verbose:
             raise

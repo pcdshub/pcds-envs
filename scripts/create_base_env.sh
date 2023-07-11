@@ -33,7 +33,7 @@ mamba install --file "${ENV_DIR}"/extras_conda.txt
 pip install -r "${ENV_DIR}"/pip-packages.txt
 
 # Second extras round to pick up pypi stuff
-python get_extras.py --verbose --include-extras "${BASE}" > "${ENV_DIR}"/extras_pip.txt
+python get_extras.py --verbose --for-pypi "${BASE}" > "${ENV_DIR}"/extras_pip.txt
 # Looks redundant to force pypi to not "forget" about previous pins
 pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/extras_pip.txt
 
