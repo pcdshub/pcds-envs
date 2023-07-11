@@ -44,7 +44,7 @@ conda activate "${ENVNAME}"
 
 # First extras round to pick up conda stuff
 python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_conda.txt
-mamba install --file "${ENV_DIR}"/extras_conda.txt
+mamba install -y --file "${ENV_DIR}"/extras_conda.txt
 
 # Install from the pinned latest versions in case something wants an update
 pip install -r "${ENV_DIR}"/pip-packages.txt
