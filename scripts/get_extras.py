@@ -9,10 +9,13 @@ requirements.
 
 Once a package is installed, the "test" and "doc" extras will be present in the
 metadata even if we haven't installed them yet, and then we can inspect them
-with the pkg_resources module.
+with the importlib.metadata module.
 """
+from __future__ import annotations
+
 import logging
 from argparse import ArgumentParser
+from dataclasses import dataclass
 from importlib.metadata import PackageNotFoundError, distribution
 from pathlib import Path
 
@@ -44,7 +47,7 @@ def get_packages(base: str) -> list[str]:
         return [line for line in fd.read().splitlines() if line]
 
 
-def get_package_extra_deps(package: str) -> set[str]:
+def get_package_extra_deps(package: str) -> set[PackageSpec]:
     """
     Given a package name, get all of the dependencies of just the extras.
 
@@ -68,10 +71,77 @@ def get_package_extra_deps(package: str) -> set[str]:
     except PackageNotFoundError:
         logger.warning("%s is not installed and cannot be checked.", package)
         return set()
-    return set(req.split(' ')[0].lower() for req in full_reqs if '; extra' in req)
+    specs = [PackageSpec.from_importlib_metadata(req) for req in full_reqs]
+    return set(pkg for pkg in specs if pkg.source_extra)
 
 
-def get_env_extra_deps(base: str) -> set[str]:
+@dataclass(frozen=True)
+class PackageSpec:
+    # Just the install name e.g. pcdsdevices
+    name: str
+    # Install name with pypi extra e.g. pcdsdevices[doc]
+    name_with_extra: str
+    # Any pinning information e.g. >=7.0.1
+    pin: str | None
+    # Just the extra of this spec e.g. doc
+    spec_extra: str | None
+    # The extra classification of the package that requires this one
+    source_extra: str | None
+
+    @classmethod
+    def from_importlib_metadata(cls, spec: str) -> PackageSpec:
+        """
+        Parse an importlib metadata spec.
+
+        These specs look something like:
+        "sphinx (<7.0.0) ; extra = 'doc'"
+        But if the package is not pinned or it is not an extra it may just be:
+        "sphinx"
+        And sometimes there can be further specifiers like:
+        "mkdocstrings[python]"
+        which all need to be handled appropriately.
+
+        Parameters
+        ----------
+        spec : str
+            A spec string from importlib.metadata.Distribution.requires, which
+            should always be a list of such strings.
+        """
+        name_with_extra = spec.split(" ")[0]
+        if "[" in name_with_extra:
+            name, spec_extra = name_with_extra.split("[")
+            spec_extra = spec_extra.strip("]")
+        else:
+            name = name_with_extra
+            spec_extra = None
+        if "(" in spec:
+            pin = spec.split("(")[1].split(")")[0]
+        else:
+            pin = None
+        if "; extra" in spec:
+            source_extra = spec.split("; extra == ")[1].strip("'")
+        else:
+            source_extra = None
+        return cls(
+            name=name,
+            name_with_extra=name_with_extra,
+            pin=pin,
+            spec_extra=spec_extra,
+            source_extra=source_extra,
+        )
+
+    def is_installed(self) -> bool:
+        """
+        Return True if this package is installed and False otherwise.
+        """
+        try:
+            distribution(self.name)
+            return True
+        except PackageNotFoundError:
+            return False
+
+
+def get_env_extra_deps(base: str) -> set[PackageSpec]:
     """
     Given a base environment, get all of the extras to include.
 
@@ -82,7 +152,7 @@ def get_env_extra_deps(base: str) -> set[str]:
 
     Returns
     -------
-    dependencies : list of str
+    dependencies : set of PackageSpec
         All pypi depenencies of the package extras.
     """
     deps = set()
@@ -91,18 +161,7 @@ def get_env_extra_deps(base: str) -> set[str]:
     return deps
 
 
-def dep_installed(dep: str) -> bool:
-    """
-    Return True if dep is installed and False otherwise.
-    """
-    try:
-        distribution(dep)
-        return True
-    except PackageNotFoundError:
-        return False
-
-
-def get_missing_dependencies(all_deps: set[str]) -> set[str]:
+def get_missing_dependencies(all_deps: set[PackageSpec]) -> set[PackageSpec]:
     """
     Return a reduced set of dependencies: only the ones that are not installed
 
@@ -113,13 +172,13 @@ def get_missing_dependencies(all_deps: set[str]) -> set[str]:
 
     Returns
     -------
-    missing_deps : set of str
+    missing_deps : set of PackageSpec
         A new set that only includes the dependencies that are not installed.
     """
-    return set(dep for dep in all_deps if not dep_installed(dep))
+    return set(dep for dep in all_deps if not dep.is_installed())
 
 
-def main(base: str) -> None:
+def main(base: str, include_extras: bool) -> None:
     """
     Get all missing extras dependencies in the current env and send them to stdout.
 
@@ -127,10 +186,17 @@ def main(base: str) -> None:
     ----------
     base : str
         The environment name, e.g. pcds.
+
+    pypi : bool
+        Whether or not to include the pypi extras string
     """
     all_deps = get_env_extra_deps(base=base)
     missing_deps = get_missing_dependencies(all_deps=all_deps)
-    print("\n".join(sorted(list(missing_deps))))
+    if include_extras:
+        pkg_to_print = set(dep.name_with_extra for dep in missing_deps)
+    else:
+        pkg_to_print = set(dep.name for dep in missing_deps)
+    print("\n".join(sorted(list(pkg_to_print))))
     return 0
 
 
@@ -146,9 +212,18 @@ if __name__ == "__main__":
         action="store_true",
         help="Enable verbose error messages",
     )
+    parser.add_argument(
+        "--include-extras",
+        action="store_true",
+        help=(
+            "Include the extras spec e.g. pcdsdevices[doc] instead of just "
+            "pcdsdevices. You likely want the extras spec when installing "
+            "from pypi but not when installing from conda."
+        )
+    )
     args = parser.parse_args()
     try:
-        exit(main(base=args.base))
+        exit(main(base=args.base, include_extras=args.include_extras))
     except Exception as exc:
         if args.verbose:
             raise
