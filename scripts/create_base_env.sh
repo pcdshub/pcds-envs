@@ -18,11 +18,26 @@ else
 fi
 set -e
 ENVNAME="${BASE}-${REL}"
-source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
+source "$(dirname "$(which conda)")/../etc/profile.d/conda.sh"
 ENV_DIR="../envs/${BASE}"
+
+# Main conda install step
 mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt"
 conda activate "${ENVNAME}"
-pip install -r "${ENV_DIR}/pip-packages.txt"
-${ENV_DIR}/extra-install-steps.sh
+
+# First extras round to pick up conda stuff
+python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_conda.txt
+mamba install -y --file "${ENV_DIR}"/extras_conda.txt
+
+# Main pip install step
+pip install -r "${ENV_DIR}"/pip-packages.txt
+
+# Second extras round to pick up pypi stuff
+python get_extras.py --verbose --for-pypi "${BASE}" > "${ENV_DIR}"/extras_pip.txt
+# Looks redundant to force pypi to not "forget" about previous pins
+pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/extras_pip.txt
+
+# Environment can opt in to doing special steps at the end
+"${ENV_DIR}"/extra-install-steps.sh
 ./install_activate.sh "${BASE}" "${ENVNAME}"
 conda deactivate

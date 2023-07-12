@@ -1,0 +1,14 @@
+atef
+happi
+hutch-python
+lightpath
+lucid
+nabs
+pcdscalc
+pcdsdaq
+pcdsdevices
+pcdsutils
+pcdswidgets
+pytmc
+typhos
+whatrecord

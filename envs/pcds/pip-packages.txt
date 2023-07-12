@@ -1,17 +1,23 @@
 # pypi as new as possible
+atef>=1.0.0
 epicsmacrolib>=0.6.0
 laserbeamsize
 p4p
 pip-audit
 pmpsdb-client>=1.1.2
 python-vxi11
+slac-alarm-manager>=1.2.1
 tiled[all]
 whatrecord>=0.4.4
 # conda+pip regressive pins
+# avoids bluesky v1.11.0 which breaks nabs
+bluesky==1.10.0
 # avoids pre-releases of v2
 databroker<2.0.0
 # ipython changes make scientists upset and can break experiments
 ipython==8.4.0
+# avoids ophyd v1.8.0 which I have not had time to test
+ophyd==1.7.0
 # pin for gui interface stability
 qtpy==2.1.0
 # sphinx 7.0.0 incompatible with rtd theme at 1.2.0, temporarily pin both
