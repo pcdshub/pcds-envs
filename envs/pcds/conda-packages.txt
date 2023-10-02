@@ -26,7 +26,6 @@ epicsmacrolib>=0.6.1
 flake8>=6.1.0
 flask>=2.3.3
 fzf>=0.42.0
-gammaray>=2.11.2
 gdb>=12.1
 gh>=2.35.0
 gpytorch
