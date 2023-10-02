@@ -61,6 +61,7 @@ gammaray
 gdb
 gh
 isort
+line_profiler
 memray
 pipdeptree
 pre-commit
@@ -71,6 +72,6 @@ pytest-repeat
 pytest-xdist
 pyupgrade
 shellcheck
-# sphinx and friends temporarily disabled due to incompatibilities at v7.0.0
+# sphinx and friends updates temporarily disabled due to incompatibilities at v7.0.0
 # sphinx
 # sphinx_rtd_theme

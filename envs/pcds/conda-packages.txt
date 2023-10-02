@@ -39,6 +39,7 @@ isort>=5.12.0
 jupyter
 krtc>=0.2.1
 lightpath>=1.0.2
+line_profiler>=4.0.0
 lucid>=0.10.0
 lxml
 memray>=1.8.1
@@ -107,10 +108,8 @@ xarray
 xraylib
 yarn
 # conda only regressive pins
-# line_profiler is brokenly slow starting at 4
-line_profiler<4
-# pyqt 5.15 builds have no designer
-pyqt=5.12.3
+# pin for gui interface stability
+pyqt=5.15.9
 # workaround for conda/pip interaction bug with whatrecord
 python-graphviz<0.18
 # conda+pip regressive pins
@@ -123,7 +122,7 @@ ipython=8.4.0
 # avoids ophyd v1.8.0 which I have not had time to test
 ophyd=1.7.0
 # pin for gui interface stability
-qtpy=2.1.0
+qtpy=2.4.0
 # sphinx 7.0.0 incompatible with rtd theme at 1.2.0, temporarily pin both
 sphinx<7
 sphinx_rtd_theme=1.2.0
