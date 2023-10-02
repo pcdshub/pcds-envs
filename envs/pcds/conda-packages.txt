@@ -3,6 +3,7 @@ ads-async>=0.3.1
 anaconda-client>=1.12.1
 apischema>=0.18.0
 archapp>=1.1.0
+atef>=1.2.0
 atlassian-python-api>=3.41.2
 black>=23.9.1
 blark>=0.7.1
@@ -21,6 +22,7 @@ cython>=0.29.34
 datashader
 elog>=1.2.3
 epicscorelibs=7.0.7.99.0.0
+epicsmacrolib>=0.6.1
 flake8>=6.1.0
 flask>=2.3.3
 fzf>=0.42.0
@@ -99,17 +101,18 @@ suitcase-mongo
 suitcase-msgpack
 suitcase-specfile
 suitcase-tiff
-tc_release>=0.2.2
 timechart>=1.5.1
 toml>=0.10.2
 transfocate>=0.5.8
 typhos>=3.0.0
+whatrecord>=0.5.0
 xarray
 xraylib
 yarn
 # conda only regressive pins
 # pin for gui interface stability
 pyqt=5.15.9
+pyqtwebengine=5.15.9
 # workaround for conda/pip interaction bug with whatrecord
 python-graphviz<0.18
 # conda+pip regressive pins

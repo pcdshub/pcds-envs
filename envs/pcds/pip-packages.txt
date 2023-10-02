@@ -1,14 +1,12 @@
 # pypi as new as possible
-atef>=1.2.0
-epicsmacrolib>=0.6.1
 laserbeamsize
 p4p
 pip-audit
 pmpsdb-client>=1.1.2
 python-vxi11
 slac-alarm-manager>=1.2.2
+tc_release>=0.2.4
 tiled[all]
-whatrecord>=0.5.0
 # conda+pip regressive pins
 # avoids bluesky v1.11.0 which breaks nabs
 bluesky==1.10.0
