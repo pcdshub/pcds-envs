@@ -133,6 +133,26 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+  py312-next-full:
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: ./.github/actions/conda_setup
+    - name: create environment
+      run: |
+        cd scripts
+        python update_tags.py pcds
+        ./create_base_env.sh test pcds 3.12
+    - uses: ./.github/actions/finalize_and_check_env
+    - uses: ./.github/actions/run_tests
+      with:
+        use-tag: true
+    - uses: ./.github/actions/release_notes
   # Checks which packages are not ready yet for py310
   py310-readiness:
     needs: py310-next-full
@@ -166,6 +186,23 @@ jobs:
       run: |
         cd scripts
         ./check_py_compat.sh pcds 3.11 | tee ~/compat.log
+    - name: summarize failure
+      if: failure()
+      run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
+  py312-readiness:
+    needs: py312-next-full
+    if: failure()
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/actions/conda_setup
+    - name: check packages
+      run: |
+        cd scripts
+        ./check_py_compat.sh pcds 3.12 | tee ~/compat.log
     - name: summarize failure
       if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
