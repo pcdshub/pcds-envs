@@ -74,6 +74,7 @@ LAB_PACKAGES = [
     'epicscorelibs',
     'hklpy',
     'ophyd',
+    'ophyd-async',
     'pcaspy',
     'pyepics',
     'suitcase-csv',
