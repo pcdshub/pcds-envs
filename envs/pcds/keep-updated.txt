@@ -41,6 +41,7 @@ whatrecord
 caproto
 hklpy
 # ophyd (need to test v1.8.0)
+ophyd-async
 pyepics
 
 # Developer tools

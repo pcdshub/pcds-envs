@@ -1,5 +1,6 @@
 # pypi as new as possible
 laserbeamsize
+ophyd-async>=0.1.0
 p4p
 pip-audit
 pmpsdb-client>=1.1.2
