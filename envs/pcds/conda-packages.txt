@@ -112,8 +112,6 @@ yarn
 # pin for gui interface stability
 pyqt=5.15.9
 pyqtwebengine=5.15.9
-# workaround for conda/pip interaction bug with whatrecord
-python-graphviz<0.18
 # conda+pip regressive pins
 # avoids bluesky v1.11.0 which breaks nabs
 bluesky=1.10.0
