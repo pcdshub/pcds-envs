@@ -90,4 +90,15 @@ if [ -x "$(command -v pip)" ]; then
 fi
 echo "pip_check_end"
 
+# Do a security audit check
+echo "pip_audit_start"
+if [ -x "$(command -v pip-audit)" ]; then
+  pip-audit -s osv --desc
+  (( ERROR += $? ))
+else
+  echo "pip-audit not installed"
+  (( ERROR += 1 ))
+fi
+echo "pip_audit_end"
+
 exit $ERROR
