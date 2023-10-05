@@ -76,3 +76,6 @@ shellcheck
 # sphinx and friends updates temporarily disabled due to incompatibilities at v7.0.0
 # sphinx
 # sphinx_rtd_theme
+
+# Security
+openssl
