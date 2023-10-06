@@ -32,6 +32,7 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+      if: always()
   # The env from current-env-tests + the latest tags slapped onto it
   py39-next-incr:
     defaults:
@@ -53,6 +54,7 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+      if: always()
     - name: Environment Export
       if: always()
       run: conda env export --file export.yaml
@@ -83,6 +85,7 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+      if: always()
     - name: Environment Export
       if: always()
       run: conda env export --file export.yaml
@@ -112,6 +115,7 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+      if: always()
   # Try to build a python 3.11 env
   py311-next-full:
     defaults:
@@ -133,6 +137,7 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+      if: always()
   py312-next-full:
     defaults:
       run:
@@ -153,6 +158,7 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
+      if: always()
   # Checks which packages are not ready yet for py310
   py310-readiness:
     needs: py310-next-full
