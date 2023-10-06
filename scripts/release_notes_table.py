@@ -54,7 +54,7 @@ PCDS_PACKAGES = [
     'pswalker',
     'pyca',
     'pytmc',
-    'tc_release',
+    'tc-release',
     'transfocate',
     'typhos',
     'whatrecord',
