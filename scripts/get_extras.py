@@ -28,7 +28,7 @@ CONDA_ONLY = []
 # Packages that are only available on PYPI
 PYPI_ONLY = []
 # Packages that can't be put into the environment right now
-AVOID = []
+AVOID = ['python-ldap']
 
 
 @dataclass(frozen=True)
