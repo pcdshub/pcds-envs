@@ -93,7 +93,7 @@ echo "pip_check_end"
 # Do a security audit check
 echo "pip_audit_start"
 if [ -x "$(command -v pip-audit)" ]; then
-  pip-audit -s osv --desc
+  python pip_audit_markdown.py
   (( ERROR += $? ))
 else
   echo "pip-audit not installed"
