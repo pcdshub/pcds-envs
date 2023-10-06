@@ -1,20 +1,18 @@
 """
 Script to clean up old conda pack relics
 """
-from dataclasses import dataclass
-from typing import Tuple, List
 import argparse
 import os
 import os.path
 import re
 import shutil
 import socket
-import sys
-
+from dataclasses import dataclass
+from typing import List, Tuple
 
 HUTCH_PYTHON_ENV = '/cds/group/pcds/pyps/apps/hutch-python/{hutch}/{hutch}env'
 UNPACK_DIRECTORY = '/u1/{hutch}opr/conda_envs'
-VER_MATCH = re.compile('^[^#].*CONDA_ENVNAME.*pcds-(\d\.\d\.\d)')
+VER_MATCH = re.compile(r'^[^#].*CONDA_ENVNAME.*pcds-(\d\.\d\.\d)')
 
 
 @dataclass
@@ -82,35 +80,6 @@ def get_saved_envs(hutch: str) -> List[UnpackedEnv]:
     )
 
 
-def get_older_paths(hutch: str, buffer: int = 5) -> List[str]:
-    """
-    For a given hutch, get paths that are OK to delete.
-
-    Parameters
-    ----------
-    hutch : str
-        The hutch we're in.
-    buffer : int, optional
-        How many extra environments prior to the current env to keep.
-
-    Returns
-    -------
-    paths : list of str
-        All the paths that are OK to delete.
-    """
-    current_version = get_current_version(hutch)
-    saved_envs = get_saved_envs(hutch)
-    old_envs = []
-    for env in reversed(saved_envs):
-        if env.version >= current_version:
-            continue
-        if buffer > 0:
-            buffer -= 1
-        else:
-            old_envs.append(env.path)
-    return list(reversed(old_envs))
-
-
 def get_current_hutch() -> str:
     """
     Quick and simple: get the hutch name from our server name.
@@ -119,20 +88,51 @@ def get_current_hutch() -> str:
     return hostname.split('-')[0]
 
 
+def envs_to_keep(hutch: str):
+    current_version = get_current_version(hutch)
+    all_envs = get_saved_envs(hutch)
+    keep = all_envs[-5:]
+    found_current_version = False
+    for env in all_envs:
+        if env.version == current_version:
+            if env not in keep:
+                keep.insert(0, env)
+            found_current_version = True
+            break
+    if not found_current_version:
+        raise RuntimeError('Did not find current version installed, something is wrong.')
+    return keep
+
+
+def envs_to_remove(hutch: str, keep: List[UnpackedEnv]):
+    all_paths = get_saved_envs(hutch)
+    return [path for path in all_paths if path not in keep]
+
+
 def main(dry_run=True):
     print('Cleaning up old hutch python directories.')
     hutch = get_current_hutch()
-    paths = get_older_paths(hutch)
-    if not paths:
+    keep = envs_to_keep(hutch)
+    remove = envs_to_remove(hutch, keep)
+    current_ver = get_current_version(hutch)
+    print(f'Current version is {current_ver}')
+    if keep:
+        print('Keeping the following envs:')
+        for env in keep:
+            print(env)
+    if remove:
+        print('Remove the following envs:')
+        for env in remove:
+            print(env)
+    else:
         print('Did not find any paths to clean up')
         return
-    print(f'Found old paths: {paths}')
     if dry_run:
-        print('Dry run: not deleting paths')
+        print('Dry run: not deleting envs')
     else:
-        for path in paths:
-            print(f'Deleting {path}')
-            shutil.rmtree(path)
+        for env in remove:
+            print(f'Deleting {env}')
+            shutil.rmtree(env.path)
 
 
 if __name__ == '__main__':
@@ -146,4 +146,3 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
     main(dry_run=not args.delete)
-
