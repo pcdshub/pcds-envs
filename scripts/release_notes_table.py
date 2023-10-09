@@ -93,6 +93,7 @@ COMMUNITY_PACKAGES = [
     'opencv',
     'pandas',
     'pre-commit',
+    'pyqt',
     'python',
     'pytest',
     'scikit-image',
