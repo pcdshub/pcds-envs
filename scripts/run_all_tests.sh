@@ -93,7 +93,7 @@ echo "pip_check_end"
 # Do a security audit check
 echo "pip_audit_start"
 if [ -x "$(command -v pip-audit)" ]; then
-  echo "pip audit results:\n"
+  echo "pip audit results:"
   python pip_audit_markdown.py
   (( ERROR += $? ))
 else
