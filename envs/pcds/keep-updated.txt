@@ -28,7 +28,7 @@ pyca
 pydm
 pytmc
 slac-alarm-manager
-tc_release
+tc-release
 timechart
 transfocate
 typhos

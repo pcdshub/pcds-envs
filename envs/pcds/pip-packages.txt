@@ -6,7 +6,7 @@ pip-audit
 pmpsdb-client>=1.1.2
 python-vxi11
 slac-alarm-manager>=1.2.2
-tc_release>=0.2.4
+tc-release>=0.2.4
 tiled[all]
 # conda+pip regressive pins
 # avoids bluesky v1.11.0 which breaks nabs
