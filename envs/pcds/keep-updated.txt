@@ -58,7 +58,6 @@ coverage
 flake8
 flask
 fzf
-gammaray
 gdb
 gh
 isort
