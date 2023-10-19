@@ -18,7 +18,7 @@ BRANCH="rel-${REL}"
 NAME="${BASE}-${REL}"
 echo "Staging environment ${NAME} for release"
 HASBRANCH=$(git branch | grep "${BRANCH}"$)
-HASREL=$(mamba env list | grep "${NAME}"$)
+HASREL=$(conda env list | grep "${NAME}"$)
 set -e
 if [ -z "${HASBRANCH}" ]; then
   echo "Creating branch ${BRANCH}"
@@ -44,7 +44,7 @@ PIP_TAGS="../envs/${BASE}/pip-packages.txt"
 
 echo "Exporting yaml file"
 YAML="../envs/${BASE}/env.yaml"
-mamba env export -n "${NAME}" -f "${YAML}"
+conda env export -n "${NAME}" -f "${YAML}"
 echo "Committing and pushing"
 git add "${YAML}"
 git add "${CONDA_TAGS}"

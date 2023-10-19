@@ -28,7 +28,7 @@ pyca
 pydm
 pytmc
 slac-alarm-manager
-tc_release
+tc-release
 timechart
 transfocate
 typhos
@@ -41,6 +41,7 @@ whatrecord
 caproto
 hklpy
 # ophyd (need to test v1.8.0)
+ophyd-async
 pyepics
 
 # Developer tools
@@ -57,10 +58,10 @@ coverage
 flake8
 flask
 fzf
-gammaray
 gdb
 gh
 isort
+line_profiler
 memray
 pipdeptree
 pre-commit
@@ -71,6 +72,9 @@ pytest-repeat
 pytest-xdist
 pyupgrade
 shellcheck
-# sphinx and friends temporarily disabled due to incompatibilities at v7.0.0
+# sphinx and friends updates temporarily disabled due to incompatibilities at v7.0.0
 # sphinx
 # sphinx_rtd_theme
+
+# Security
+openssl

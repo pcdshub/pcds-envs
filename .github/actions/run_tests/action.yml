@@ -36,3 +36,7 @@ runs:
     - run: sed -n '/pip_check_start/{:a;n;/pip_check_end/b;p;ba}' ~/test_output.log >> "$GITHUB_STEP_SUMMARY"
       if: ${{ always() }}
       shell: bash -eo pipefail {0}
+    # This extracts the results of the pip-audit step
+    - run: sed -n '/pip_audit_start/{:a;n;/pip_audit_end/b;p;ba}' ~/test_output.log >> "$GITHUB_STEP_SUMMARY"
+      if: ${{ always() }}
+      shell: bash -eo pipefail {0}

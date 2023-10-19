@@ -23,10 +23,12 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
+# Packages that are only available on Conda
 CONDA_ONLY = []
-PYPI_ONLY = [
-    "whatrecord",
-]
+# Packages that are only available on PYPI
+PYPI_ONLY = []
+# Packages that can't be put into the environment right now
+AVOID = ['python-ldap']
 
 
 @dataclass(frozen=True)
@@ -196,15 +198,15 @@ def main(base: str, for_pypi: bool) -> int:
     base : str
         The environment name, e.g. pcds.
 
-    include_extras : bool
+    for_pypi : bool
         Whether or not to include the pypi extras string
     """
     all_deps = get_env_extra_deps(base=base)
     missing_deps = get_missing_dependencies(all_deps=all_deps)
     if for_pypi:
-        pkg_to_print = set(dep.name_with_extra for dep in missing_deps if dep.name not in CONDA_ONLY)
+        pkg_to_print = set(dep.name_with_extra for dep in missing_deps if dep.name not in CONDA_ONLY + AVOID)
     else:
-        pkg_to_print = set(dep.name for dep in missing_deps if dep.name not in PYPI_ONLY)
+        pkg_to_print = set(dep.name for dep in missing_deps if dep.name not in PYPI_ONLY + AVOID)
     print("\n".join(sorted(list(pkg_to_print))))
     return 0
 
