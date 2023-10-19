@@ -35,6 +35,7 @@ HEADERS = {
 # List of packages to include in PCDS table
 PCDS_PACKAGES = [
     'ads-async',
+    'atef',
     'blark',
     'elog',
     'happi',
