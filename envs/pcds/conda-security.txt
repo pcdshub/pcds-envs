@@ -2,5 +2,5 @@
 # Apply this even in the incr environment
 # This file can be periodically cleared after an env release
 pip>=23.3
-pyarrow>=14.0.4
+pyarrow>=14.0.1
 werkzeug>=3.0.1
