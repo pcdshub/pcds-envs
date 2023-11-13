@@ -39,12 +39,12 @@ TEMP_CONDA_UP=".conda_up.txt"
 git diff "${GIT_REF}" "${ENV_DIR}/conda-packages.txt" | grep "^+\w" | cut -c 2- > "${TEMP_CONDA_UP}"
 
 # Update the copy minimally with our new specs
-mamba install -q -y -n "${ENVNAME}" --file "${TEMP_CONDA_UP}"
+mamba install -q -y -n "${ENVNAME}" --file "${TEMP_CONDA_UP}" --file "${ENV_DIR}/conda-security.txt"
 conda activate "${ENVNAME}"
 
 # First extras round to pick up conda stuff
 python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_conda.txt
-mamba install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}"/extras_conda.txt
+mamba install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/conda-security.txt" --file "${ENV_DIR}/extras_conda.txt"
 
 # Install from the pinned latest versions in case something wants an update
 pip install -r "${ENV_DIR}"/pip-packages.txt
