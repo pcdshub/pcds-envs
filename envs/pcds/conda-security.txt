@@ -4,6 +4,7 @@
 aiohttp>=3.8.6
 cryptography>=41.0.6
 jupyter_server>=2.11.2
+paramiko>=3.4.0
 pip>=23.3
 pyarrow>=14.0.1
 werkzeug>=3.0.1
