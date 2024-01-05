@@ -1,12 +1,12 @@
 # pypi as new as possible
 laserbeamsize
-ophyd-async>=0.1.0
+ophyd-async>=0.2.0
 p4p
 pip-audit
 pmpsdb-client>=1.1.2
 python-vxi11
 slac-alarm-manager>=1.2.2
-tc-release>=0.2.4
+tc-release>=0.2.5
 tiled[all]
 # conda+pip regressive pins
 # avoids bluesky v1.11.0 which breaks nabs
