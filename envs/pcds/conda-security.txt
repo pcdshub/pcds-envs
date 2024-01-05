@@ -7,4 +7,5 @@ jupyter_server>=2.11.2
 paramiko>=3.4.0
 pip>=23.3
 pyarrow>=14.0.1
+pycryptodome>=3.19.1
 werkzeug>=3.0.1
