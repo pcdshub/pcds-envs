@@ -14,7 +14,7 @@ def get_master_tag(repo):
     clone_tries = 10
     while clone_tries > 0:
         try:
-            subprocess.run(['git', 'clone', '--depth', '1', f'git@github.com:{repo}',
+            subprocess.run(['git', 'clone', '--depth', '1', f'https://github.com/{repo}',
                             tmp_dir], check=True)
             break
         except subprocess.CalledProcessError:
