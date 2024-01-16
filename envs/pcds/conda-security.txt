@@ -1,11 +1,5 @@
 # Extra dependencies that must be updated to handle a CVE
 # Apply this even in the incr environment
 # This file can be periodically cleared after an env release
-aiohttp>=3.8.6
-cryptography>=41.0.6
-jupyter_server>=2.11.2
-paramiko>=3.4.0
-pip>=23.3
-pyarrow>=14.0.1
-pycryptodome>=3.19.1
-werkzeug>=3.0.1
+gitpython>=3.1.41
+jinja2>=3.1.3
