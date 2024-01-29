@@ -21,7 +21,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
@@ -40,7 +40,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
@@ -71,7 +71,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
@@ -101,7 +101,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
@@ -123,7 +123,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
@@ -144,7 +144,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
@@ -168,7 +168,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/actions/conda_setup
     - name: check packages
       run: |
@@ -186,7 +186,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/actions/conda_setup
     - name: check packages
       run: |
@@ -203,7 +203,7 @@ jobs:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: ./.github/actions/conda_setup
     - name: check packages
       run: |
