@@ -12,6 +12,7 @@ ACK_LIST = {
     "GHSA-29gw-9793-fvw7": "Windows-only",
     "PYSEC-2023-163": "Only affects langchain users",
     "PYSEC-2021-878": "Fixed in 1.2.2, mistakenly attached to 1.5.3",
+    "GHSA-wj6h-64fc-37mp": "We pick this up via tiled, seems difficult to exploit",
 }
 
 
