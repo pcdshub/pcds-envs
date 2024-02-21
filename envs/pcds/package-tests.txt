@@ -18,6 +18,7 @@ pcdshub/pswalker
 slaclab/pyca
 slaclab/pydm
 pcdshub/pytmc
+pcdshub/tc-release
 slaclab/timechart
 pcdshub/transfocate
 pcdshub/typhos
