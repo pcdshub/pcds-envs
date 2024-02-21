@@ -13,6 +13,7 @@ pcdshub/pcdsdaq
 pcdshub/pcdsdevices
 pcdshub/pcdsutils
 pcdshub/pcdswidgets
+pcdshub/pmps-ui
 pcdshub/psdm_qs_cli
 pcdshub/pswalker
 slaclab/pyca
