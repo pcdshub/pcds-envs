@@ -38,6 +38,7 @@ whatrecord
 # - Packages developed by e.g. NSLS-II, APS
 # - Frequently relevant features/fixes
 # bluesky (need to fix nabs and test v1.11.0)
+bloptools
 caproto
 hklpy
 # ophyd (need to test v1.8.0)
