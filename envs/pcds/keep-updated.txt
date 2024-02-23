@@ -37,11 +37,11 @@ whatrecord
 # Collaboration packages
 # - Packages developed by e.g. NSLS-II, APS
 # - Frequently relevant features/fixes
-bluesky
+# bluesky (need to fix nabs and test v1.11.0)
 bloptools
 caproto
 hklpy
-ophyd
+# ophyd (need to test v1.8.0)
 ophyd-async
 pyepics
 
