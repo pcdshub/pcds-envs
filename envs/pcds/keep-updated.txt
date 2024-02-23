@@ -54,7 +54,7 @@ atlassian-python-api
 black
 conda-pack
 conda-smithy
-coverage
+# coverage (v7.4.2 missing conda build, skip for now)
 flake8
 flask
 fzf

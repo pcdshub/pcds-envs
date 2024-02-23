@@ -17,7 +17,6 @@ coloredlogs>=15.0.1
 conda-pack>=0.7.1
 conda-smithy>=3.30.4
 cookiecutter>=2.1.1
-coverage>=7.4.2
 cython>=0.29.34
 datashader>=0.14.4
 elog>=1.2.3
@@ -115,6 +114,8 @@ pyqtwebengine=5.15.9
 # conda+pip regressive pins
 # avoids bluesky v1.11.0 which breaks nabs
 bluesky=1.10.0
+# coverage 7.4.2 does not have a py39 build on conda
+coverage=7.4.1
 # avoids pre-releases of v2
 databroker<2.0.0
 # ipython changes make scientists upset and can break experiments

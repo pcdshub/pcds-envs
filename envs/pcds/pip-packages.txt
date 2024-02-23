@@ -10,6 +10,8 @@ slac-alarm-manager>=1.3.0
 tc-release>=0.2.6
 tiled[all]
 # conda+pip regressive pins
+# coverage 7.4.2 does not have a py39 build on conda
+coverage==7.4.1
 # avoids bluesky v1.11.0 which breaks nabs
 bluesky==1.10.0
 # avoids pre-releases of v2
