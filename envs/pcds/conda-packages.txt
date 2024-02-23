@@ -7,7 +7,6 @@ atef>=1.4.0
 atlassian-python-api>=3.41.10
 black>=24.2.0
 blark>=0.8.1
-bloptools>=0.5.0
 bluesky-live>=0.0.8
 bluesky-queueserver>=0.0.18
 bluesky-widgets>=0.0.14
