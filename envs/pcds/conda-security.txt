@@ -1,5 +1,13 @@
 # Extra dependencies that must be updated to handle a CVE
 # Apply this even in the incr environment
 # This file can be periodically cleared after an env release
+aiohttp>=3.9.1
+cryptography>=42.0.0
+fastapi>=0.109.1
 gitpython>=3.1.41
 jinja2>=3.1.3
+jupyter-lsp>=2.2.2
+jupterlab>=4.0.11
+notebook>=7.0.7
+python-multipart>=0.0.7
+starlette>=0.36.2
