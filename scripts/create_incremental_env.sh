@@ -39,20 +39,23 @@ TEMP_CONDA_UP=".conda_up.txt"
 git diff "${GIT_REF}" "${ENV_DIR}/conda-packages.txt" | grep "^+\w" | cut -c 2- > "${TEMP_CONDA_UP}"
 
 # Update the copy minimally with our new specs
-mamba install -q -y -n "${ENVNAME}" --file "${TEMP_CONDA_UP}" --file "${ENV_DIR}/conda-security.txt"
+mamba install -q -y -n "${ENVNAME}" --file "${TEMP_CONDA_UP}" --file "${ENV_DIR}/security-packages.txt"
 conda activate "${ENVNAME}"
 
 # First extras round to pick up conda stuff
 python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_conda.txt
-mamba install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/conda-security.txt" --file "${ENV_DIR}/extras_conda.txt"
+mamba install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt" --file "${ENV_DIR}/extras_conda.txt"
 
 # Install from the pinned latest versions in case something wants an update
-pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/conda-security.txt
+pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/security-packages.txt
 
 # Second extras round to pick up pypi stuff
 python get_extras.py --verbose --for-pypi "${BASE}" > "${ENV_DIR}"/extras_pip.txt
+# Also pull out the git installs, include these with the pip extras
+cut -f 2 -c " " "${ENV_DIR}"/git-packages.txt >> "${ENV_DIR}"/extras_pip.txt
+
 # Looks redundant to force pypi to not "forget" about previous pins
-pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/conda-security.txt -r "${ENV_DIR}"/extras_pip.txt
+pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/security-packages.txt -r "${ENV_DIR}"/extras_pip.txt
 
 # Environment can opt in to doing special steps at the end
 "${ENV_DIR}"/extra-install-steps.sh

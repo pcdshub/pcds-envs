@@ -43,9 +43,8 @@ CONDA_TAGS="../envs/${BASE}/conda-packages.txt"
 PIP_TAGS="../envs/${BASE}/pip-packages.txt"
 
 echo "Exporting yaml file"
-YAML="../envs/${BASE}/env.yaml"
-conda env export -n "${NAME}" -f "${YAML}"
-echo "Committing and pushing"
+YAML="$(python export_env.py --rel "${REL}" --base "${BASE}")"
+
 git add "${YAML}"
 git add "${CONDA_TAGS}"
 git add "${PIP_TAGS}"
