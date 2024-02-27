@@ -7,7 +7,7 @@ if [ -f "${PLUGIN_DEST}" ]; then
 else
     if [ -f "${PLUGIN_SOURCE}" ]; then
         echo "Using precompiled designer plugin file from ${PLUGIN_SOURCE}"
-        cp "${PLUGIN_PATH}" "${PLUGIN_DEST}"
+        cp "${PLUGIN_SOURCE}" "${PLUGIN_DEST}"
     else
         echo "Could not find precompiled designer plugin file at ${PLUGIN_SOURCE}"
     fi
