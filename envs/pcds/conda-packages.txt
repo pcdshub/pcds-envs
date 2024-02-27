@@ -71,7 +71,6 @@ pydm>=1.22.0
 pyepics>=3.5.2
 pyfiglet>=0.8
 pymongo>=4.3.3
-pynput>=1.7.6
 py-spy>=0.3.14
 pytables>=3.6.1
 pytest>=8.0.1
