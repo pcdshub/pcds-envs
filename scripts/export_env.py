@@ -26,9 +26,13 @@ def main(base: str, rel: str) -> int:
         line = line.strip()
         pkg, git_spec = line.split()
         for num, line in enumerate(yaml_lines):
-            indent, spec = line.split("- ")
+            try:
+                indent, spec = line.split("- ")
+            except ValueError:
+                # Not a spec line
+                continue
             if spec.startswith(f"{pkg}=="):
-                yaml_lines[num] = "- ".join(indent, git_spec)
+                yaml_lines[num] = "- ".join((indent, git_spec))
                 done = True
                 break
         if not done:
