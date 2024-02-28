@@ -35,7 +35,7 @@ pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/security-packages.t
 # Second extras round to pick up pypi stuff
 python get_extras.py --verbose --for-pypi "${BASE}" > "${ENV_DIR}"/extras_pip.txt
 # Also pull out the git installs, include these with the pip extras
-cut -f 2 -c " " "${ENV_DIR}"/git-packages.txt >> "${ENV_DIR}"/extras_pip.txt
+cut -f 2 -d " " "${ENV_DIR}"/git-packages.txt >> "${ENV_DIR}"/extras_pip.txt
 
 # Looks redundant to force pypi to not "forget" about previous pins
 pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/security-packages.txt -r "${ENV_DIR}"/extras_pip.txt
