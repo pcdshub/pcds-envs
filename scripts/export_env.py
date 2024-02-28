@@ -38,6 +38,8 @@ def main(base: str, rel: str) -> int:
         if not done:
             raise RuntimeError(f"Did not find {pkg} in yaml")
 
+    # Supposed to end with a newline
+    yaml_lines.append("")
     with env_path.open("w") as fd:
         fd.write("\n".join(yaml_lines))
     print(env_path)
