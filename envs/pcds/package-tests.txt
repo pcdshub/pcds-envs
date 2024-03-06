@@ -13,11 +13,13 @@ pcdshub/pcdsdaq
 pcdshub/pcdsdevices
 pcdshub/pcdsutils
 pcdshub/pcdswidgets
+pcdshub/pmps-ui
 pcdshub/psdm_qs_cli
 pcdshub/pswalker
 slaclab/pyca
 slaclab/pydm
 pcdshub/pytmc
+pcdshub/tc-release
 slaclab/timechart
 pcdshub/transfocate
 pcdshub/typhos

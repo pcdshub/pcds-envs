@@ -54,7 +54,7 @@ atlassian-python-api
 black
 conda-pack
 conda-smithy
-coverage
+# coverage (v7.4.2 missing conda build, skip for now)
 flake8
 flask
 fzf
@@ -68,6 +68,7 @@ pre-commit
 pycln
 py-spy
 pytest
+pytest-qt
 pytest-repeat
 pytest-xdist
 pyupgrade

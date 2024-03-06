@@ -22,20 +22,23 @@ source "$(dirname "$(which conda)")/../etc/profile.d/conda.sh"
 ENV_DIR="../envs/${BASE}"
 
 # Main conda install step
-mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/conda-security.txt"
+mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt"
 conda activate "${ENVNAME}"
 
 # First extras round to pick up conda stuff
 python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_conda.txt
-mamba install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/conda-security.txt" --file "${ENV_DIR}/extras_conda.txt"
+mamba install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt" --file "${ENV_DIR}/extras_conda.txt"
 
 # Main pip install step
-pip install -r "${ENV_DIR}"/pip-packages.txt
+pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/security-packages.txt
 
 # Second extras round to pick up pypi stuff
 python get_extras.py --verbose --for-pypi "${BASE}" > "${ENV_DIR}"/extras_pip.txt
+# Also pull out the git installs, include these with the pip extras
+cut -f 2 -d " " "${ENV_DIR}"/git-packages.txt >> "${ENV_DIR}"/extras_pip.txt
+
 # Looks redundant to force pypi to not "forget" about previous pins
-pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/extras_pip.txt
+pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/security-packages.txt -r "${ENV_DIR}"/extras_pip.txt
 
 # Environment can opt in to doing special steps at the end
 "${ENV_DIR}"/extra-install-steps.sh
