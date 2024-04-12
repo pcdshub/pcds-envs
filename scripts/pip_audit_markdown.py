@@ -51,7 +51,7 @@ def format_results(results: dict[str, list[dict[str, Any]]]) -> PrettyTable:
                 fix_ver,
                 new_or_seen,
                 vuln["id"],
-                vuln["description"],
+                vuln["description"].strip().replace("\n", " "),
                 are_we_ok,
             ])
     return table
