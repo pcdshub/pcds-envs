@@ -17,7 +17,8 @@ else
   BASE="${2}"
   TAG="${BASE}-${REL}"
 fi
-YAML="../envs/${BASE}/env.yaml"
+ENV_DIR="../envs/${BASE}"
+YAML="${ENV_DIR}/env.yaml"
 NAME="${BASE}-${REL}"
 echo "Applying release ${NAME}"
 echo "Checking for tag ${TAG}"
@@ -27,6 +28,7 @@ echo "Building environment"
 mamba env create -n "${NAME}" -f "${YAML}"
 ./install_activate.sh "${BASE}" "${NAME}"
 CONDA_BIN=`dirname $(which conda)`
+"${ENV_DIR}"/extra-install-steps.sh
 echo "Write-protecting new env"
 pushd "${CONDA_BIN}/../envs"
 chmod -R a-w ${NAME}
