@@ -10,7 +10,6 @@ jupyter-lsp>=2.2.2
 jupyterlab>=4.0.11
 notebook>=7.0.7
 orjson>=3.9.15
-perl=5.32.1=7_hd590300_perl5
 pyopenssl>=24
 python-multipart>=0.0.7
 starlette>=0.36.2
