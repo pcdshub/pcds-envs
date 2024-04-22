@@ -60,6 +60,7 @@ pcdswidgets>=0.8.3
 periodictable>=1.5.2
 pipdeptree>=2.18.1
 pmgr>=2.1.2
+pmpsdb_client>=1.2.0
 pre-commit>=3.7.0
 psdaq-control-minimal>=3.3.38
 psdm_qs_cli>=0.3.7
