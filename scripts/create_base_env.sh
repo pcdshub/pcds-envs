@@ -41,6 +41,6 @@ cut -f 2 -d " " "${ENV_DIR}"/git-packages.txt >> "${ENV_DIR}"/extras_pip.txt
 pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/security-packages.txt -r "${ENV_DIR}"/extras_pip.txt
 
 # Environment can opt in to doing special steps at the end
-"${ENV_DIR}"/extra-install-steps.sh
+"${ENV_DIR}"/extra-install-steps.sh "${CONDA_PREFIX}"
 ./install_activate.sh "${BASE}" "${ENVNAME}"
 conda deactivate

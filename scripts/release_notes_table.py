@@ -50,6 +50,8 @@ PCDS_PACKAGES = [
     'pcdsdevices',
     'pcdsutils',
     'pcdswidgets',
+    'pmpsdb-client',
+    'pmpsui',
     'pmgr',
     'psdaq-control-minimal',
     'pswalker',

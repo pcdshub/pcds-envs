@@ -13,6 +13,7 @@ ACK_LIST = {
     "PYSEC-2023-163": "Only affects langchain users",
     "PYSEC-2021-878": "Fixed in 1.2.2, mistakenly attached to 1.5.3",
     "GHSA-wj6h-64fc-37mp": "Not used in prod, will never be fixed, see tiled dependencies",
+    "GHSA-7gpw-8wmc-pm8g": "Unlikely to affect prod, fix not on conda-forge yet"
 }
 
 
@@ -51,7 +52,7 @@ def format_results(results: dict[str, list[dict[str, Any]]]) -> PrettyTable:
                 fix_ver,
                 new_or_seen,
                 vuln["id"],
-                vuln["description"],
+                vuln["description"].strip().replace("\n", " "),
                 are_we_ok,
             ])
     return table
