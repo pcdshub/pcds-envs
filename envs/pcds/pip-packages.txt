@@ -1,6 +1,5 @@
 # pypi as new as possible
 laserbeamsize
-ophyd-async>=0.2.0
 p4p
 pip-audit
 PyQt5-stubs>=5.15.6
