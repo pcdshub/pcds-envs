@@ -1,44 +1,47 @@
 import argparse
-import json
 import re
 import subprocess
 from pathlib import Path
 
 import requests
+from binstar_client import Binstar
+from binstar_client.errors import BinstarError
 from packaging import version
 
 CHANNELS = ['conda-forge', 'pcds-tag', 'lcls-ii']
+client = None
+
+
+def get_client() -> Binstar:
+    global client
+    if client is None:
+        client = Binstar()
+    return client
 
 
 def latest_version(package):
-    info = subprocess.check_output(['conda', 'search', '--json', package],
-                                   universal_newlines=True)
-    info_list = json.loads(info)[package]
-    channel_versions = {}
+    client = get_client()
+    versions_list = None
+    for ch in CHANNELS:
+        try:
+            info = client.package(ch, package)
+        except BinstarError:
+            continue
+        else:
+            # latest_version key is not necessarily correct, we need to check ourselves
+            versions_list = info["versions"]
+            break
+    if versions_list is None:
+        raise RuntimeError(f"{package} not found in any channel: {CHANNELS}")
     latest_version = "0.0.0"
-    for info_item in info_list:
-        item_version = info_item['version']
-        item_channel = info_item['channel']
-        for ch in CHANNELS:
-            if ch in item_channel:
-                item_channel = ch
-                break
+    for item_version in versions_list:
         try:
             if version.parse(item_version) > version.parse(latest_version):
                 latest_version = item_version
-            latest_ch_ver = channel_versions.setdefault(item_channel, "0.0.0")
-            if version.parse(item_version) > version.parse(latest_ch_ver):
-                channel_versions[item_channel] = item_version
         except version.InvalidVersion:
             # Some packages can have malformed version numbers
             # Just ignore these and move on
             pass
-    if channel_versions.get('conda-forge', latest_version) != latest_version:
-        print(
-            f'Warning! {package}={latest_version} '
-            'is not ready on conda-forge! '
-            'Building with this config is likely to fail!'
-            )
     return latest_version
 
 
