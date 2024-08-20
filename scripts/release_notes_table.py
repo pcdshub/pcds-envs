@@ -84,7 +84,6 @@ LAB_PACKAGES = [
     'suitcase-jsonl',
     'suitcase-specfile',
     'suitcase-tiff',
-    'tiled',
 ]
 # List of packages to include in (notable) COMMUNITY table
 COMMUNITY_PACKAGES = [
