@@ -40,16 +40,21 @@ def main():
     tagged = {}
     untagged = []
 
+    max_out_length = 0
     for i, repo in enumerate(repos):
         org, repository_name = repo.split('/')
-        print(f"checking {repo} ({i+1}/{len(repos)})", end="\r")
+        out_string = f"checking {repo} ({i+1}/{len(repos)})"
+        if len(out_string) > max_out_length:
+            max_out_length = len(out_string)
+
+        print(out_string + " " * (max_out_length - len(out_string)), end="\r")
         latest_tag = is_tag_latest(org, repository_name)
         if not latest_tag:
             untagged.append(repo)
         else:
             tagged[repo] = latest_tag
 
-    print()
+    print(" " * max_out_length)
     for repo, tag in tagged.items():
         print(f'{repo} is tagged at {tag}')
 
