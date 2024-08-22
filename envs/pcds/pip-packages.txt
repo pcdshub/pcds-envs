@@ -1,7 +1,7 @@
 # pypi as new as possible
 bluesky-queueserver>=0.0.18
 bloptools>=0.7.0
-grpcio-tools>=1.51.1
+grpcio-tools>=1.62.2
 laserbeamsize
 p4p
 pip-audit
