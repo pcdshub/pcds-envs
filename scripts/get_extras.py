@@ -20,6 +20,8 @@ from dataclasses import dataclass
 from importlib.metadata import PackageNotFoundError, distribution
 from pathlib import Path
 
+from packaging.requirements import Requirement
+
 logger = logging.getLogger(__name__)
 
 
@@ -49,13 +51,8 @@ class PackageSpec:
         """
         Parse an importlib metadata spec.
 
-        These specs look something like:
-        "sphinx (<7.0.0) ; extra = 'doc'"
-        But if the package is not pinned or it is not an extra it may just be:
-        "sphinx"
-        And sometimes there can be further specifiers like:
-        "mkdocstrings[python]"
-        which all need to be handled appropriately.
+        This is now handled by the packaging module.
+        In the future I might refactor to remove PackageSpec.
 
         Parameters
         ----------
@@ -63,25 +60,21 @@ class PackageSpec:
             A spec string from importlib.metadata.Distribution.requires, which
             should always be a list of such strings.
         """
-        name_with_extra = spec.split(" ")[0]
-        if "[" in name_with_extra:
-            name, spec_extra = name_with_extra.split("[")
-            spec_extra = spec_extra.strip("]")
-        else:
-            name = name_with_extra
+        req = Requirement(spec)
+        try:
+            spec_extra = req.extras.pop()
+        except KeyError:
             spec_extra = None
-        if "(" in spec:
-            pin = spec.split("(")[1].split(")")[0]
-        else:
-            pin = None
-        if "; extra" in spec:
-            source_extra = spec.split("; extra == ")[1].strip("'")
-        else:
+        if req.marker is None:
             source_extra = None
+            name_with_extra = req.name
+        else:
+            source_extra = str(req.marker).split(" ")[-1].strip('"').strip("'")
+            name_with_extra = f"{req.name}[{source_extra}]"
         return cls(
-            name=name,
+            name=req.name,
             name_with_extra=name_with_extra,
-            pin=pin,
+            pin=str(req.specifier),
             spec_extra=spec_extra,
             source_extra=source_extra,
         )
