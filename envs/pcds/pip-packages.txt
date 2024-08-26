@@ -1,5 +1,4 @@
 # pypi as new as possible
-bluesky-queueserver>=0.0.18
 bloptools>=0.7.0
 grpcio-tools>=1.62.2
 laserbeamsize
@@ -13,6 +12,8 @@ tc-release>=0.2.6
 # conda+pip regressive pins
 # avoids bluesky v1.11.0 which breaks nabs
 bluesky==1.10.0
+# Requires bluesky at v1.11.0 to get to 0.0.20, update pin when bluesky pin updates
+bluesky-queueserver==0.0.19
 # ipython changes make scientists upset and can break experiments
 ipython==8.4.0
 # most of the ecosystem is not ready for numpy 2.0
