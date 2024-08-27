@@ -122,6 +122,8 @@ bluesky-base=1.10.0
 databroker=1.2.5
 # ipython changes make scientists upset and can break experiments
 ipython=8.4.0
+# matplotlib conda pin can be removed once all conda dependencies specify matplotlib-base
+matplotlib=3.8.4
 # most of the ecosystem is not ready for numpy 2.0
 numpy=1.26.4
 # avoids ophyd v1.8.0 which I have not had time to test
