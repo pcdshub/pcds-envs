@@ -60,12 +60,12 @@ jobs:
     - name: Environment Export
       id: export
       if: steps.create.outcome == 'success'
-      run: conda env export --file export.yaml
+      run: python scripts/export_env.py --rel ci --base pcds
     - uses: actions/upload-artifact@v4
       if: steps.export.outcome == 'success'
       with:
         name: incr_env.yaml
-        path: "export.yaml"
+        path: "envs/pcds/env.yaml"
   # Start from scratch to get some py39 testing done
   # This is a fallback alternative to py39-next-incr, which is preferred
   py39-next-full:
@@ -93,12 +93,12 @@ jobs:
     - name: Environment Export
       id: export
       if: steps.create.outcome == 'success'
-      run: conda env export --file export.yaml
+      run: python scripts/export_env.py --rel ci --base pcds
     - uses: actions/upload-artifact@v4
       if: steps.export.outcome == 'success'
       with:
         name: py39_env.yaml
-        path: "export.yaml"
+        path: "envs/pcds/env.yaml"
   # Try to build a python 3.10 env
   py310-next-full:
     defaults:
@@ -125,12 +125,12 @@ jobs:
     - name: Environment Export
       id: export
       if: steps.create.outcome == 'success'
-      run: conda env export --file export.yaml
+      run: python scripts/export_env.py --rel ci --base pcds
     - uses: actions/upload-artifact@v4
       if: steps.export.outcome == 'success'
       with:
         name: py310_env.yaml
-        path: "export.yaml"
+        path: "envs/pcds/env.yaml"
   # Try to build a python 3.11 env
   py311-next-full:
     defaults:
@@ -157,12 +157,12 @@ jobs:
     - name: Environment Export
       id: export
       if: steps.create.outcome == 'success'
-      run: conda env export --file export.yaml
+      run: python scripts/export_env.py --rel ci --base pcds
     - uses: actions/upload-artifact@v4
       if: steps.export.outcome == 'success'
       with:
         name: py311_env.yaml
-        path: "export.yaml"
+        path: "envs/pcds/env.yaml"
   py312-next-full:
     defaults:
       run:
@@ -188,12 +188,12 @@ jobs:
     - name: Environment Export
       id: export
       if: steps.create.outcome == 'success'
-      run: conda env export --file export.yaml
+      run: python scripts/export_env.py --rel ci --base pcds
     - uses: actions/upload-artifact@v4
       if: steps.export.outcome == 'success'
       with:
         name: py312_env.yaml
-        path: "export.yaml"
+        path: "envs/pcds/env.yaml"
   # Checks which packages are not ready yet for py310
   py310-readiness:
     needs: py310-next-full
