@@ -386,20 +386,7 @@ def main(env_name='pcds', reference='master'):
     reverse_deps_cache = build_reverse_deps_cache(added_pkgs)
 
     showed_update = False
-    # First, show updates by category
-    tables = build_tables(updates)
-    for name, table in tables.items():
-        if len(list(table)) > 0:
-            showed_update = True
-            print(HEADERS[name])
-            divider = '-' * len(HEADERS[name])
-            print(divider)
-            print()
-            table.set_style(prettytable.MARKDOWN)
-            print(table)
-            print()
-
-    # Then, show added/removed packages
+    # First, show added packages (exiting!)
     # Split based on what pkg_resources knows about dependencies
     added_reqs = {
         pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 0
@@ -415,6 +402,19 @@ def main(env_name='pcds', reference='master'):
         for pkg in sorted(added_specs):
             print(f'- {pkg}')
         print()
+    # Next, show updates by category
+    tables = build_tables(updates)
+    for name, table in tables.items():
+        if len(list(table)) > 0:
+            showed_update = True
+            print(HEADERS[name])
+            divider = '-' * len(HEADERS[name])
+            print(divider)
+            print()
+            table.set_style(prettytable.MARKDOWN)
+            print(table)
+            print()
+    # Next, show dependency updates
     if added_reqs:
         showed_update = True
         header = 'Added the Following Dependencies'
@@ -464,6 +464,7 @@ def main(env_name='pcds', reference='master'):
                 else:
                     print(f'- {pkg} (required by {first_required_text})')
         print()
+    # Last, show removals
     if removed_pkgs:
         showed_update = True
         header = 'Removed the Following Packages'
