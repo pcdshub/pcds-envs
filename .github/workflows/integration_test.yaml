@@ -215,7 +215,7 @@ jobs:
         conda create --name test python=3.10
         conda activate test
         cd scripts
-        ./check_py_compat_pypi.sh | tee -a ~/compat.log
+        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
     - name: summarize failure
       if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
@@ -240,7 +240,7 @@ jobs:
         conda create --name test python=3.11
         conda activate test
         cd scripts
-        ./check_py_compat_pypi.sh | tee -a ~/compat.log
+        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
     - name: summarize failure
       if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
@@ -264,7 +264,7 @@ jobs:
         conda create --name test python=3.12
         conda activate test
         cd scripts
-        ./check_py_compat_pypi.sh | tee -a ~/compat.log
+        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
     - name: summarize failure
       if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
