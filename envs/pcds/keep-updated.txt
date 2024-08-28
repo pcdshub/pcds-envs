@@ -37,7 +37,11 @@ whatrecord
 # Collaboration packages
 # - Packages developed by e.g. NSLS-II, APS
 # - Frequently relevant features/fixes
+bloptools
 # bluesky (need to fix nabs and test v1.11.0)
+# bluesky-live
+# blueksy-queueserver
+# bluesky-widgets
 caproto
 hklpy
 # ophyd (need to test v1.8.0)
@@ -53,12 +57,14 @@ atlassian-python-api
 black
 conda-pack
 conda-smithy
-# coverage (v7.4.2 missing conda build, skip for now)
+coverage
 flake8
 flask
 fzf
 gdb
 gh
+ghapi
+grpcio-tools
 isort
 line_profiler
 memray
@@ -72,9 +78,9 @@ pytest-repeat
 pytest-xdist
 pyupgrade
 shellcheck
-# sphinx and friends updates temporarily disabled due to incompatibilities at v7.0.0
+# sphinx temporarily disabled due to incompatibilities at v8.0.0
 # sphinx
-# sphinx_rtd_theme
+sphinx_rtd_theme
 
 # Security
 openssl

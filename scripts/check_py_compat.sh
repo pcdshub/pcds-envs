@@ -13,12 +13,12 @@ else
   PY_VER="${2}"
 fi
 EXIT_CODE=0
-while read line;
+while read -r line;
 do
   if [[ "${line}" == "#"* ]]; then
     continue
   fi
-  if mamba create --dry-run --name debug_test python="${PY_VER}" "${line}" > /dev/null 2>&1; then
+  if mamba create --dry-run --name debug_test python="${PY_VER}" "${line}" --file "../envs/${BASE}/security-packages.txt" > /dev/null 2>&1; then
     echo "Found working package ${line}"
   else
     echo "Found uninstallable package ${line}"

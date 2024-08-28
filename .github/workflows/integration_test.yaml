@@ -26,13 +26,14 @@ jobs:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
+      id: create
       run: mamba env create -q -n pcds-test -f envs/pcds/env.yaml
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: always()
+      if: steps.create.outcome == 'success'
   # The env from current-env-tests + the latest tags slapped onto it
   py39-next-incr:
     defaults:
@@ -45,6 +46,7 @@ jobs:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
+      id: create
       run: |
         cd scripts
         python update_tags.py pcds
@@ -54,15 +56,18 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: always()
+      if: steps.create.outcome == 'success'
     - name: Environment Export
-      if: always()
-      run: conda env export --file export.yaml
+      id: export
+      if: steps.create.outcome == 'success'
+      run: |
+        conda activate base
+        python scripts/export_env.py --rel test --base pcds
     - uses: actions/upload-artifact@v4
-      if: always()
+      if: steps.export.outcome == 'success'
       with:
         name: incr_env.yaml
-        path: "export.yaml"
+        path: "envs/pcds/env.yaml"
   # Start from scratch to get some py39 testing done
   # This is a fallback alternative to py39-next-incr, which is preferred
   py39-next-full:
@@ -76,6 +81,7 @@ jobs:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
+      id: create
       run: |
         cd scripts
         python update_tags.py pcds
@@ -85,15 +91,18 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: always()
+      if: steps.create.outcome == 'success'
     - name: Environment Export
-      if: always()
-      run: conda env export --file export.yaml
+      id: export
+      if: steps.create.outcome == 'success'
+      run: |
+        conda activate base
+        python scripts/export_env.py --rel test --base pcds
     - uses: actions/upload-artifact@v4
-      if: always()
+      if: steps.export.outcome == 'success'
       with:
-        name: next_env.yaml
-        path: "export.yaml"
+        name: py39_env.yaml
+        path: "envs/pcds/env.yaml"
   # Try to build a python 3.10 env
   py310-next-full:
     defaults:
@@ -106,6 +115,7 @@ jobs:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
+      id: create
       run: |
         cd scripts
         python update_tags.py pcds
@@ -115,7 +125,18 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: always()
+      if: steps.create.outcome == 'success'
+    - name: Environment Export
+      id: export
+      if: steps.create.outcome == 'success'
+      run: |
+        conda activate base
+        python scripts/export_env.py --rel test --base pcds
+    - uses: actions/upload-artifact@v4
+      if: steps.export.outcome == 'success'
+      with:
+        name: py310_env.yaml
+        path: "envs/pcds/env.yaml"
   # Try to build a python 3.11 env
   py311-next-full:
     defaults:
@@ -128,6 +149,7 @@ jobs:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
+      id: create
       run: |
         cd scripts
         python update_tags.py pcds
@@ -137,7 +159,18 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: always()
+      if: steps.create.outcome == 'success'
+    - name: Environment Export
+      id: export
+      if: steps.create.outcome == 'success'
+      run: |
+        conda activate base
+        python scripts/export_env.py --rel test --base pcds
+    - uses: actions/upload-artifact@v4
+      if: steps.export.outcome == 'success'
+      with:
+        name: py311_env.yaml
+        path: "envs/pcds/env.yaml"
   py312-next-full:
     defaults:
       run:
@@ -149,6 +182,7 @@ jobs:
         fetch-depth: 0
     - uses: ./.github/actions/conda_setup
     - name: create environment
+      id: create
       run: |
         cd scripts
         python update_tags.py pcds
@@ -158,7 +192,18 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: always()
+      if: steps.create.outcome == 'success'
+    - name: Environment Export
+      id: export
+      if: steps.create.outcome == 'success'
+      run: |
+        conda activate base
+        python scripts/export_env.py --rel test --base pcds
+    - uses: actions/upload-artifact@v4
+      if: steps.export.outcome == 'success'
+      with:
+        name: py312_env.yaml
+        path: "envs/pcds/env.yaml"
   # Checks which packages are not ready yet for py310
   py310-readiness:
     needs: py310-next-full
@@ -170,10 +215,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: ./.github/actions/conda_setup
-    - name: check packages
+    - name: check packages conda
       run: |
         cd scripts
         ./check_py_compat.sh pcds 3.10 | tee ~/compat.log
+    - name: check packages pip
+      if: always()
+      run: |
+        conda create --name test python=3.10
+        conda activate test
+        cd scripts
+        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
     - name: summarize failure
       if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
@@ -188,10 +240,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: ./.github/actions/conda_setup
-    - name: check packages
+    - name: check packages conda
       run: |
         cd scripts
         ./check_py_compat.sh pcds 3.11 | tee ~/compat.log
+    - name: check packages pip
+      if: always()
+      run: |
+        conda create --name test python=3.11
+        conda activate test
+        cd scripts
+        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
     - name: summarize failure
       if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
@@ -205,10 +264,17 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: ./.github/actions/conda_setup
-    - name: check packages
+    - name: check packages conda
       run: |
         cd scripts
         ./check_py_compat.sh pcds 3.12 | tee ~/compat.log
+    - name: check packages pip
+      if: always()
+      run: |
+        conda create --name test python=3.12
+        conda activate test
+        cd scripts
+        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
     - name: summarize failure
       if: failure()
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
