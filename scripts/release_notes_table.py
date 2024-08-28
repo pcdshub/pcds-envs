@@ -386,7 +386,7 @@ def main(env_name='pcds', reference='master'):
     reverse_deps_cache = build_reverse_deps_cache(added_pkgs)
 
     showed_update = False
-    # First, show added packages (exiting!)
+    # First, show added packages (exciting!)
     # Split based on what pkg_resources knows about dependencies
     added_reqs = {
         pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 0
