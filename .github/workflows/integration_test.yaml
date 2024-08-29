@@ -35,7 +35,7 @@ jobs:
     - uses: ./.github/actions/release_notes
       if: steps.create.outcome == 'success'
   # The env from current-env-tests + the latest tags slapped onto it
-  py39-next-incr:
+  py311-next-incr:
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -68,76 +68,8 @@ jobs:
       with:
         name: incr_env.yaml
         path: "envs/pcds/env.yaml"
-  # Start from scratch to get some py39 testing done
-  # This is a fallback alternative to py39-next-incr, which is preferred
-  py39-next-full:
-    defaults:
-      run:
-        shell: bash --login -eo pipefail {0}
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - uses: ./.github/actions/conda_setup
-    - name: create environment
-      id: create
-      run: |
-        cd scripts
-        python update_tags.py pcds
-        ./create_base_env.sh test pcds 3.9
-    - uses: ./.github/actions/finalize_and_check_env
-    - uses: ./.github/actions/run_tests
-      with:
-        use-tag: true
-    - uses: ./.github/actions/release_notes
-      if: steps.create.outcome == 'success'
-    - name: Environment Export
-      id: export
-      if: steps.create.outcome == 'success'
-      run: |
-        conda activate base
-        python scripts/export_env.py --rel test --base pcds
-    - uses: actions/upload-artifact@v4
-      if: steps.export.outcome == 'success'
-      with:
-        name: py39_env.yaml
-        path: "envs/pcds/env.yaml"
-  # Try to build a python 3.10 env
-  py310-next-full:
-    defaults:
-      run:
-        shell: bash --login -eo pipefail {0}
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - uses: ./.github/actions/conda_setup
-    - name: create environment
-      id: create
-      run: |
-        cd scripts
-        python update_tags.py pcds
-        ./create_base_env.sh test pcds 3.10
-    - uses: ./.github/actions/finalize_and_check_env
-    - uses: ./.github/actions/run_tests
-      with:
-        use-tag: true
-    - uses: ./.github/actions/release_notes
-      if: steps.create.outcome == 'success'
-    - name: Environment Export
-      id: export
-      if: steps.create.outcome == 'success'
-      run: |
-        conda activate base
-        python scripts/export_env.py --rel test --base pcds
-    - uses: actions/upload-artifact@v4
-      if: steps.export.outcome == 'success'
-      with:
-        name: py310_env.yaml
-        path: "envs/pcds/env.yaml"
-  # Try to build a python 3.11 env
+  # Start from scratch to get some py311 testing done
+  # This is a fallback alternative to py311-next-incr, which is preferred
   py311-next-full:
     defaults:
       run:
@@ -204,56 +136,39 @@ jobs:
       with:
         name: py312_env.yaml
         path: "envs/pcds/env.yaml"
-  # Checks which packages are not ready yet for py310
-  py310-readiness:
-    needs: py310-next-full
-    if: failure()
+  py313-next-full:
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - uses: ./.github/actions/conda_setup
-    - name: check packages conda
+    - name: create environment
+      id: create
       run: |
         cd scripts
-        ./check_py_compat.sh pcds 3.10 | tee ~/compat.log
-    - name: check packages pip
-      if: always()
+        python update_tags.py pcds
+        ./create_base_env.sh test pcds 3.13
+    - uses: ./.github/actions/finalize_and_check_env
+    - uses: ./.github/actions/run_tests
+      with:
+        use-tag: true
+    - uses: ./.github/actions/release_notes
+      if: steps.create.outcome == 'success'
+    - name: Environment Export
+      id: export
+      if: steps.create.outcome == 'success'
       run: |
-        conda create --name test python=3.10
-        conda activate test
-        cd scripts
-        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
-    - name: summarize failure
-      if: failure()
-      run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
-  # Checks which packages are not ready yet for py311
-  py311-readiness:
-    needs: py311-next-full
-    if: failure()
-    defaults:
-      run:
-        shell: bash --login -eo pipefail {0}
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v4
-    - uses: ./.github/actions/conda_setup
-    - name: check packages conda
-      run: |
-        cd scripts
-        ./check_py_compat.sh pcds 3.11 | tee ~/compat.log
-    - name: check packages pip
-      if: always()
-      run: |
-        conda create --name test python=3.11
-        conda activate test
-        cd scripts
-        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
-    - name: summarize failure
-      if: failure()
-      run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
+        conda activate base
+        python scripts/export_env.py --rel test --base pcds
+    - uses: actions/upload-artifact@v4
+      if: steps.export.outcome == 'success'
+      with:
+        name: py313_env.yaml
+        path: "envs/pcds/env.yaml"
   py312-readiness:
     needs: py312-next-full
     if: failure()
@@ -272,6 +187,30 @@ jobs:
       if: always()
       run: |
         conda create --name test python=3.12
+        conda activate test
+        cd scripts
+        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
+    - name: summarize failure
+      if: failure()
+      run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
+  py313-readiness:
+    needs: py313-next-full
+    if: failure()
+    defaults:
+      run:
+        shell: bash --login -eo pipefail {0}
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./.github/actions/conda_setup
+    - name: check packages conda
+      run: |
+        cd scripts
+        ./check_py_compat.sh pcds 3.13 | tee ~/compat.log
+    - name: check packages pip
+      if: always()
+      run: |
+        conda create --name test python=3.13
         conda activate test
         cd scripts
         ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
