@@ -38,13 +38,13 @@ whatrecord
 # - Packages developed by e.g. NSLS-II, APS
 # - Frequently relevant features/fixes
 bloptools
-# bluesky (need to fix nabs and test v1.11.0)
-# bluesky-live
-# blueksy-queueserver
-# bluesky-widgets
+bluesky
+bluesky-live
+blueksy-queueserver
+bluesky-widgets
 caproto
 hklpy
-# ophyd (need to test v1.8.0)
+ophyd
 pyepics
 xopt
 

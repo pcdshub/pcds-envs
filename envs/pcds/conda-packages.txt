@@ -3,10 +3,10 @@ ads-async>=0.3.1
 anaconda-client>=1.12.3
 apischema>=0.18.0
 archapp>=1.1.0
-atef>=1.5.1
-atlassian-python-api>=3.41.16
+atlassian-python-api>=3.41.14
 black>=24.8.0
 blark>=0.8.1
+bluesky-base>=1.10.0
 bluesky-live>=0.0.8
 bluesky-widgets>=0.0.14
 bokeh>=1.0.1
@@ -116,17 +116,9 @@ yarn>=3.5.0
 pyqt=5.15.9
 pyqtwebengine=5.15.9
 # conda+pip regressive pins
-# avoids bluesky v1.11.0 which breaks nabs
-bluesky-base=1.10.0
-# non-tiled databroker required in conda-packages if any package has databroker as a dep
-databroker=1.2.5
 # ipython changes make scientists upset and can break experiments
-ipython=8.4.0
-# matplotlib conda pin can be removed once all conda dependencies specify matplotlib-base
-matplotlib=3.8.4
+ipython=8.26.0
 # most of the ecosystem is not ready for numpy 2.0
 numpy=1.26.4
-# avoids ophyd v1.8.0 which I have not had time to test
-ophyd=1.7.0
 # pin for gui interface stability
-qtpy=2.1.0
+qtpy=2.4.1
