@@ -27,7 +27,7 @@ jobs:
     - uses: ./.github/actions/conda_setup
     - name: create environment
       id: create
-      run: mamba env create -q -n pcds-test -f envs/pcds/env.yaml
+      run: conda env create -q -n pcds-test -f envs/pcds/env.yaml
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
       with:
