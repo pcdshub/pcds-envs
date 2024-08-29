@@ -40,7 +40,7 @@ whatrecord
 bloptools
 bluesky
 bluesky-live
-blueksy-queueserver
+bluesky-queueserver
 bluesky-widgets
 caproto
 hklpy
