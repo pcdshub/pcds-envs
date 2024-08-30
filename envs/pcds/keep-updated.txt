@@ -38,10 +38,11 @@ whatrecord
 # - Packages developed by e.g. NSLS-II, APS
 # - Frequently relevant features/fixes
 bloptools
-bluesky
-bluesky-live
-bluesky-queueserver
-bluesky-widgets
+# bluesky stuck at 1.10.0 until 1.13.0 releases and we test it
+# bluesky
+# bluesky-live
+# bluesky-queueserver
+# bluesky-widgets
 caproto
 hklpy
 ophyd
