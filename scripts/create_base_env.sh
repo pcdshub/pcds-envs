@@ -22,12 +22,12 @@ source "$(dirname "$(which conda)")/../etc/profile.d/conda.sh"
 ENV_DIR="../envs/${BASE}"
 
 # Main conda install step
-mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt"
+conda create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt"
 conda activate "${ENVNAME}"
 
 # First extras round to pick up conda stuff
 python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_conda.txt
-mamba install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt" --file "${ENV_DIR}/extras_conda.txt"
+conda install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt" --file "${ENV_DIR}/extras_conda.txt"
 
 # Main pip install step
 pip install -r "${ENV_DIR}"/pip-packages.txt -r "${ENV_DIR}"/security-packages.txt

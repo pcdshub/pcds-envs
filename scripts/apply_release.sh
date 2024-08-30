@@ -6,7 +6,7 @@ else
   REL="${1}"
 fi
 set -e
-source "$(dirname `which conda`)/../etc/profile.d/conda.sh"
+source "$(dirname "$(which conda)")/../etc/profile.d/conda.sh"
 echo "Updating to latest"
 git checkout master
 git pull origin master
@@ -25,14 +25,14 @@ echo "Checking for tag ${TAG}"
 git fetch origin
 git checkout "${TAG}"
 echo "Building environment"
-mamba env create -n "${NAME}" -f "${YAML}"
+conda env create -n "${NAME}" -f "${YAML}"
 ./install_activate.sh "${BASE}" "${NAME}"
-CONDA_BIN=`dirname $(which conda)`
+CONDA_BIN="$(dirname "$(which conda)")"
 CONDA_ENVS_BASE="$(realpath "${CONDA_BIN}/../envs")"
 "${ENV_DIR}"/extra-install-steps.sh "${CONDA_ENVS_BASE}/${NAME}"
 echo "Write-protecting new env"
 pushd "${CONDA_ENVS_BASE}"
-chmod -R a-w ${NAME}
+chmod -R a-w "${NAME}"
 popd
 git checkout master
 echo "Done"

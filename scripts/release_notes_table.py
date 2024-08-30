@@ -291,7 +291,7 @@ def build_reverse_deps_cache(
     This finds all the python packages with well-formed dependencies, as this
     is discoverable in any given python environment, then extends the info
     using the "subset" argument if provided, or with the info discovered
-    from mamba list. Afterwards, mamba repoquery seems to be the fastest
+    from conda list. Afterwards, conda repoquery seems to be the fastest
     way to build the dependency tree.
     """
     reverse_deps_cache = collections.defaultdict(set)
@@ -308,18 +308,18 @@ def build_reverse_deps_cache(
             for req in reqs:
                 if req.key != pkg_name:
                     reverse_deps_cache[req.key].add(pkg_name)
-    # Use the mamba info to augment the above
+    # Use the conda info to augment the above
     if subset is None:
-        for pkg_name in mamba_list():
-            print(f'checking mamba for {pkg_name}')
-            dependencies = mamba_repoquery('depends', pkg_name)
+        for pkg_name in conda_list():
+            print(f'checking conda for {pkg_name}')
+            dependencies = conda_repoquery('depends', pkg_name)
             for dep in dependencies:
                 if dep != pkg_name:
                     reverse_deps_cache[dep].add(pkg_name)
     else:
         for pkg_name in subset:
-            print(f'checking mamba for {pkg_name}')
-            needs = mamba_repoquery('whoneeds', pkg_name)
+            print(f'checking conda for {pkg_name}')
+            needs = conda_repoquery('whoneeds', pkg_name)
             reverse_deps_cache[pkg_name].update(
                 [nd for nd in needs if nd != pkg_name]
             )
@@ -344,10 +344,10 @@ def determine_installed_extras(package: str) -> list[str]:
     return installed_extras
 
 
-def mamba_repoquery(command: str, package: str) -> list[str]:
+def conda_repoquery(command: str, package: str) -> list[str]:
     response = json.loads(
         subprocess.check_output([
-            'mamba',
+            'conda',
             'repoquery',
             command,
             '--offline',
@@ -358,10 +358,10 @@ def mamba_repoquery(command: str, package: str) -> list[str]:
     return [spec['name'] for spec in response['result']['pkgs']]
 
 
-def mamba_list() -> list[str]:
+def conda_list() -> list[str]:
     response = json.loads(
         subprocess.check_output([
-            'mamba',
+            'conda',
             'list',
             '--json',
         ])
@@ -392,7 +392,7 @@ def main(env_name='pcds', reference='master'):
         pkg for pkg in added_pkgs if len(reverse_deps_cache[pkg]) > 0
     }
     added_specs = added_pkgs.difference(added_reqs)
-    # Further refine the split based on mamba's knowledge
+    # Further refine the split based on conda's knowledge
     if added_specs:
         showed_update = True
         header = 'Added the Following Packages'
