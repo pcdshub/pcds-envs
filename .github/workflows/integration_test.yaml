@@ -68,6 +68,11 @@ jobs:
       with:
         name: incr_env.yaml
         path: "envs/pcds/env.yaml"
+    - name: Steps context debug
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+      if: always()
   # Start from scratch to get some py311 testing done
   # This is a fallback alternative to py311-next-incr, which is preferred
   py311-next-full:
@@ -103,6 +108,11 @@ jobs:
       with:
         name: py311_env.yaml
         path: "envs/pcds/env.yaml"
+    - name: Steps context debug
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+      if: always()
   py312-next-full:
     defaults:
       run:
@@ -136,6 +146,11 @@ jobs:
       with:
         name: py312_env.yaml
         path: "envs/pcds/env.yaml"
+    - name: Steps context debug
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+      if: always()
   py313-next-full:
     defaults:
       run:
@@ -169,6 +184,11 @@ jobs:
       with:
         name: py313_env.yaml
         path: "envs/pcds/env.yaml"
+    - name: Steps context debug
+      env:
+        STEPS_CONTEXT: ${{ toJson(steps) }}
+      run: echo "$STEPS_CONTEXT"
+      if: always()
   py312-readiness:
     needs: py312-next-full
     if: failure()
