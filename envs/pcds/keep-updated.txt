@@ -46,6 +46,7 @@ caproto
 hklpy
 # ophyd (need to test v1.8.0)
 pyepics
+xopt
 
 # Developer tools
 # - General tools for Python developers

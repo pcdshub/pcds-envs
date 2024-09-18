@@ -110,6 +110,7 @@ typhos>=4.0.0
 whatrecord>=0.6.0
 xarray>=2023.3.0
 xraylib>=4.1.3
+xopt>=2.3.0
 yarn>=3.5.0
 # conda only regressive pins
 # pin for gui interface stability
