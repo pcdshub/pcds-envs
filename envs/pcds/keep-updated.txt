@@ -67,7 +67,7 @@ gh
 ghapi
 grpcio-tools
 isort
-line_profiler
+# line_profiler (locked with ipython)
 memray
 pipdeptree
 pre-commit
