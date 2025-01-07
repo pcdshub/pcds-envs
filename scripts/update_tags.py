@@ -49,7 +49,7 @@ pypi_version_re = re.compile(r'-(\d\.\d\.\d).tar.gz')
 
 
 def pypi_latest_version_no_search(package):
-    req = requests.get(f'https://pypi.python.org/pypi/{package}/json')
+    req = requests.get(f'https://pypi.org/simple/{package}')
     matches = set(pypi_version_re.findall(req.text))
     if not matches:
         raise RuntimeError(f'{package} not found on pypi.')
