@@ -2,6 +2,7 @@
 bloptools>=0.7.0
 grpcio-tools>=1.62.2
 laserbeamsize
+line-profiler>=4.1.2
 p4p
 pip-audit
 py-trees>=2.2.3

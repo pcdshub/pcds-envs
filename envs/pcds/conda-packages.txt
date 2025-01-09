@@ -38,7 +38,6 @@ isort>=5.13.2
 jupyter>=1.0.0
 krtc>=0.3.0
 lightpath>=1.0.5
-line_profiler>=4.1.2
 lucid>=0.11.0
 lxml>=4.8.0
 memray>=1.13.4
