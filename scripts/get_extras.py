@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 # Packages that are only available on Conda
 CONDA_ONLY = []
 # Packages that are only available on PYPI
-PYPI_ONLY = []
+PYPI_ONLY = ["line_profiler"]
 # Packages that can't be put into the environment right now
 AVOID = ['python-ldap']
 
