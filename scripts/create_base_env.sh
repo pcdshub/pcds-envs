@@ -24,9 +24,11 @@ ENV_DIR="../envs/${BASE}"
 # Main conda install step
 mamba create -y --name "${ENVNAME}" python="${PY_VER}" --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt"
 conda activate "${ENVNAME}"
+echo "-------------ACTIVATED"
 
 # First extras round to pick up conda stuff
 python get_extras.py --verbose "${BASE}" > "${ENV_DIR}"/extras_conda.txt
+cat "${ENV_DIR}"/extras_conda.txt
 mamba install -y --file "${ENV_DIR}/conda-packages.txt" --file "${ENV_DIR}/security-packages.txt" --file "${ENV_DIR}/extras_conda.txt"
 
 # Main pip install step
