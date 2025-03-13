@@ -35,7 +35,7 @@ jobs:
     - uses: ./.github/actions/release_notes
       if: steps.create.outcome == 'success'
   # The env from current-env-tests + the latest tags slapped onto it
-  py311-next-incr:
+  py312-next-incr:
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -73,46 +73,8 @@ jobs:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo "$STEPS_CONTEXT"
       if: always()
-  # Start from scratch to get some py311 testing done
-  # This is a fallback alternative to py311-next-incr, which is preferred
-  py311-next-full:
-    defaults:
-      run:
-        shell: bash --login -eo pipefail {0}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - uses: ./.github/actions/conda_setup
-    - name: create environment
-      id: create
-      run: |
-        cd scripts
-        python update_tags.py pcds
-        ./create_base_env.sh test pcds 3.11
-    - uses: ./.github/actions/finalize_and_check_env
-    - uses: ./.github/actions/run_tests
-      with:
-        use-tag: true
-    - uses: ./.github/actions/release_notes
-      if: steps.create.outcome == 'success'
-    - name: Environment Export
-      id: export
-      if: steps.create.outcome == 'success'
-      run: |
-        conda activate base
-        python scripts/export_env.py --rel test --base pcds
-    - uses: actions/upload-artifact@v4
-      if: steps.export.outcome == 'success'
-      with:
-        name: py311_env.yaml
-        path: "envs/pcds/env.yaml"
-    - name: Steps context debug
-      env:
-        STEPS_CONTEXT: ${{ toJson(steps) }}
-      run: echo "$STEPS_CONTEXT"
-      if: always()
+  # Start from scratch to get some py312 testing done
+  # This is a fallback alternative to py312-next-incr, which is preferred
   py312-next-full:
     defaults:
       run:
