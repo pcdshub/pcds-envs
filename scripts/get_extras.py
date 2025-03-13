@@ -141,8 +141,7 @@ def get_package_extra_deps(package: str) -> Iterator[PackageSpec]:
     except PackageNotFoundError:
         logger.warning("%s is not installed and cannot be checked.", package)
         return set()
-    specs = list(PackageSpec.from_importlib_metadata(req) for req in full_reqs)
-    print(package, specs)
+    specs = (PackageSpec.from_importlib_metadata(req) for req in full_reqs)
     return (yield from (pkg for pkg in specs if pkg.source_extra))
 
 
