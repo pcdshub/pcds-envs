@@ -12,7 +12,7 @@ else
   BASE="${2}"
 fi
 if [ -z "${3}" ]; then
-  PY_VER="3.9"
+  PY_VER="3.12"
 else
   PY_VER="${3}"
 fi

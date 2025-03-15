@@ -20,7 +20,5 @@ bluesky-queueserver==0.0.19
 databroker==1.2.5
 # ipython changes make scientists upset and can break experiments
 ipython==8.26.0
-# most of the ecosystem is not ready for numpy 2.0
-numpy==1.26.4
 # pin for gui interface stability
 qtpy==2.4.1
