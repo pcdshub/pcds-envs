@@ -12,13 +12,9 @@ python-vxi11
 slac-alarm-manager>=1.4.0
 tc-release>=0.2.6
 # conda+pip regressive pins
-# avoids bluesky v1.11.0 which breaks nabs
-bluesky==1.10.0
 # Requires bluesky at v1.11.0 to get to 0.0.20, update pin when bluesky pin updates
 bluesky-queueserver==0.0.19
 # non-tiled databroker required until we need tiled
 databroker==1.2.5
-# ipython changes make scientists upset and can break experiments
-ipython==8.26.0
 # pin for gui interface stability
 qtpy==2.4.1
