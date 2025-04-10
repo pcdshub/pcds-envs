@@ -47,7 +47,6 @@ opencv>=4.5.1[build='^qt5.*$']
 openssl>=3.5.0
 pandas>=1.5.3
 panel>=0.14.4
-papermill>=2.3.4
 paramiko>=3.1.0
 pcaspy>=0.7.3
 pcdscalc>=0.6.1

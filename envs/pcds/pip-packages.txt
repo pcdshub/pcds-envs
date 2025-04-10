@@ -5,6 +5,7 @@ grpcio-tools>=1.71.0
 laserbeamsize
 line_profiler>=4.1.2
 p4p
+papermill>=2.3.4
 pip-audit
 py-trees>=2.2.3
 PyQt5-stubs>=5.15.6
