@@ -1,6 +1,6 @@
 # pypi as new as possible
-atef>=1.5.2
-bloptools>=0.7.1
+atef>=1.5.3
+blop>=0.7.2
 grpcio-tools>=1.71.0
 laserbeamsize
 line_profiler>=4.1.2
@@ -12,8 +12,6 @@ python-vxi11
 slac-alarm-manager>=1.4.0
 tc-release>=0.2.6
 # conda+pip regressive pins
-# Requires bluesky at v1.11.0 to get to 0.0.20, update pin when bluesky pin updates
-bluesky-queueserver==0.0.19
 # non-tiled databroker required until we need tiled
 databroker==1.2.5
 # pin for gui interface stability
