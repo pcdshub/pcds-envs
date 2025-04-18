@@ -2,6 +2,7 @@
 atef>=1.5.3
 blop>=0.7.2
 grpcio-tools>=1.71.0
+hid>=1.0.7
 laserbeamsize
 lcls_naming_tool
 line_profiler>=4.1.2
