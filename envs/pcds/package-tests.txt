@@ -5,6 +5,7 @@ pcdshub/happi
 pcdshub/hutch-python
 pcdshub/hxrsnd
 pcdshub/krtc
+pcdshub/lcls_naming_tool
 pcdshub/lightpath
 pcdshub/lucid
 pcdshub/nabs

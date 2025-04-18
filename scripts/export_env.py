@@ -1,5 +1,8 @@
 """
 Exports the current environment, then fixes pypi git lines
+
+This must be run from the base environment.  No other environment can be activated
+for this script to run successfully.
 """
 import argparse
 import pathlib
@@ -11,8 +14,8 @@ parser.add_argument("--base", type=str, default="pcds")
 
 
 def main(base: str, rel: str) -> int:
-    env_name = f"{args.base}-{args.rel}"
-    env_dir = pathlib.Path(__file__).parent.parent / "envs" / args.base
+    env_name = f"{base}-{rel}"
+    env_dir = pathlib.Path(__file__).parent.parent / "envs" / base
     env_path = env_dir / "env.yaml"
     subprocess.run(["conda", "env", "export", "-n", env_name, "-f", str(env_path)], check=True)
     with env_path.open("r") as fd:
