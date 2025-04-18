@@ -298,7 +298,12 @@ def build_reverse_deps_cache(
     # Use the standard python info
     for pkg_name, dist in pkg_resources.working_set.by_key.items():
         print(f'checking pkg_resources for {pkg_name}')
-        extras = [None] + list(determine_installed_extras(pkg_name))
+        try:
+            extras = [None] + list(determine_installed_extras(pkg_name))
+        except Exception as ex:
+            print(f"Error determining extras for {pkg_name}: {ex}")
+            # If we can't figure out the extras, just skip it
+            extras = [None]
         distribution = pkg_resources.get_distribution(pkg_name)
         for extra in extras:
             if extra is None:
