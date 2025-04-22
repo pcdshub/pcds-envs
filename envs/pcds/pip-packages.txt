@@ -1,5 +1,4 @@
 # pypi as new as possible
-atef>=1.5.3
 blop>=0.7.2
 grpcio-tools>=1.71.0
 hid>=1.0.7
