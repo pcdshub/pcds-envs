@@ -7,7 +7,7 @@ runs:
   #   run:
   #     shell: bash --login -eo pipefail {0}
   steps:
-    - run: mamba env export --file envs/pcds/env.yaml
+    - run: conda env export --file envs/pcds/env.yaml
       shell: bash --login -eo pipefail {0}
     - run: |
         cd scripts
