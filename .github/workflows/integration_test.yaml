@@ -50,7 +50,7 @@ jobs:
       run: |
         cd scripts
         python update_tags.py pcds
-        ./create_incremental_env.sh test pcds origin/master
+        ./create_incremental_env.sh test pcds $(git rev-parse HEAD)
     - uses: ./.github/actions/finalize_and_check_env
     - uses: ./.github/actions/run_tests
       with:
