@@ -5,7 +5,17 @@ if [ -z "${1}" ]; then
     exit 1
 fi
 
-PLUGIN_SOURCE="${DESIGNER_PLUGIN:-/cds/group/pcds/pyps/conda/designer_fix/libpyqt5.so}"
+# detect python version in env_directory
+PY_EXE="${1}/bin/python"
+if [ ! -f "${PY_EXE}" ]; then
+    echo "Unable to find a python executable in the conda env directory, cannot select designer plugin file"
+    exit 1
+fi
+
+# Note that this plugin may actually specific to the version of pyqt/qt installed
+# For now we only differentiate based on python version
+PY_VER="$(${PY_EXE} -V | grep -oP "\d.\d+" | sed -r "s/\./_/g")"
+PLUGIN_SOURCE="${DESIGNER_PLUGIN:-/cds/group/pcds/pyps/conda/designer_fix/${PY_VER}/libpyqt5.so}"
 PLUGIN_DEST="${1}/plugins/designer/libpyqt5.so"
 if [ -f "${PLUGIN_DEST}" ]; then
     echo "There is already a file at ${PLUGIN_DEST}, skipping."

@@ -151,30 +151,6 @@ jobs:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo "$STEPS_CONTEXT"
       if: always()
-  py312-readiness:
-    needs: py312-next-full
-    if: failure()
-    defaults:
-      run:
-        shell: bash --login -eo pipefail {0}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: ./.github/actions/conda_setup
-    - name: check packages conda
-      run: |
-        cd scripts
-        ./check_py_compat.sh pcds 3.12 | tee ~/compat.log
-    - name: check packages pip
-      if: always()
-      run: |
-        conda create --name test python=3.12
-        conda activate test
-        cd scripts
-        ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
-    - name: summarize failure
-      if: failure()
-      run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
   py313-readiness:
     needs: py313-next-full
     if: failure()
