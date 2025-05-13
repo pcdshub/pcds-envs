@@ -11,3 +11,5 @@ if [ -x "${EPICS_ENV_SCRIPT}" ]; then
     source "${EPICS_ENV_SCRIPT}"
 fi
 
+# Set Qt GL integration to allow screens to launch
+export QT_XCB_GL_INTEGRATION=none

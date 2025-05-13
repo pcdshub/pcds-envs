@@ -11,3 +11,4 @@ if [ -x "${EPICS_ENV_SCRIPT}" ]; then
     source "${EPICS_ENV_SCRIPT}"
 fi
 
+unset QT_XCB_GL_INTEGRATION
