@@ -33,7 +33,7 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: steps.create.outcome == 'success'
+      if: ${{ !cancelled() && steps.create.outcome == 'success' }}
   # The env from current-env-tests + the latest tags slapped onto it
   py312-next-incr:
     defaults:
@@ -56,10 +56,10 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: steps.create.outcome == 'success'
+      if: ${{ !cancelled() && steps.create.outcome == 'success' }}
     - name: Environment Export
       id: export
-      if: steps.create.outcome == 'success'
+      if: ${{ !cancelled() && steps.create.outcome == 'success' }}
       run: |
         conda activate base
         python scripts/export_env.py --rel test --base pcds
@@ -72,7 +72,7 @@ jobs:
       env:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo "$STEPS_CONTEXT"
-      if: always()
+      if: ${{ always() }}
   # Start from scratch to get some py312 testing done
   # This is a fallback alternative to py312-next-incr, which is preferred
   py312-next-full:
@@ -96,15 +96,15 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: steps.create.outcome == 'success'
+      if: ${{ !cancelled() && steps.create.outcome == 'success' }}
     - name: Environment Export
       id: export
-      if: steps.create.outcome == 'success'
+      if: ${{ !cancelled() && steps.create.outcome == 'success' }}
       run: |
         conda activate base
         python scripts/export_env.py --rel test --base pcds
     - uses: actions/upload-artifact@v4
-      if: steps.export.outcome == 'success'
+      if: ${{ !cancelled() && steps.export.outcome == 'success' }}
       with:
         name: py312_env.yaml
         path: "envs/pcds/env.yaml"
@@ -112,7 +112,7 @@ jobs:
       env:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo "$STEPS_CONTEXT"
-      if: always()
+      if: ${{ always() }}
   py313-next-full:
     defaults:
       run:
@@ -134,15 +134,15 @@ jobs:
       with:
         use-tag: true
     - uses: ./.github/actions/release_notes
-      if: steps.create.outcome == 'success'
+      if: ${{ !cancelled() && steps.create.outcome == 'success' }}
     - name: Environment Export
       id: export
-      if: steps.create.outcome == 'success'
+      if: ${{ !cancelled() && steps.create.outcome == 'success' }}
       run: |
         conda activate base
         python scripts/export_env.py --rel test --base pcds
     - uses: actions/upload-artifact@v4
-      if: steps.export.outcome == 'success'
+      if: ${{ !cancelled() && steps.export.outcome == 'success' }}
       with:
         name: py313_env.yaml
         path: "envs/pcds/env.yaml"
@@ -150,10 +150,10 @@ jobs:
       env:
         STEPS_CONTEXT: ${{ toJson(steps) }}
       run: echo "$STEPS_CONTEXT"
-      if: always()
+      if: ${{ always() }}
   py313-readiness:
     needs: py313-next-full
-    if: failure()
+    if: ${{ failure() }}
     defaults:
       run:
         shell: bash --login -eo pipefail {0}
@@ -166,12 +166,12 @@ jobs:
         cd scripts
         ./check_py_compat.sh pcds 3.13 | tee ~/compat.log
     - name: check packages pip
-      if: always()
+      if: ${{ always() }}
       run: |
         conda create --name test python=3.13
         conda activate test
         cd scripts
         ./check_py_compat_pypi.sh pcds | tee -a ~/compat.log
     - name: summarize failure
-      if: failure()
+      if: ${{ failure() }}
       run:  grep "uninstallable package" ~/compat.log >> "$GITHUB_STEP_SUMMARY"
