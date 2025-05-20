@@ -1,2 +1,2 @@
 flask-authnz git+https://github.com/slaclab/flask_authnz@0.0.24
-pmpsui git+https://github.com/pcdshub/pmps-ui.git@v1.1.0
+pmpsui git+https://github.com/pcdshub/pmps-ui.git@v2.0.0
