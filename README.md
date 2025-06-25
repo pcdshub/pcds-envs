@@ -20,7 +20,7 @@ This completes the setup, but you need to deactivate and reactivate the environm
 
 To create a development environment from a yaml:
 - Download and install a [miniconda environment](https://conda.io/miniconda.html)
-- `git clone https://github.com/pcdshub/pcds-env.git`
+- `git clone https://github.com/pcdshub/pcds-envs.git`
 - `cd pcds-env`
 - optional: `git fetch`, `git checkout 0.1.0` (if you'd like a tag other than latest)
 - `conda env create -n myenvname -f envs/pcds/env.yaml`
